@@ -2,6 +2,8 @@
 
  An asynchronous API wrapper for pokeapi written in Python. Not only is this package asynchronous, it is also fully typed, meaning you don't have to look back and forth at documentations.
 
+![Tests](https://github.com/beastmatser/aiopokeapi/actions/workflows/tests.yml/badge.svg)
+
 ## Installation
 
 ```sh
