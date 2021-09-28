@@ -1,16 +1,3 @@
-# Aiopokeapi
-
- An asynchronous API wrapper for pokeapi written in Python. Not only is this package asynchronous, it is also fully typed, meaning you don't have to look back and forth at documentations.
-
-## Installation
-
-```sh
-pip install git+https://github.com/beastmatser/aiopokeapi
-```
-
-## Getting started
-
-```py
 import asyncio
 import aiopoke
 
@@ -25,4 +12,3 @@ async def main():
 # this is a bug with asyncio to ignore this you can add
 # asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 asyncio.run(main())
-```
