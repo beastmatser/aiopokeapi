@@ -7,7 +7,7 @@
 ## Installation
 
 ```sh
-pip install git+https://github.com/beastmatser/aiopokeapi
+pip install aiopokeapi
 ```
 
 ## Getting started
