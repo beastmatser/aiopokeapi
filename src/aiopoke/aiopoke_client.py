@@ -1,3 +1,4 @@
+# type: ignore
 import aiohttp
 from typing import Any, Callable, Dict, Optional, Union
 
@@ -187,8 +188,9 @@ class AiopokeClient:
         }
         return build_map[endpoint](data)
 
-    @cache
-    async def _fetch(self, endpoint: str, name_or_id: Union[str, int]) -> Dict[str, Any]:
+    async def _fetch(
+        self, endpoint: str, name_or_id: Union[str, int]
+    ):
         endpoint = endpoint.lower().replace(" ", "-")
         if endpoint not in ENDPOINTS:
             raise ValueError(f"'{endpoint}' is not a valid endpoint")
@@ -199,202 +201,225 @@ class AiopokeClient:
         url = f"https://pokeapi.co/api/v2/{endpoint}/{name_or_id}"
         async with self.session.get(url) as response:
             try:
-                data: Dict[str, Any] = await response.json()
+                data = await response.json()
             except aiohttp.ContentTypeError:
                 raise ValueError(f"An invalid value for '{endpoint}' was passed in")
 
         return data
 
-    async def fetch_ability(self, name_or_id) -> Ability:
-        data = await self._fetch("ability", name_or_id)
-        return Ability(data)
+    @cache("ability")
+    async def fetch_ability(self, id_: int) -> Ability:
+        return await self._fetch("ability", id_)
 
-    async def fetch_berry(self, name_or_id) -> Berry:
-        data = await self._fetch("berry", name_or_id)
-        return Berry(data)
+    @cache("berry")
+    async def fetch_berry(self, name_or_id: Union[str, int]) -> Berry:
+        return await self._fetch("berry", name_or_id)
 
-    async def fetch_berry_flavor(self, name_or_id) -> BerryFlavor:
-        data = await self._fetch("berry-flavor", name_or_id)
-        return BerryFlavor(data)
+    @cache("berry-flavor")
+    async def fetch_berry_flavor(self, name_or_id: Union[str, int]) -> BerryFlavor:
+        return await self._fetch("berry-flavor", name_or_id)
 
-    async def fetch_berry_firmness(self, name_or_id) -> BerryFirmness:
-        data = await self._fetch("berry-firmness", name_or_id)
-        return BerryFirmness(data)
+    @cache("berry-flavor")
+    async def fetch_berry_firmness(self, name_or_id: Union[str, int]) -> BerryFirmness:
+        return await self._fetch("berry-flavor", name_or_id)
 
-    async def fetch_characteristic(self, name_or_id) -> Characteristic:
-        data = await self._fetch("characteristic", name_or_id)
-        return Characteristic(data)
+    @cache("characteristic")
+    async def fetch_characteristic(self, name_or_id: Union[str, int]) -> Characteristic:
+        return await self._fetch("characteristic", name_or_id)
 
-    async def fetch_contest_effect(self, id_) -> ContestEffect:
-        data = await self._fetch("contest-effect", id_)
-        return ContestEffect(data)
+    @cache("contest-effect")
+    async def fetch_contest_effect(self, id_: int) -> ContestEffect:
+        return await self._fetch("contest-effect", id_)
 
-    async def fetch_contest_type(self, name_or_id) -> ContestType:
-        data = await self._fetch("contest-type", name_or_id)
-        return ContestType(data)
+    @cache("contest-type")
+    async def fetch_contest_type(self, name_or_id: Union[str, int]) -> ContestType:
+        return await self._fetch("contest-type", name_or_id)
 
-    async def fetch_egg_group(self, name_or_id) -> EggGroup:
-        data = await self._fetch("egg-group", name_or_id)
-        return EggGroup(data)
+    @cache("egg-group")
+    async def fetch_egg_group(self, name_or_id: Union[str, int]) -> EggGroup:
+        return await self._fetch("egg-group", name_or_id)
 
-    async def fetch_encounter_condition(self, name_or_id) -> EncounterCondition:
-        data = await self._fetch("encounter-condition", name_or_id)
-        return EncounterCondition(data)
+    @cache("encounter-condition")
+    async def fetch_encounter_condition(
+        self, name_or_id: Union[str, int]
+    ) -> EncounterCondition:
+        return await self._fetch("encounter-condition", name_or_id)
 
+    @cache("encounter-condition-value")
     async def fetch_encounter_condition_value(
-        self, name_or_id
+        self, name_or_id: Union[str, int]
     ) -> EncounterConditionValue:
-        data = await self._fetch("encounter-condition-value", name_or_id)
-        return EncounterConditionValue(data)
+        return await self._fetch("encounter-condition-value", name_or_id)
 
-    async def fetch_encounter_method(self, name_or_id) -> EncounterMethod:
-        data = await self._fetch("encounter-method", name_or_id)
-        return EncounterMethod(data)
+    @cache("encounter-method")
+    async def fetch_encounter_method(
+        self, name_or_id: Union[str, int]
+    ) -> EncounterMethod:
+        return await self._fetch("encounter-method", name_or_id)
 
-    async def fetch_evolution_chain(self, id_) -> EvolutionChain:
-        data = await self._fetch("evolution-chain", id_)
-        return EvolutionChain(data)
+    @cache("evolution-chain")
+    async def fetch_evolution_chain(self, id_: int) -> EvolutionChain:
+        return await self._fetch("evolution-chain", id_)
 
-    async def fetch_evolution_trigger(self, id_) -> EvolutionTrigger:
-        data = await self._fetch("evolution-trigger", id_)
-        return EvolutionTrigger(data)
+    @cache("evolution-trigger")
+    async def fetch_evolution_trigger(self, id_: int) -> EvolutionTrigger:
+        return await self._fetch("evolution-trigger", id_)
 
-    async def fetch_gender(self, name_or_id) -> Gender:
-        data = await self._fetch("gender", name_or_id)
-        return Gender(data)
+    @cache("gender")
+    async def fetch_gender(self, name_or_id: Union[str, int]) -> Gender:
+        return await self._fetch("gender", name_or_id)
 
-    async def fetch_generation(self, name_or_id) -> Generation:
-        data = await self._fetch("generation", name_or_id)
-        return Generation(data)
+    @cache("generation")
+    async def fetch_generation(self, name_or_id: Union[str, int]) -> Generation:
+        return await self._fetch("generation", name_or_id)
 
-    async def fetch_growth_rate(self, name_or_id) -> GrowthRate:
-        data = await self._fetch("growth-rate", name_or_id)
-        return GrowthRate(data)
+    @cache("growth-rate")
+    async def fetch_growth_rate(self, name_or_id: Union[str, int]) -> GrowthRate:
+        return await self._fetch("growth-rate", name_or_id)
 
-    async def fetch_item(self, name_or_id) -> Item:
-        data = await self._fetch("item", name_or_id)
-        return Item(data)
+    @cache("item")
+    async def fetch_item(self, name_or_id: Union[str, int]) -> Item:
+        return await self._fetch("item", name_or_id)
 
-    async def fetch_item_attribute(self, name_or_id) -> ItemAttribute:
-        data = await self._fetch("item-attribute", name_or_id)
-        return ItemAttribute(data)
+    @cache("item-attribute")
+    async def fetch_item_attribute(self, name_or_id: Union[str, int]) -> ItemAttribute:
+        return await self._fetch("item-attribute", name_or_id)
 
-    async def fetch_item_category(self, name_or_id) -> ItemCategory:
-        data = await self._fetch("item-category", name_or_id)
-        return ItemCategory(data)
+    @cache("item-category")
+    async def fetch_item_category(self, name_or_id: Union[str, int]) -> ItemCategory:
+        return await self._fetch("item-category", name_or_id)
 
-    async def fetch_item_fling_effect(self, name_or_id) -> ItemFlingEffect:
-        data = await self._fetch("item-fling-effect", name_or_id)
-        return ItemFlingEffect(data)
+    @cache("item-fling-effect")
+    async def fetch_item_fling_effect(
+        self, name_or_id: Union[str, int]
+    ) -> ItemFlingEffect:
+        return await self._fetch("item-fling-effect", name_or_id)
 
-    async def fetch_item_pocket(self, name_or_id) -> ItemPocket:
-        data = await self._fetch("item-pocket", name_or_id)
-        return ItemPocket(data)
+    @cache("item-pocket")
+    async def fetch_item_pocket(self, name_or_id: Union[str, int]) -> ItemPocket:
+        return await self._fetch("item-pocket", name_or_id)
 
-    async def fetch_location(self, name_or_id) -> Location:
-        data = await self._fetch("location", name_or_id)
-        return Location(data)
+    @cache("location")
+    async def fetch_location(self, name_or_id: Union[str, int]) -> Location:
+        return await self._fetch("location", name_or_id)
 
-    async def fetch_location_area(self, name_or_id) -> LocationArea:
-        data = await self._fetch("location-area", name_or_id)
-        return LocationArea(data)
+    @cache("location-area")
+    async def fetch_location_area(self, name_or_id: Union[str, int]) -> LocationArea:
+        return await self._fetch("location-area", name_or_id)
 
-    async def fetch_machine(self, name_or_id) -> Machine:
-        data = await self._fetch("machine", name_or_id)
-        return Machine(data)
+    @cache("machine")
+    async def fetch_machine(self, id_: int) -> Machine:
+        return await self._fetch("machine", id_)
 
-    async def fetch_move(self, name_or_id) -> Move:
-        data = await self._fetch("move", name_or_id)
-        return Move(data)
+    @cache("move")
+    async def fetch_move(self, name_or_id: Union[str, int]) -> Move:
+        return await self._fetch("move", name_or_id)
 
-    async def fetch_move_ailment(self, name_or_id) -> MoveAilment:
-        data = await self._fetch("move-ailment", name_or_id)
-        return MoveAilment(data)
+    @cache("move-ailment")
+    async def fetch_move_ailment(self, name_or_id: Union[str, int]) -> MoveAilment:
+        return await self._fetch("move-ailment", name_or_id)
 
-    async def fetch_move_battle_style(self, name_or_id) -> MoveBatteStyle:
-        data = await self._fetch("move-battle-style", name_or_id)
-        return MoveBatteStyle(data)
+    @cache("move-battle-style")
+    async def fetch_move_battle_style(
+        self, name_or_id: Union[str, int]
+    ) -> MoveBatteStyle:
+        return await self._fetch("move-battle-style", name_or_id)
 
-    async def fetch_move_category(self, name_or_id) -> MoveCategory:
-        data = await self._fetch("move-category", name_or_id)
-        return MoveCategory(data)
+    @cache("move-category")
+    async def fetch_move_category(self, name_or_id: Union[str, int]) -> MoveCategory:
+        return await self._fetch("move-category", name_or_id)
 
-    async def fetch_move_damage_class(self, name_or_id) -> MoveDamageClass:
-        data = await self._fetch("move-damage-class", name_or_id)
-        return MoveDamageClass(data)
+    @cache("move-damage-class")
+    async def fetch_move_damage_class(
+        self, name_or_id: Union[str, int]
+    ) -> MoveDamageClass:
+        return await self._fetch("move-damage-class", name_or_id)
 
-    async def fetch_move_learn_method(self, name_or_id) -> MoveLearnMethod:
-        data = await self._fetch("move-learn-method", name_or_id)
-        return MoveLearnMethod(data)
+    @cache("move-learn-method")
+    async def fetch_move_learn_method(
+        self, name_or_id: Union[str, int]
+    ) -> MoveLearnMethod:
+        return await self._fetch("move-learn-method", name_or_id)
 
-    async def fetch_move_target(self, name_or_id) -> MoveTarget:
-        data = await self._fetch("move-target", name_or_id)
-        return MoveTarget(data)
+    @cache("move-target")
+    async def fetch_move_target(self, name_or_id: Union[str, int]) -> MoveTarget:
+        return await self._fetch("move-target", name_or_id)
 
-    async def fetch_nature(self, name_or_id) -> Nature:
-        data = await self._fetch("nature", name_or_id)
-        return Nature(data)
+    @cache("nature")
+    async def fetch_nature(self, name_or_id: Union[str, int]) -> Nature:
+        return await self._fetch("nature", name_or_id)
 
-    async def fetch_pal_park_area(self, name_or_id) -> PalParkArea:
-        data = await self._fetch("pal-park-area", name_or_id)
-        return PalParkArea(data)
+    @cache("pal-park-area")
+    async def fetch_pal_park_area(self, name_or_id: Union[str, int]) -> PalParkArea:
+        return await self._fetch("pal-park-area", name_or_id)
 
-    async def fetch_pokeathlon_stat(self, name_or_id) -> PokeathlonStat:
-        data = await self._fetch("pokeathlon-stat", name_or_id)
-        return PokeathlonStat(data)
+    @cache("pokeathlon-stat")
+    async def fetch_pokeathlon_stat(
+        self, name_or_id: Union[str, int]
+    ) -> PokeathlonStat:
+        return await self._fetch("pokeathlon-stat", name_or_id)
 
-    async def fetch_pokedex(self, name_or_id) -> Pokedex:
-        data = await self._fetch("pokedex", name_or_id)
-        return Pokedex(data)
+    @cache("pokedex")
+    async def fetch_pokedex(self, name_or_id: Union[str, int]) -> Pokedex:
+        return await self._fetch("pokedex", name_or_id)
 
-    async def fetch_pokemon(self, name_or_id) -> Pokemon:
+    @cache("pokemon")
+    async def fetch_pokemon(self, name_or_id: Union[str, int]) -> Pokemon:
         data = await self._fetch("pokemon", name_or_id)
-        return Pokemon(data)
+        response = await self.session.get(f"https://pokeapi.co/api/v2/pokemon/{data['id']}/encounters")  # type: ignore
+        data["location_area_encounters"] = await response.json()
+        return data
 
-    async def fetch_pokemon_color(self, name_or_id) -> PokemonColor:
-        data = await self._fetch("pokemon-color", name_or_id)
-        return PokemonColor(data)
+    @cache("pokemon-color")
+    async def fetch_pokemon_color(self, name_or_id: Union[str, int]) -> PokemonColor:
+        return await self._fetch("pokemon-color", name_or_id)
 
-    async def fetch_pokemon_form(self, name_or_id) -> PokemonForm:
-        data = await self._fetch("pokemon-form", name_or_id)
-        return PokemonForm(data)
+    @cache("pokemon-form")
+    async def fetch_pokemon_form(self, name_or_id: Union[str, int]) -> PokemonForm:
+        return await self._fetch("pokemon-form", name_or_id)
 
-    async def fetch_pokemon_habitat(self, name_or_id) -> PokemonHabitat:
-        data = await self._fetch("pokemon-habitat", name_or_id)
-        return PokemonHabitat(data)
+    @cache("pokemon-habitat")
+    async def fetch_pokemon_habitat(
+        self, name_or_id: Union[str, int]
+    ) -> PokemonHabitat:
+        return await self._fetch("pokemon-habitat", name_or_id)
 
-    async def fetch_pokemon_shape(self, name_or_id) -> PokemonShape:
-        data = await self._fetch("pokemon-shape", name_or_id)
-        return PokemonShape(data)
+    @cache("pokemon-shape")
+    async def fetch_pokemon_shape(self, name_or_id: Union[str, int]) -> PokemonShape:
+        return await self._fetch("pokemon-shape", name_or_id)
 
-    async def fetch_pokemon_species(self, name_or_id) -> PokemonSpecies:
-        data = await self._fetch("pokemon-species", name_or_id)
-        return PokemonSpecies(data)
+    @cache("pokemon-species")
+    async def fetch_pokemon_species(
+        self, name_or_id: Union[str, int]
+    ) -> PokemonSpecies:
+        return await self._fetch("pokemon-species", name_or_id)
 
-    async def fetch_region(self, name_or_id) -> Region:
-        data = await self._fetch("region", name_or_id)
-        return Region(data)
+    @cache("region")
+    async def fetch_region(self, name_or_id: Union[str, int]) -> Region:
+        return await self._fetch("region", name_or_id)
 
-    async def fetch_stat(self, name_or_id) -> Stat:
-        data = await self._fetch("stat", name_or_id)
-        return Stat(data)
+    @cache("stat")
+    async def fetch_stat(self, name_or_id: Union[str, int]) -> Stat:
+        return await self._fetch("stat", name_or_id)
 
-    async def fetch_super_contest_effect(self, name_or_id) -> SuperContestEffect:
-        data = await self._fetch("super-contest-effect", name_or_id)
-        return SuperContestEffect(data)
+    @cache("super-contest-effect")
+    async def fetch_super_contest_effect(self, _id) -> SuperContestEffect:
+        return await self._fetch("super-contest-effect", _id)
 
-    async def fetch_type(self, name_or_id) -> NaturalGiftType:
-        data = await self._fetch("type", name_or_id)
-        return NaturalGiftType(data)
+    @cache("type")
+    async def fetch_type(self, name_or_id: Union[str, int]) -> NaturalGiftType:
+        return await self._fetch("type", name_or_id)
 
-    async def fetch_natural_gift_type(self, name_or_id) -> NaturalGiftType:
-        data = await self._fetch("type", name_or_id)
-        return NaturalGiftType(data)
+    @cache("type")
+    async def fetch_natural_gift_type(
+        self, name_or_id: Union[str, int]
+    ) -> NaturalGiftType:
+        return await self._fetch("type", name_or_id)
 
-    async def fetch_version(self, name_or_id) -> Version:
-        data = await self._fetch("version", name_or_id)
-        return Version(data)
+    @cache("version")
+    async def fetch_version(self, name_or_id: Union[str, int]) -> Version:
+        return await self._fetch("version", name_or_id)
 
-    async def fetch_version_group(self, name_or_id) -> VersionGroup:
-        data = await self._fetch("version-group", name_or_id)
-        return VersionGroup(data)
+    @cache("version-group")
+    async def fetch_version_group(self, name_or_id: Union[str, int]) -> VersionGroup:
+        return await self._fetch("version-group", name_or_id)

@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from .aiopoke_client import AiopokeClient
     from .resources import (
         Ability,
         Berry,
@@ -64,7 +63,7 @@ class Url(Generic[T]):
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} id_={self.id_} endpoint='{self.endpoint}'>"
 
-    async def fetch(self, client: "AiopokeClient") -> T:
+    async def fetch(self, client) -> T:
         data = await client._fetch(self.endpoint, self.id_)
         obj: T = client.build(self.endpoint, data)
         return obj
@@ -209,7 +208,12 @@ class MinimalPokedex(MinimalResource["Pokedex"]):
 
 
 class MinimalPokemon(MinimalResource["Pokemon"]):
-    pass
+    async def fetch(self, client) -> "Pokemon":
+        data = await client._fetch(self.endpoint, self.id_)
+        response = await client.session.get(f"https://pokeapi.co/api/v2/pokemon/{self.id_}/encounters")  # type: ignore
+        data["location_area_encounters"] = await response.json()
+        obj: "Pokemon" = client.build(self.endpoint, data)
+        return obj
 
 
 class MinimalPokemonColor(MinimalResource["PokemonColor"]):
