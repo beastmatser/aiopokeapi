@@ -6,11 +6,14 @@ if TYPE_CHECKING:
         Berry,
         BerryFirmness,
         BerryFlavor,
+        Characteristic,
         ContestType,
+        ContestEffect,
         EggGroup,
         EncounterCondition,
         EncounterConditionValue,
         EncounterMethod,
+        EvolutionChain,
         EvolutionTrigger,
         Generation,
         GrowthRate,
@@ -21,6 +24,7 @@ if TYPE_CHECKING:
         ItemPocket,
         Location,
         LocationArea,
+        Machine,
         Move,
         MoveAilment,
         MoveBatteStyle,
@@ -64,12 +68,28 @@ class Url(Generic[T]):
         return f"<{self.__class__.__name__} id_={self.id_} endpoint='{self.endpoint}'>"
 
     async def fetch(self) -> T:
-        from .aiopoke_client import AiopokeClient
+        from .aiopoke_client import AiopokeClient  # type: ignore
 
         client = AiopokeClient()  # this will return an existing instance
         data = await client._fetch(self.endpoint, self.id_)
         obj: T = client.build(self.endpoint, data)
         return obj
+
+
+class MachineUrl(Url["Machine"]):
+    pass
+
+
+class EvolutionChainUrl(Url["EvolutionChain"]):
+    pass
+
+
+class CharacteristicUrl(Url["Characteristic"]):
+    pass
+
+
+class ContestEffectUrl(Url["ContestEffect"]):
+    pass
 
 
 class MinimalResource(Url[T]):
@@ -211,7 +231,11 @@ class MinimalPokedex(MinimalResource["Pokedex"]):
 
 
 class MinimalPokemon(MinimalResource["Pokemon"]):
-    async def fetch(self, client) -> "Pokemon":
+    async def fetch(self) -> "Pokemon":
+        from .aiopoke_client import AiopokeClient  # type: ignore
+
+        client = AiopokeClient()  # this will return an existing instance
+
         data = await client._fetch(self.endpoint, self.id_)
         response = await client.session.get(f"https://pokeapi.co/api/v2/pokemon/{self.id_}/encounters")  # type: ignore
         data["location_area_encounters"] = await response.json()

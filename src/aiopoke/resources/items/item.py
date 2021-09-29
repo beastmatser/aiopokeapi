@@ -1,11 +1,11 @@
 from typing import List, Optional
 from ...minimal_resources import (
+    EvolutionChainUrl,
     MinimalItemAttribute,
     MinimalItemCategory,
     MinimalItemFlingEffect,
     MinimalPokemon,
     MinimalVersion,
-    Url,
 )
 from ...utility import Sprite
 from ...utility import (
@@ -20,7 +20,7 @@ from ...utility import (
 
 class Item(NamedResource):
     attributes: List["MinimalItemAttribute"]
-    baby_trigger_form: Optional[Url]
+    baby_trigger_form: Optional["EvolutionChainUrl"]
     cost: int
     effect_entry: "VerboseEffect"
     effect_entries: List["VerboseEffect"]
@@ -40,9 +40,9 @@ class Item(NamedResource):
             MinimalItemAttribute(attribute_data)
             for attribute_data in data["attributes"]
         ]
-        self.baby_trigger_form = (
-            Url(data["baby_trigger_form"]["url"])
-            if data["baby_trigger_form"] is not None
+        self.baby_trigger_for = (
+            EvolutionChainUrl(data["baby_trigger_for"]["url"])
+            if data["baby_trigger_for"] is not None
             else None
         )
         self.category = MinimalItemCategory(data["category"])

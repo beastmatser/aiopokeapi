@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from ...minimal_resources import (
+    ContestEffectUrl,
     MinimalContestType,
     MinimalGeneration,
     MinimalLanguage,
@@ -12,7 +13,6 @@ from ...minimal_resources import (
     MinimalPokemon,
     MinimalStat,
     MinimalVersionGroup,
-    Url,
 )
 from ...utility.common_models import (
     MachineVersionDetail,
@@ -26,7 +26,7 @@ from ..pokemon.ability import AbilityEffectChange
 class Move(NamedResource):
     accuracy: int
     contest_combos: "ContestComboSets"
-    contest_effect: Url
+    contest_effect: ContestEffectUrl
     contest_type: "MinimalContestType"
     damage_class: "MinimalMoveDamageClass"
     effect_chance: Optional[int]
@@ -50,7 +50,7 @@ class Move(NamedResource):
         super().__init__(data)
         self.accuracy = data["accuracy"]
         self.contest_combos = ContestComboSets(data["contest_combos"])
-        self.contest_effect = Url(data["contest_effect"])
+        self.contest_effect = ContestEffectUrl(data["contest_effect"])
         self.contest_type = MinimalContestType(data["contest_type"])
         self.damage_class = MinimalMoveDamageClass(data["damage_class"])
         self.effect_chance = data["effect_chance"]

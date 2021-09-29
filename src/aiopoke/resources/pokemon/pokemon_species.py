@@ -1,5 +1,6 @@
 from typing import List
 from ...minimal_resources import (
+    EvolutionChainUrl,
     MinimalGeneration,
     MinimalLanguage,
     MinimalPokedex,
@@ -11,7 +12,6 @@ from ...minimal_resources import (
     MinimalGrowthRate,
     MinimalPokemonHabitat,
     MinimalPokemonShape,
-    Url
 )
 from ...utility.common_models import Name, NamedResource, FlavorText, Description
 
@@ -21,8 +21,8 @@ class PokemonSpecies(NamedResource):
     capture_rate: int
     color: "MinimalPokemonColor"
     egg_groups: List["MinimalEggGroup"]
-    evolution_chain: Url
-    flavor_text_entry: FlavorText
+    evolution_chain: "EvolutionChainUrl"
+    flavor_text_entry: "FlavorText"
     flavor_text_entries: List["FlavorText"]
     form_description: str
     form_descriptions: List["Description"]
@@ -51,7 +51,7 @@ class PokemonSpecies(NamedResource):
         self.capture_rate = data["capture_rate"]
         self.color = MinimalPokemonColor(data["color"])
         self.egg_groups = [MinimalEggGroup(egg_group_data) for egg_group_data in data["egg_groups"]]
-        self.evolution_chain = Url(data["evolution_chain"])
+        self.evolution_chain = EvolutionChainUrl(data["evolution_chain"])
         self.evolves_from_species = MinimalPokemonSpecies(data["evolves_from_species"])
         self.flavor_text_entry = [
             FlavorText(flavor_text_entry_data)
