@@ -1,12 +1,12 @@
 from typing import List, Optional
-from ...minimal_resources import MinimalNature, MinimalMove, MinimalMoveDamageClass
+from ...minimal_resources import MinimalNature, MinimalMove, MinimalMoveDamageClass, Url
 from ...utility import Name, NamedResource
 
 
 class Stat(NamedResource):
     affecting_moves: "MoveStatAffectSets"
     affecting_natures: "NatureStatAffectSets"
-    characteristics: List[str]  # url
+    characteristics: List[Url]
     game_index: int
     is_battle_only: bool
     move_damage_class: Optional["MinimalMoveDamageClass"]
@@ -16,7 +16,7 @@ class Stat(NamedResource):
         super().__init__(data)
         self.affecting_moves = MoveStatAffectSets(data["affecting_moves"])
         self.affecting_natures = NatureStatAffectSets(data["affecting_natures"])
-        self.characteristics = [characteristic_data["url"] for characteristic_data in data["characteristics"]]
+        self.characteristics = [Url(characteristic_data["url"]) for characteristic_data in data["characteristics"]]
         self.game_index = data["game_index"]
         self.is_battle_only = data["is_battle_only"]
         self.move_damage_class = MinimalMoveDamageClass(data["move_damage_class"]) if data["move_damage_class"] is not None else None

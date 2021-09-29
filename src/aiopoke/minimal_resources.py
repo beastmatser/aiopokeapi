@@ -63,7 +63,10 @@ class Url(Generic[T]):
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} id_={self.id_} endpoint='{self.endpoint}'>"
 
-    async def fetch(self, client) -> T:
+    async def fetch(self) -> T:
+        from .aiopoke_client import AiopokeClient
+
+        client = AiopokeClient()  # this will return an existing instance
         data = await client._fetch(self.endpoint, self.id_)
         obj: T = client.build(self.endpoint, data)
         return obj

@@ -1,12 +1,12 @@
-from ...minimal_resources import MinimalVersionGroup
+from ...minimal_resources import MinimalVersionGroup, Url
 
 
 class MachineVersionDetail:
-    machine: str  # url
+    machine: Url
     version_group: "MinimalVersionGroup"
 
     def __init__(self, data) -> None:
-        self.machine = data["machine"]
+        self.machine = Url(data["machine"])
         self.version_group = MinimalVersionGroup(data["version_group"])
 
     def __repr__(self) -> str:

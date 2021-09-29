@@ -5,8 +5,9 @@ from ...minimal_resources import (
     MinimalItemFlingEffect,
     MinimalPokemon,
     MinimalVersion,
+    Url,
 )
-from ...utility.common_models.sprites import OptionalSprite, Sprite
+from ...utility import Sprite
 from ...utility import (
     Name,
     MachineVersionDetail,
@@ -19,7 +20,7 @@ from ...utility import (
 
 class Item(NamedResource):
     attributes: List["MinimalItemAttribute"]
-    baby_trigger_form: Optional[str]  # url
+    baby_trigger_form: Optional[Url]
     cost: int
     effect_entry: "VerboseEffect"
     effect_entries: List["VerboseEffect"]
@@ -31,7 +32,7 @@ class Item(NamedResource):
     held_by_pokemon: List["ItemHolderPokemon"]
     machines: List["MachineVersionDetail"]
     names: List["Name"]
-    sprite: OptionalSprite
+    sprite: Optional["Sprite"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -40,8 +41,8 @@ class Item(NamedResource):
             for attribute_data in data["attributes"]
         ]
         self.baby_trigger_form = (
-            data["baby_trigger_for"]["url"]
-            if data["baby_trigger_for"] is not None
+            Url(data["baby_trigger_form"]["url"])
+            if data["baby_trigger_form"] is not None
             else None
         )
         self.category = MinimalItemCategory(data["category"])
