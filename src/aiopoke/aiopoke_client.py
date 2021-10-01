@@ -203,7 +203,7 @@ class AiopokeClient:
             try:
                 data = await response.json()
             except aiohttp.ContentTypeError:
-                raise ValueError(f"An invalid value for '{endpoint}' was passed in")
+                return None
 
         return data
 
