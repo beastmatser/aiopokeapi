@@ -73,12 +73,12 @@ class Pokemon(NamedResource):
 class PokemonAbility:
     is_hidden: bool
     slot: int
-    pokemon: MinimalResource["Ability"]
+    ability: MinimalResource["Ability"]
 
     def __init__(self, data) -> None:
         self.is_hidden = data["is_hidden"]
         self.slot = data["slot"]
-        self.pokemon = MinimalResource(data["ability"])
+        self.ability = MinimalResource(data["ability"])
 
     def __repr__(self) -> str:
         return f"<PokemonAbility is_hidden={self.is_hidden} slot={self.slot} pokemon={self.pokemon}>"
