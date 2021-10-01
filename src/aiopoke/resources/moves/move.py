@@ -125,12 +125,12 @@ class ContestComboSets:
 
 
 class ContestComboDetail:
-    use_before: List["MinimalMove"]
-    use_after: List["MinimalMove"]
+    use_before: Optional[List["MinimalMove"]]
+    use_after: Optional[List["MinimalMove"]]
 
     def __init__(self, data) -> None:
-        self.use_before = [MinimalMove(move_data) for move_data in data["use_before"]]
-        self.use_after = [MinimalMove(move_data) for move_data in data["use_after"]]
+        self.use_before = [MinimalMove(move_data) for move_data in data["use_before"]] if data["use_before"] is not None else None
+        self.use_after = [MinimalMove(move_data) for move_data in data["use_after"]] if data["use_after"] is not None else None
 
     def __repr__(self) -> str:
         return f"<ContestComboDetail use_before={self.use_before} use_after={self.use_after}>"
