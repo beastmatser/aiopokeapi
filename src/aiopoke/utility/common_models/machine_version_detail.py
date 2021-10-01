@@ -1,13 +1,17 @@
-from ...minimal_resources import MinimalVersionGroup, MachineUrl
+from typing import TYPE_CHECKING
+from ...minimal_resources import MinimalResource, Url
+
+if TYPE_CHECKING:
+    from ...resources import Machine, VersionGroup
 
 
 class MachineVersionDetail:
-    machine: MachineUrl
-    version_group: "MinimalVersionGroup"
+    machine: Url["Machine"]
+    version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
-        self.machine = MachineUrl(data["machine"])
-        self.version_group = MinimalVersionGroup(data["version_group"])
+        self.machine = Url(data["machine"])
+        self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
         return f"<MachineVersionDetail machine={self.machine} version_group={self.version_group}>"

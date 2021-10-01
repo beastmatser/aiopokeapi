@@ -1,16 +1,19 @@
-from typing import List
-from ...minimal_resources import MinimalItem
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility import Effect, NamedResource
+
+if TYPE_CHECKING:
+    from . import Item
 
 
 class ItemFlingEffect(NamedResource):
     effect_entry: "Effect"
     effect_entries: List["Effect"]
-    items: List["MinimalItem"]
+    items: List[MinimalResource["Item"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.items = [MinimalItem(item_data) for item_data in data["items"]]
+        self.items = [MinimalResource(item_data) for item_data in data["items"]]
         self.effect_entry = [
             Effect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]

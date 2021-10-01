@@ -1,40 +1,38 @@
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 from ...minimal_resources import (
-    ContestEffectUrl,
-    MinimalContestType,
-    MinimalGeneration,
-    MinimalLanguage,
-    MinimalMove,
-    MinimalMoveAilment,
-    MinimalMoveCategory,
-    MinimalMoveDamageClass,
-    MinimalNaturalGiftType,
     MinimalPokemon,
-    MinimalStat,
-    MinimalVersionGroup,
+    MinimalResource,
+    Url
 )
-from ...utility.common_models import (
-    MachineVersionDetail,
-    Name,
-    NamedResource,
-    VerboseEffect,
-)
+from ...utility import MachineVersionDetail, Name, NamedResource, VerboseEffect
 from ..pokemon.ability import AbilityEffectChange
+
+if TYPE_CHECKING:
+    from ...resources import (
+        ContestEffect,
+        ContestType,
+        Generation,
+        NaturalGiftType,
+        Stat,
+        VersionGroup,
+    )
+    from ...utility import Language
+    from . import MoveAilment, MoveCategory, MoveDamageClass
 
 
 class Move(NamedResource):
     accuracy: int
     contest_combos: "ContestComboSets"
-    contest_effect: ContestEffectUrl
-    contest_type: "MinimalContestType"
-    damage_class: "MinimalMoveDamageClass"
+    contest_effect: Url["ContestEffect"]
+    contest_type: MinimalResource["ContestType"]
+    damage_class: MinimalResource["MoveDamageClass"]
     effect_chance: Optional[int]
     effect_entry: "VerboseEffect"
     effect_entries: List["VerboseEffect"]
     flavor_text_entry: "MoveFlavorText"
     flavor_text_entries: List["MoveFlavorText"]
-    generation: "MinimalGeneration"
+    generation: MinimalResource["Generation"]
     learned_by_pokemon: List["MinimalPokemon"]
     machines: List["MachineVersionDetail"]
     meta: "MoveMetaData"
@@ -44,15 +42,15 @@ class Move(NamedResource):
     pp: int
     priority: int
     stat_changes: List["MoveStatChange"]
-    type_: "MinimalNaturalGiftType"
+    type_: MinimalResource["NaturalGiftType"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.accuracy = data["accuracy"]
         self.contest_combos = ContestComboSets(data["contest_combos"])
-        self.contest_effect = ContestEffectUrl(data["contest_effect"])
-        self.contest_type = MinimalContestType(data["contest_type"])
-        self.damage_class = MinimalMoveDamageClass(data["damage_class"])
+        self.contest_effect = Url(data["contest_effect"])
+        self.contest_type = MinimalResource(data["contest_type"])
+        self.damage_class = MinimalResource(data["damage_class"])
         self.effect_chance = data["effect_chance"]
         self.effect_changes = [
             AbilityEffectChange(effect_change_data)
@@ -76,7 +74,7 @@ class Move(NamedResource):
             MoveFlavorText(move_flavor_text_entry_data)
             for move_flavor_text_entry_data in data["flavor_text_entries"]
         ]
-        self.generation = MinimalGeneration(data["generation"])
+        self.generation = MinimalResource(data["generation"])
         self.learned_by_pokemon = [
             MinimalPokemon(pokemon_data) for pokemon_data in data["learned_by_pokemon"]
         ]
@@ -96,7 +94,7 @@ class Move(NamedResource):
             MoveStatChange(stat_change_data)
             for stat_change_data in data["stat_changes"]
         ]
-        self.type_ = MinimalNaturalGiftType(data["type"])
+        self.type_ = MinimalResource(data["type"])
 
     def __repr__(self) -> str:
         return (
@@ -125,12 +123,20 @@ class ContestComboSets:
 
 
 class ContestComboDetail:
-    use_before: Optional[List["MinimalMove"]]
-    use_after: Optional[List["MinimalMove"]]
+    use_before: Optional[List[MinimalResource["Move"]]]
+    use_after: Optional[List[MinimalResource["Move"]]]
 
     def __init__(self, data) -> None:
-        self.use_before = [MinimalMove(move_data) for move_data in data["use_before"]] if data["use_before"] is not None else None
-        self.use_after = [MinimalMove(move_data) for move_data in data["use_after"]] if data["use_after"] is not None else None
+        self.use_before = (
+            [MinimalResource(move_data) for move_data in data["use_before"]]
+            if data["use_before"] is not None
+            else None
+        )
+        self.use_after = (
+            [MinimalResource(move_data) for move_data in data["use_after"]]
+            if data["use_after"] is not None
+            else None
+        )
 
     def __repr__(self) -> str:
         return f"<ContestComboDetail use_before={self.use_before} use_after={self.use_after}>"
@@ -138,21 +144,21 @@ class ContestComboDetail:
 
 class MoveFlavorText:
     flavor_text: str
-    language: "MinimalLanguage"
-    version_group: "MinimalVersionGroup"
+    language: MinimalResource["Language"]
+    version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
         self.flavor_text = data["flavor_text"]
-        self.language = MinimalLanguage(data["language"])
-        self.version_group = MinimalVersionGroup(data["version_group"])
+        self.language = MinimalResource(data["language"])
+        self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
         return f"<MoveFlavorText flavor_text='{self.flavor_text}' language={self.language} version_group={self.version_group}>"
 
 
 class MoveMetaData:
-    ailment: "MinimalMoveAilment"
-    category: "MinimalMoveCategory"
+    ailment: MinimalResource["MoveAilment"]
+    category: MinimalResource["MoveCategory"]
     min_hits: int
     max_hits: int
     min_turns: int
@@ -165,8 +171,8 @@ class MoveMetaData:
     stat_chance: int
 
     def __init__(self, data) -> None:
-        self.ailment = MinimalMoveAilment(data["ailment"])
-        self.category = MinimalMoveCategory(data["category"])
+        self.ailment = MinimalResource(data["ailment"])
+        self.category = MinimalResource(data["category"])
         self.min_hits = data["min_hits"]
         self.max_hits = data["max_hits"]
         self.min_turns = data["min_turns"]
@@ -188,11 +194,11 @@ class MoveMetaData:
 
 class MoveStatChange:
     change: int
-    stat: "MinimalStat"
+    stat: MinimalResource["Stat"]
 
     def __init__(self, data) -> None:
         self.change = data["change"]
-        self.stat = MinimalStat(data["stat"])
+        self.stat = MinimalResource(data["stat"])
 
     def __repr__(self) -> str:
         return f"<MoveStatChange change={self.change} stat={self.stat}>"
@@ -205,7 +211,8 @@ class PastMoveStatValues:
     pp: int
     effect_entry: "VerboseEffect"
     effect_entries: List["VerboseEffect"]
-    type_: "MinimalNaturalGiftType"
+    type_: MinimalResource["NaturalGiftType"]
+    version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
         self.accuracy = data["accuracy"]
@@ -221,8 +228,8 @@ class PastMoveStatValues:
             VerboseEffect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
         ]
-        self.type_ = MinimalNaturalGiftType(data["type"])
-        self.version_group = MinimalVersionGroup(data["version_group"])
+        self.type_ = MinimalResource(data["type"])
+        self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
         return (

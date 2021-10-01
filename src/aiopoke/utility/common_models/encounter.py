@@ -1,23 +1,26 @@
-from typing import List
-from ...minimal_resources import MinimalEncounterMethod, MinimalEncounterConditionValue
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
+
+if TYPE_CHECKING:
+    from ...resources import EncounterMethod, EncounterConditionValue
 
 
 class Encounter:
     min_level: int
     max_level: int
-    condition_values: List["MinimalEncounterConditionValue"]
+    condition_values: List[MinimalResource["EncounterConditionValue"]]
     chance: int
-    method: "MinimalEncounterMethod"
+    method: MinimalResource["EncounterMethod"]
 
     def __init__(self, data) -> None:
         self.min_level = data["min_level"]
         self.max_level = data["max_level"]
         self.condition_values = [
-            MinimalEncounterConditionValue(condition_value_data)
+            MinimalResource(condition_value_data)
             for condition_value_data in data["condition_values"]
         ]
         self.chance = data["chance"]
-        self.method = MinimalEncounterMethod(data["method"])
+        self.method = MinimalResource(data["method"])
 
     def __repr__(self) -> str:
         return (

@@ -1,17 +1,16 @@
-from typing import List
-from ...minimal_resources import (
-    MinimalPokemon,
-    MinimalVersion,
-    MinimalEncounterMethod,
-    MinimalLocation,
-)
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource, MinimalPokemon
 from ...utility import Name, VersionEncounterDetail, NamedResource
+
+if TYPE_CHECKING:
+    from . import Location
+    from ...resources import EncounterMethod, Version
 
 
 class LocationArea(NamedResource):
     encounter_method_rates: List["EncounterMethodRate"]
     pokemon_encounters: List["PokemonEncounter"]
-    location: "MinimalLocation"
+    location: MinimalResource["Location"]
     game_index: int
     names: List["Name"]
 
@@ -25,7 +24,7 @@ class LocationArea(NamedResource):
             PokemonEncounter(pokemon_encounter_data)
             for pokemon_encounter_data in data["pokemon_encounters"]
         ]
-        self.location = MinimalLocation(data["location"])
+        self.location = MinimalResource(data["location"])
         self.game_index = data["game_index"]
         self.names = [Name(name_data) for name_data in data["names"]]
 
@@ -52,11 +51,11 @@ class PokemonEncounter:
 
 
 class EncounterMethodRate:
-    encounter_method: "MinimalEncounterMethod"
+    encounter_method: MinimalResource["EncounterMethod"]
     version_details: List["EncounterVersionDetail"]
 
     def __init__(self, data) -> None:
-        self.encounter_method = MinimalEncounterMethod(data["encounter_method"])
+        self.encounter_method = MinimalResource(data["encounter_method"])
         self.version_details = [
             EncounterVersionDetail(encounter_version_detail)
             for encounter_version_detail in data["version_details"]
@@ -68,11 +67,11 @@ class EncounterMethodRate:
 
 class EncounterVersionDetail:
     rate: int
-    version: "MinimalVersion"
+    version: MinimalResource["Version"]
 
     def __init__(self, data) -> None:
         self.rate = data["rate"]
-        self.version = MinimalVersion(data["version"])
+        self.version = MinimalResource(data["version"])
 
     def __repr__(self) -> str:
         return f"<EncounterVersionDetail rate={self.rate} version={self.version}>"

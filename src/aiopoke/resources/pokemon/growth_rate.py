@@ -1,6 +1,9 @@
-from typing import List
-from ...minimal_resources import MinimalPokemonSpecies
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility import NamedResource, Description
+
+if TYPE_CHECKING:
+    from . import PokemonSpecies
 
 
 class GrowthRate(NamedResource):
@@ -8,7 +11,7 @@ class GrowthRate(NamedResource):
     descriptions: List["Description"]
     formula: str
     levels: List["GrowthRateExperienceLevel"]
-    pokemon_species: List["MinimalPokemonSpecies"]
+    pokemon_species: List[MinimalResource["PokemonSpecies"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -25,7 +28,7 @@ class GrowthRate(NamedResource):
             GrowthRateExperienceLevel(level_data) for level_data in data["levels"]
         ]
         self.pokemon_species = [
-            MinimalPokemonSpecies(pokemon_species_data)
+            MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["pokemon_species"]
         ]
 

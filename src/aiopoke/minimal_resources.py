@@ -1,53 +1,7 @@
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from .resources import (
-        Ability,
-        Berry,
-        BerryFirmness,
-        BerryFlavor,
-        Characteristic,
-        ContestType,
-        ContestEffect,
-        EggGroup,
-        EncounterCondition,
-        EncounterConditionValue,
-        EncounterMethod,
-        EvolutionChain,
-        EvolutionTrigger,
-        Generation,
-        GrowthRate,
-        Item,
-        ItemAttribute,
-        ItemCategory,
-        ItemFlingEffect,
-        ItemPocket,
-        Location,
-        LocationArea,
-        Machine,
-        Move,
-        MoveAilment,
-        MoveBatteStyle,
-        MoveCategory,
-        MoveDamageClass,
-        MoveLearnMethod,
-        NaturalGiftType,
-        Nature,
-        PalParkArea,
-        PokeathlonStat,
-        Pokedex,
-        Pokemon,
-        PokemonColor,
-        PokemonForm,
-        PokemonHabitat,
-        PokemonShape,
-        PokemonSpecies,
-        Region,
-        Stat,
-        Version,
-        VersionGroup,
-    )
-    from .utility.language import Language
+    from .resources import Pokemon
 
 
 T = TypeVar("T")
@@ -76,22 +30,6 @@ class Url(Generic[T]):
         return obj
 
 
-class MachineUrl(Url["Machine"]):
-    pass
-
-
-class EvolutionChainUrl(Url["EvolutionChain"]):
-    pass
-
-
-class CharacteristicUrl(Url["Characteristic"]):
-    pass
-
-
-class ContestEffectUrl(Url["ContestEffect"]):
-    pass
-
-
 class MinimalResource(Url[T]):
     name: str
     url: str
@@ -106,130 +44,6 @@ class MinimalResource(Url[T]):
         return f"<{self.__class__.__name__} name='{self.name}' id_={self.id_} endpoint='{self.endpoint}'>"
 
 
-class MinimalAbility(MinimalResource["Ability"]):
-    pass
-
-
-class MinimalBerry(MinimalResource["Berry"]):
-    pass
-
-
-class MinimalBerryFirmness(MinimalResource["BerryFirmness"]):
-    pass
-
-
-class MinimalBerryFlavor(MinimalResource["BerryFlavor"]):
-    pass
-
-
-class MinimalContestType(MinimalResource["ContestType"]):
-    pass
-
-
-class MinimalEggGroup(MinimalResource["EggGroup"]):
-    pass
-
-
-class MinimalEncounterCondition(MinimalResource["EncounterCondition"]):
-    pass
-
-
-class MinimalEncounterConditionValue(MinimalResource["EncounterConditionValue"]):
-    pass
-
-
-class MinimalEncounterMethod(MinimalResource["EncounterMethod"]):
-    pass
-
-
-class MinimalEvolutionTrigger(MinimalResource["EvolutionTrigger"]):
-    pass
-
-
-class MinimalGeneration(MinimalResource["Generation"]):
-    pass
-
-
-class MinimalGrowthRate(MinimalResource["GrowthRate"]):
-    pass
-
-
-class MinimalItem(MinimalResource["Item"]):
-    pass
-
-
-class MinimalItemAttribute(MinimalResource["ItemAttribute"]):
-    pass
-
-
-class MinimalItemCategory(MinimalResource["ItemCategory"]):
-    pass
-
-
-class MinimalItemFlingEffect(MinimalResource["ItemFlingEffect"]):
-    pass
-
-
-class MinimalItemPocket(MinimalResource["ItemPocket"]):
-    pass
-
-
-class MinimalLanguage(MinimalResource["Language"]):
-    pass
-
-
-class MinimalLocation(MinimalResource["Location"]):
-    pass
-
-
-class MinimalLocationArea(MinimalResource["LocationArea"]):
-    pass
-
-
-class MinimalMove(MinimalResource["Move"]):
-    pass
-
-
-class MinimalMoveAilment(MinimalResource["MoveAilment"]):
-    pass
-
-
-class MinimalMoveBattleStyle(MinimalResource["MoveBatteStyle"]):
-    pass
-
-
-class MinimalMoveCategory(MinimalResource["MoveCategory"]):
-    pass
-
-
-class MinimalMoveDamageClass(MinimalResource["MoveDamageClass"]):
-    pass
-
-
-class MinimalMoveLearnMethod(MinimalResource["MoveLearnMethod"]):
-    pass
-
-
-class MinimalNaturalGiftType(MinimalResource["NaturalGiftType"]):
-    pass
-
-
-class MinimalNature(MinimalResource["Nature"]):
-    pass
-
-
-class MinimalParkPalArea(MinimalResource["PalParkArea"]):
-    pass
-
-
-class MinimalPokeathlonStat(MinimalResource["PokeathlonStat"]):
-    pass
-
-
-class MinimalPokedex(MinimalResource["Pokedex"]):
-    pass
-
-
 class MinimalPokemon(MinimalResource["Pokemon"]):
     async def fetch(self) -> "Pokemon":
         from .aiopoke_client import AiopokeClient  # type: ignore
@@ -241,39 +55,3 @@ class MinimalPokemon(MinimalResource["Pokemon"]):
         data["location_area_encounters"] = await response.json()
         obj: "Pokemon" = client.build(self.endpoint, data)
         return obj
-
-
-class MinimalPokemonColor(MinimalResource["PokemonColor"]):
-    pass
-
-
-class MinimalPokemonForm(MinimalResource["PokemonForm"]):
-    pass
-
-
-class MinimalPokemonHabitat(MinimalResource["PokemonHabitat"]):
-    pass
-
-
-class MinimalPokemonShape(MinimalResource["PokemonShape"]):
-    pass
-
-
-class MinimalPokemonSpecies(MinimalResource["PokemonSpecies"]):
-    pass
-
-
-class MinimalRegion(MinimalResource["Region"]):
-    pass
-
-
-class MinimalStat(MinimalResource["Stat"]):
-    pass
-
-
-class MinimalVersion(MinimalResource["Version"]):
-    pass
-
-
-class MinimalVersionGroup(MinimalResource["VersionGroup"]):
-    pass

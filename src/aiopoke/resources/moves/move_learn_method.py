@@ -1,13 +1,16 @@
-from typing import List
-from ...minimal_resources import MinimalVersionGroup
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource, Description
+
+if TYPE_CHECKING:
+    from ...resources import VersionGroup
 
 
 class MoveLearnMethod(NamedResource):
     description: str
     descriptions: List["Description"]
     names: List["Name"]
-    version_groups: List["MinimalVersionGroup"]
+    version_groups: List[MinimalResource["VersionGroup"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -21,7 +24,7 @@ class MoveLearnMethod(NamedResource):
         ]
         self.names = [Name(name_data) for name_data in data["names"]]
         self.version_groups = [
-            MinimalVersionGroup(version_group_data)
+            MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
         ]
 

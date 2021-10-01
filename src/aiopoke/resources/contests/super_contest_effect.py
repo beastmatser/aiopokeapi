@@ -1,6 +1,9 @@
-from typing import List
+from typing import List, TYPE_CHECKING
 from ...utility import FlavorText
-from ...minimal_resources import MinimalMove
+from ...minimal_resources import MinimalResource
+
+if TYPE_CHECKING:
+    from ...resources.moves import Move
 
 
 class SuperContestEffect:
@@ -8,7 +11,7 @@ class SuperContestEffect:
     flavor_text_entry: "FlavorText"
     flavor_text_entries: List["FlavorText"]
     id_: int
-    moves: List["MinimalMove"]
+    moves: List[MinimalResource["Move"]]
 
     def __init__(self, data) -> None:
         self.appeal = data["appeal"]
@@ -22,7 +25,7 @@ class SuperContestEffect:
             for flavor_text_entry_data in data["flavor_text_entries"]
         ]
         self.id_ = data["id"]
-        self.moves = [MinimalMove(move_data) for move_data in data["moves"]]
+        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
 
     def __repr__(self) -> str:
         return (

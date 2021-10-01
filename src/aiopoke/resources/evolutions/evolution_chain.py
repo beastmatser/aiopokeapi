@@ -1,22 +1,26 @@
-from typing import List, Optional
-from ...minimal_resources import (
-    MinimalItem,
-    MinimalMove,
-    MinimalNaturalGiftType,
-    MinimalLocation,
-    MinimalPokemonSpecies,
-    MinimalEvolutionTrigger,
-)
+from typing import TYPE_CHECKING, List, Optional
+
+from ...minimal_resources import MinimalResource
+
+if TYPE_CHECKING:
+    from ...resources import (
+        EvolutionTrigger,
+        Item,
+        Location,
+        Move,
+        NaturalGiftType,
+        PokemonSpecies,
+    )
 
 
 class EvolutionChain:
-    baby_trigger_item: Optional["MinimalItem"]
+    baby_trigger_item: Optional[MinimalResource["Item"]]
     chain: "ChainLink"
     id_: int
 
     def __init__(self, data) -> None:
         self.baby_trigger_item = (
-            MinimalItem(data["baby_trigger_item"])
+            MinimalResource(data["baby_trigger_item"])
             if data.get("baby_trigger_item") is not None
             else None
         )
@@ -31,7 +35,7 @@ class ChainLink:
     evolution_details: List["EvolutionDetail"]
     evolves_to: List["ChainLink"]
     is_baby: bool
-    species: "MinimalPokemonSpecies"
+    species: MinimalResource["PokemonSpecies"]
 
     def __init__(self, data) -> None:
         self.evolution_details = [
@@ -42,7 +46,7 @@ class ChainLink:
             ChainLink(evolves_to_data) for evolves_to_data in data["evolves_to"]
         ]
         self.is_baby = data["is_baby"]
-        self.species = MinimalPokemonSpecies(data["species"])
+        self.species = MinimalResource(data["species"])
 
     def __repr__(self) -> str:
         return f"<ChainLink evolution_details={self.evolution_details} evolves_to={self.evolves_to} is_baby={self.is_baby} species={self.species}>"
@@ -50,44 +54,46 @@ class ChainLink:
 
 class EvolutionDetail:
     gender: Optional[int]
-    held_item: Optional["MinimalItem"]
-    item: Optional["MinimalItem"]
-    known_move: Optional["MinimalMove"]
-    known_move_type: Optional["MinimalNaturalGiftType"]
-    location: Optional["MinimalLocation"]
+    held_item: Optional[MinimalResource["Item"]]
+    item: Optional[MinimalResource["Item"]]
+    known_move: Optional[MinimalResource["Move"]]
+    known_move_type: Optional[MinimalResource["NaturalGiftType"]]
+    location: Optional[MinimalResource["Location"]]
     min_affection: Optional[int]
     min_beauty: Optional[int]
     min_happiness: Optional[int]
     min_level: int
     needs_overworld_rain: Optional[bool]
-    party_species: Optional["MinimalPokemonSpecies"]
-    party_type: Optional["MinimalNaturalGiftType"]
+    party_species: Optional[MinimalResource["PokemonSpecies"]]
+    party_type: Optional[MinimalResource["NaturalGiftType"]]
     relative_physical_stats: Optional[int]
     time_of_day: str
-    trade_species: Optional["MinimalPokemonSpecies"]
-    trigger: "MinimalEvolutionTrigger"
+    trade_species: Optional[MinimalResource["PokemonSpecies"]]
+    trigger: MinimalResource["EvolutionTrigger"]
     turn_upside_down: bool
 
     def __init__(self, data) -> None:
         self.gender = data["gender"]
         self.held_item = (
-            MinimalItem(data["held_item"])
+            MinimalResource(data["held_item"])
             if data.get("held_item") is not None
             else None
         )
-        self.item = MinimalItem(data["item"]) if data.get("item") is not None else None
+        self.item = (
+            MinimalResource(data["item"]) if data.get("item") is not None else None
+        )
         self.known_move = (
-            MinimalMove(data["known_move"])
+            MinimalResource(data["known_move"])
             if data.get("known_move") is not None
             else None
         )
         self.known_move_type = (
-            MinimalNaturalGiftType(data["known_move_type"])
+            MinimalResource(data["known_move_type"])
             if data.get("known_move_type") is not None
             else None
         )
         self.location = (
-            MinimalLocation(data["location"])
+            MinimalResource(data["location"])
             if data.get("location") is not None
             else None
         )
@@ -97,23 +103,23 @@ class EvolutionDetail:
         self.min_level = data["min_level"]
         self.needs_overworld_rain = data["needs_overworld_rain"]
         self.party_species = (
-            MinimalPokemonSpecies(data["party_species"])
+            MinimalResource(data["party_species"])
             if data.get("party_species") is not None
             else None
         )
         self.party_type = (
-            MinimalNaturalGiftType(data["party_type"])
+            MinimalResource(data["party_type"])
             if data.get("party_type") is not None
             else None
         )
         self.relative_physical_stats = data["relative_physical_stats"]
         self.time_of_day = data["time_of_day"]
         self.trade_species = (
-            MinimalPokemonSpecies(data["trade_species"])
+            MinimalResource(data["trade_species"])
             if data.get("trade_species") is not None
             else None
         )
-        self.trigger = MinimalEvolutionTrigger(data["trigger"])
+        self.trigger = MinimalResource(data["trigger"])
         self.turn_upside_down = data["turn_upside_down"]
 
     def __repr__(self) -> str:

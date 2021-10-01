@@ -1,6 +1,9 @@
-from typing import List
-from ...minimal_resources import MinimalNature
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource
+
+if TYPE_CHECKING:
+    from . import Nature
 
 
 class PokeathlonStat(NamedResource):
@@ -30,11 +33,11 @@ class NaturePokeathlonStatAffectSets:
 
 class NaturePokeathlonStatAffect:
     max_change: int
-    nature: "MinimalNature"
+    nature: MinimalResource["Nature"]
 
     def __init__(self, data) -> None:
         self.max_change = data["max_change"]
-        self.nature = MinimalNature(data["nature"])
+        self.nature = MinimalResource(data["nature"])
 
     def __repr__(self) -> str:
         return f"<NaturePokeathlonStatAffect max_change={self.max_change} nature={self.nature}>"

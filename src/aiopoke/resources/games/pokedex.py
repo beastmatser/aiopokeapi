@@ -1,10 +1,9 @@
-from typing import List, Optional
-from ...minimal_resources import (
-    MinimalRegion,
-    MinimalVersionGroup,
-    MinimalPokemonSpecies,
-)
+from typing import List, Optional, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility import Name, NamedResource, Description
+
+if TYPE_CHECKING:
+    from ...resources import (PokemonSpecies, Region, VersionGroup)
 
 
 class Pokedex(NamedResource):
@@ -12,8 +11,8 @@ class Pokedex(NamedResource):
     descriptions: List["Description"]
     is_main_series: bool
     pokemon_entries: List["PokemonEntry"]
-    region: Optional["MinimalRegion"]
-    version_groups: List["MinimalVersionGroup"]
+    region: Optional[MinimalResource["Region"]]
+    version_groups: List[MinimalResource["VersionGroup"]]
     names: List["Name"]
 
     def __init__(self, data) -> None:
@@ -31,10 +30,10 @@ class Pokedex(NamedResource):
         ]
         self.names = [Name(name_data) for name_data in data["names"]]
         self.region = (
-            MinimalRegion(data["region"]) if data["region"] is not None else None
+            MinimalResource(data["region"]) if data["region"] is not None else None
         )
         self.version_groups = [
-            MinimalVersionGroup(version_group_data)
+            MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
         ]
 
@@ -48,11 +47,11 @@ class Pokedex(NamedResource):
 
 class PokemonEntry:
     entry_number: int
-    pokemon_species: "MinimalPokemonSpecies"
+    pokemon_species: MinimalResource["PokemonSpecies"]
 
     def __init__(self, data) -> None:
         self.entry_number = data["entry_number"]
-        self.pokemon_species = MinimalPokemonSpecies(data["pokemon_species"])
+        self.pokemon_species = MinimalResource(data["pokemon_species"])
 
     def __repr__(self) -> str:
         return f"<PokemonEntry entry_number={self.entry_number} pokemon_species={self.pokemon_species}>"

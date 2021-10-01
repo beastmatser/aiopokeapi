@@ -1,11 +1,14 @@
-from typing import List
-from ...minimal_resources import MinimalPokemonSpecies
-from ...utility import NamedResource
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
+from ...utility.common_models import NamedResource
+
+if TYPE_CHECKING:
+    from . import PokemonSpecies
 
 
 class Gender(NamedResource):
     pokemon_species_details: List["PokemonSpeciesGender"]
-    required_for_evolution: List["MinimalPokemonSpecies"]
+    required_for_evolution: List[MinimalResource["PokemonSpecies"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -14,7 +17,7 @@ class Gender(NamedResource):
             for pokemon_species_detail_data in data["pokemon_species_details"]
         ]
         self.required_for_evolution = [
-            MinimalPokemonSpecies(pokemon_species_data)
+            MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["required_for_evolution"]
         ]
 
@@ -26,11 +29,11 @@ class Gender(NamedResource):
 
 
 class PokemonSpeciesGender:
-    pokemon_species: "MinimalPokemonSpecies"
+    pokemon_species: MinimalResource["PokemonSpecies"]
     rate: int
 
     def __init__(self, data) -> None:
-        self.pokemon_species = MinimalPokemonSpecies(data["pokemon_species"])
+        self.pokemon_species = MinimalResource(data["pokemon_species"])
         self.rate = data["rate"]
 
     def __repr__(self) -> str:

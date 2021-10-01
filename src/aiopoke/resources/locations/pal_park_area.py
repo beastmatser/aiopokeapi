@@ -1,6 +1,9 @@
-from typing import List
-from ...minimal_resources import MinimalPokemonSpecies
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource
+
+if TYPE_CHECKING:
+    from ...resources import PokemonSpecies
 
 
 class PalParkArea(NamedResource):
@@ -22,12 +25,12 @@ class PalParkArea(NamedResource):
 class PalParkEncounterSpecies:
     base_score: int
     rate: int
-    pokemon_species: "MinimalPokemonSpecies"
+    pokemon_species: MinimalResource["PokemonSpecies"]
 
     def __init__(self, data) -> None:
         self.base_score = data["base_score"]
         self.rate = data["rate"]
-        self.pokemon_species = MinimalPokemonSpecies(data["pokemon_species"])
+        self.pokemon_species = MinimalResource(data["pokemon_species"])
 
     def __repr__(self) -> str:
         return f"<PalParkEncounterSpecies base_score={self.base_score} rate={self.rate} pokemon_species={self.pokemon_species}"

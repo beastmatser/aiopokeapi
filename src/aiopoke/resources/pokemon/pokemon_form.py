@@ -1,11 +1,9 @@
-from typing import List
-from ...minimal_resources import (
-    MinimalPokemon,
-    MinimalNaturalGiftType,
-    MinimalVersionGroup,
-)
-from ...utility import Name, NamedResource
-from ...utility.common_models.sprites import Sprites
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource, MinimalPokemon
+from ...utility import NamedResource, Name, Sprites
+
+if TYPE_CHECKING:
+    from ...resources import VersionGroup, NaturalGiftType
 
 
 class PokemonForm(NamedResource):
@@ -19,7 +17,7 @@ class PokemonForm(NamedResource):
     pokemon: "MinimalPokemon"
     sprites: "Sprites"
     types: List["SlotNaturalGiftType"]
-    version_group: "MinimalVersionGroup"
+    version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -33,7 +31,7 @@ class PokemonForm(NamedResource):
         self.pokemon = MinimalPokemon(data["pokemon"])
         self.sprites = Sprites(data["sprites"])
         self.types = [SlotNaturalGiftType(type_data) for type_data in data["types"]]
-        self.version_group = MinimalVersionGroup(data["version_group"])
+        self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
         return (
@@ -44,11 +42,11 @@ class PokemonForm(NamedResource):
 
 
 class SlotNaturalGiftType:
-    type_: MinimalNaturalGiftType
+    type_: MinimalResource[MinimalResource["NaturalGiftType"]]
     slot: int
 
     def __init__(self, data) -> None:
-        self.type_ = MinimalNaturalGiftType(data["type"])
+        self.type_ = MinimalResource(data["type"])
         self.slot = data["slot"]
 
     def __repr__(self) -> str:

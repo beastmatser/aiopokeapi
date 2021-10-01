@@ -1,26 +1,27 @@
-from typing import List
-from ...minimal_resources import (
-    MinimalBerryFlavor,
-    MinimalBerryFirmness,
-    MinimalNaturalGiftType,
-)
+from typing import List, TYPE_CHECKING
+
+from ...minimal_resources import MinimalResource
 from ...utility import NamedResource
+
+if TYPE_CHECKING:
+    from ...resources.pokemon.natural_gift_type import NaturalGiftType
+    from . import BerryFlavor, BerryFirmness
 
 
 class Berry(NamedResource):
-    firmness: "MinimalBerryFirmness"
+    firmness: MinimalResource["BerryFirmness"]
     flavors: List["BerryFlavorMap"]
     growth_time: int
     max_harvest: int
     natural_gift_power: int
-    natural_gift_type: "MinimalNaturalGiftType"
+    natural_gift_type: MinimalResource["NaturalGiftType"]
     soil_dryness: int
     smoothness: int
     size: int
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.firmness = MinimalBerryFirmness(data["firmness"])
+        self.firmness = MinimalResource(data["firmness"])
         self.flavors = [
             BerryFlavorMap(flavor_data)
             for flavor_data in data["flavors"]
@@ -28,7 +29,7 @@ class Berry(NamedResource):
         self.growth_time = data["growth_time"]
         self.max_harvest = data["max_harvest"]
         self.natural_gift_power = data["natural_gift_power"]
-        self.natural_gift_type = MinimalNaturalGiftType(data["natural_gift_type"])
+        self.natural_gift_type = MinimalResource(data["natural_gift_type"])
         self.soil_dryness = data["soil_dryness"]
         self.smoothness = data["smoothness"]
         self.size = data["size"]
@@ -44,8 +45,8 @@ class Berry(NamedResource):
 
 class BerryFlavorMap:
     potency: int
-    flavor: "MinimalBerryFlavor"
+    flavor: MinimalResource["BerryFlavor"]
 
     def __init__(self, data) -> None:
         self.potency = data["potency"]
-        self.flavor = MinimalBerryFlavor(data["flavor"])
+        self.flavor = MinimalResource(data["flavor"])

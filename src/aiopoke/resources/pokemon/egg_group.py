@@ -1,16 +1,19 @@
-from typing import List
-from ...minimal_resources import MinimalPokemonSpecies
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource
+
+if TYPE_CHECKING:
+    from . import PokemonSpecies
 
 
 class EggGroup(NamedResource):
-    pokemon_species: List["MinimalPokemonSpecies"]
+    pokemon_species: List[MinimalResource["PokemonSpecies"]]
     names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.pokemon_species = [
-            MinimalPokemonSpecies(pokemon_species_data)
+            MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["pokemon_species"]
         ]
         self.names = [Name(name_data) for name_data in data["names"]]

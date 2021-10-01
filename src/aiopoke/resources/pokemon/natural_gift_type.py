@@ -1,19 +1,20 @@
-from typing import List, Union
-from ...minimal_resources import (
-    MinimalNaturalGiftType,
-    MinimalGeneration,
-    MinimalMoveDamageClass,
-    MinimalMove,
-    MinimalPokemon
-)
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource, MinimalPokemon
 from ...utility import Name, NamedResource, GenerationGameIndex
+
+if TYPE_CHECKING:
+    from ...resources import (
+        Generation,
+        Move,
+        MoveDamageClass,
+    )
 
 
 class NaturalGiftType(NamedResource):
     damage_relations: "TypeRelations"
     game_indices: List["GenerationGameIndex"]
-    move_damage_class: "MinimalMoveDamageClass"
-    move: List["MinimalMove"]
+    move_damage_class: MinimalResource["MoveDamageClass"]
+    moves: List[MinimalResource["Move"]]
     names: List["Name"]
     past_damage_relations: List["PastTypeRelation"]
     pokemon: List["TypePokemon"]
@@ -24,8 +25,8 @@ class NaturalGiftType(NamedResource):
         self.game_indices = [
             GenerationGameIndex(game_indice_data) for game_indice_data in data["game_indices"]
         ]
-        self.move_damage_class = MinimalMoveDamageClass(data["move_damage_class"])
-        self.moves = [MinimalMove(move_data) for move_data in data["moves"]]
+        self.move_damage_class = MinimalResource(data["move_damage_class"])
+        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
         self.names = [Name(name_data) for name_data in data["names"]]
         self.past_damage_relations = [PastTypeRelation(past_damage_relation_data) for past_damage_relation_data in data["past_damage_relations"]]
         self.pokemon = [
@@ -35,42 +36,42 @@ class NaturalGiftType(NamedResource):
     def __repr__(self) -> str:
         return (
             f"<NaturalGiftType damage_relations={self.damage_relations} game_indices={self.game_indices} id_={self.id_} "
-            f"move_damage_class={self.move_damage_class} move={self.move} name='{self.name}' names={self.names} "
+            f"move_damage_class={self.move_damage_class} move={self.moves} name='{self.name}' names={self.names} "
             f"past_damage_relations={self.past_damage_relations} pokemon={self.pokemon}>"
         )
 
 
 class TypeRelations:
-    double_damage_from: List["MinimalNaturalGiftType"]
-    double_damage_to: List["MinimalNaturalGiftType"]
-    half_damage_from: List["MinimalNaturalGiftType"]
-    half_damage_to: List["MinimalNaturalGiftType"]
-    no_damage_from: List["MinimalNaturalGiftType"]
-    no_damage_to: List["MinimalNaturalGiftType"]
+    double_damage_from: List[MinimalResource["NaturalGiftType"]]
+    double_damage_to: List[MinimalResource["NaturalGiftType"]]
+    half_damage_from: List[MinimalResource["NaturalGiftType"]]
+    half_damage_to: List[MinimalResource["NaturalGiftType"]]
+    no_damage_from: List[MinimalResource["NaturalGiftType"]]
+    no_damage_to: List[MinimalResource["NaturalGiftType"]]
 
     def __init__(self, data) -> None:
         self.double_damage_from = [
-            MinimalNaturalGiftType(natural_gift_type)
+            MinimalResource(natural_gift_type)
             for natural_gift_type in data["double_damage_from"]
         ]
         self.double_damage_to = [
-            MinimalNaturalGiftType(natural_gift_type)
+            MinimalResource(natural_gift_type)
             for natural_gift_type in data["double_damage_to"]
         ]
         self.half_damage_from = [
-            MinimalNaturalGiftType(natural_gift_type)
+            MinimalResource(natural_gift_type)
             for natural_gift_type in data["half_damage_from"]
         ]
         self.half_damage_to = [
-            MinimalNaturalGiftType(natural_gift_type)
+            MinimalResource(natural_gift_type)
             for natural_gift_type in data["half_damage_to"]
         ]
         self.no_damage_from = [
-            MinimalNaturalGiftType(natural_gift_type)
+            MinimalResource(natural_gift_type)
             for natural_gift_type in data["no_damage_from"]
         ]
         self.no_damage_to = [
-            MinimalNaturalGiftType(natural_gift_type)
+            MinimalResource(natural_gift_type)
             for natural_gift_type in data["no_damage_to"]
         ]
 
@@ -84,11 +85,11 @@ class TypeRelations:
 
 class PastTypeRelation:
     damage_relations: "TypeRelations"
-    generation: "MinimalGeneration"
+    generation: MinimalResource["Generation"]
 
     def __init__(self, data) -> None:
         self.damage_relations = TypeRelations(data["damage_relations"])
-        self.generation = MinimalGeneration(data["generation"])
+        self.generation = MinimalResource(data["generation"])
 
     def __repr__(self) -> str:
         return f"<PastTypeRelation damage_relations={self.damage_relations} generation={self.generation}>"

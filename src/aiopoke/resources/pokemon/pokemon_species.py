@@ -1,27 +1,29 @@
-from typing import List
+from typing import List, TYPE_CHECKING
 from ...minimal_resources import (
-    EvolutionChainUrl,
-    MinimalGeneration,
-    MinimalLanguage,
-    MinimalPokedex,
-    MinimalParkPalArea,
+    MinimalResource,
     MinimalPokemon,
-    MinimalPokemonColor,
-    MinimalEggGroup,
-    MinimalPokemonSpecies,
-    MinimalGrowthRate,
-    MinimalPokemonHabitat,
-    MinimalPokemonShape,
+    Url
 )
-from ...utility.common_models import Name, NamedResource, FlavorText, Description
+from ...utility import Name, NamedResource, FlavorText, Description
+
+if TYPE_CHECKING:
+    from . import GrowthRate, EggGroup, PokemonHabitat, PokemonShape, PokemonColor
+    from ...resources import (
+        EvolutionChain,
+        Generation,
+        Pokedex,
+        PalParkArea
+    )
+    from ...utility import Language
 
 
 class PokemonSpecies(NamedResource):
     base_happiness: int
     capture_rate: int
-    color: "MinimalPokemonColor"
-    egg_groups: List["MinimalEggGroup"]
-    evolution_chain: "EvolutionChainUrl"
+    color: MinimalResource["PokemonColor"]
+    egg_groups: List[MinimalResource["EggGroup"]]
+    evolution_chain: Url["EvolutionChain"]
+    evolves_from_species: MinimalResource["PokemonSpecies"]
     flavor_text_entry: "FlavorText"
     flavor_text_entries: List["FlavorText"]
     form_description: str
@@ -30,9 +32,9 @@ class PokemonSpecies(NamedResource):
     gender_rate: int
     genus: "Genus"
     genera: List["Genus"]
-    generation: "MinimalGeneration"
-    growth_rate: "MinimalGrowthRate"
-    habitat: "MinimalPokemonHabitat"
+    generation: MinimalResource["Generation"]
+    growth_rate: MinimalResource["GrowthRate"]
+    habitat: MinimalResource["PokemonHabitat"]
     has_gender_differences: bool
     hatch_counter: int
     is_baby: bool
@@ -42,17 +44,17 @@ class PokemonSpecies(NamedResource):
     names: List["Name"]
     pal_park_encounters: List["PalParkEncounterArea"]
     pokedex_numbers: List["PokemonSpeciesDexEntry"]
-    shape: "MinimalPokemonShape"
+    shape: MinimalResource["PokemonShape"]
     varieties: List["PokemonSpeciesVariety"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.base_happiness = data["base_happiness"]
         self.capture_rate = data["capture_rate"]
-        self.color = MinimalPokemonColor(data["color"])
-        self.egg_groups = [MinimalEggGroup(egg_group_data) for egg_group_data in data["egg_groups"]]
-        self.evolution_chain = EvolutionChainUrl(data["evolution_chain"])
-        self.evolves_from_species = MinimalPokemonSpecies(data["evolves_from_species"])
+        self.color = MinimalResource(data["color"])
+        self.egg_groups = [MinimalResource(egg_group_data) for egg_group_data in data["egg_groups"]]
+        self.evolution_chain = Url(data["evolution_chain"])
+        self.evolves_from_species = MinimalResource(data["evolves_from_species"])
         self.flavor_text_entry = [
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
@@ -72,9 +74,9 @@ class PokemonSpecies(NamedResource):
         self.gender_rate = data["gender_rate"]
         self.genus = [Genus(genera_data) for genera_data in data["genera"] if genera_data["language"]["name"] == "en"][0]
         self.genera = [Genus(genera_data) for genera_data in data["genera"]]
-        self.generation = MinimalGeneration(data["generation"])
-        self.growth_rate = MinimalGrowthRate(data["growth_rate"])
-        self.habitat = MinimalPokemonHabitat(data["habitat"])
+        self.generation = MinimalResource(data["generation"])
+        self.growth_rate = MinimalResource(data["growth_rate"])
+        self.habitat = MinimalResource(data["habitat"])
         self.has_gender_differences = data["has_gender_differences"]
         self.hatch_counter = data["hatch_counter"]
         self.is_baby = data["is_baby"]
@@ -84,7 +86,7 @@ class PokemonSpecies(NamedResource):
         self.order = data["order"]
         self.pal_park_encounters = [PalParkEncounterArea(pal_park_encounter_data) for pal_park_encounter_data in data["pal_park_encounters"]]
         self.pokedex_numbers = [PokemonSpeciesDexEntry(pokedex_number_data) for pokedex_number_data in data["pokedex_numbers"]]
-        self.shape = MinimalPokemonShape(data["shape"])
+        self.shape = MinimalResource(data["shape"])
         self.varieties = [PokemonSpeciesVariety(variety_data) for variety_data in data["varieties"]]
 
     def __repr__(self) -> str:
@@ -102,11 +104,11 @@ class PokemonSpecies(NamedResource):
 
 class Genus:
     genus: str
-    language: "MinimalLanguage"
+    language: MinimalResource["Language"]
 
     def __init__(self, data) -> None:
         self.genus = data["genus"]
-        self.language = MinimalLanguage(data["language"])
+        self.language = MinimalResource(data["language"])
 
     def __repr__(self) -> str:
         return f"<Genus genus='{self.genus}' language={self.language}>"
@@ -114,11 +116,11 @@ class Genus:
 
 class PokemonSpeciesDexEntry:
     entry_number: int
-    pokedex: "MinimalPokedex"
+    pokedex: MinimalResource["Pokedex"]
 
     def __init__(self, data) -> None:
         self.entry_number = data["entry_number"]
-        self.pokedex = MinimalPokedex(data["pokedex"])
+        self.pokedex = MinimalResource(data["pokedex"])
 
     def __repr__(self) -> str:
         return f"<PokemonSpeciesDexEntry entry_number={self.entry_number} pokedex={self.pokedex}>"
@@ -127,12 +129,12 @@ class PokemonSpeciesDexEntry:
 class PalParkEncounterArea:
     base_score: int
     rate: int
-    area: "MinimalParkPalArea"
+    area: MinimalResource["PalParkArea"]
 
     def __init__(self, data) -> None:
         self.base_score = data["base_score"]
         self.rate = data["rate"]
-        self.area = MinimalParkPalArea(data["area"])
+        self.area = MinimalResource(data["area"])
 
     def __repr__(self) -> str:
         return f"<PalParkEncounterArea base_score={self.base_score} rate={self.rate} area={self.area}>"

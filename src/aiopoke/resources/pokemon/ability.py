@@ -1,7 +1,11 @@
-from typing import List
-from ...minimal_resources import MinimalGeneration, MinimalPokemon, MinimalVersionGroup, MinimalLanguage
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource, MinimalPokemon
 from ...utility.common_models import Name
 from ...utility import NamedResource, Effect, VerboseEffect
+
+if TYPE_CHECKING:
+    from ...resources import Generation, VersionGroup
+    from ...utility import Language
 
 
 class Ability(NamedResource):
@@ -10,7 +14,7 @@ class Ability(NamedResource):
     effect_entries: List["VerboseEffect"]
     flavor_text_entry: "AbilityFlavorText"
     flavor_text_entries: List["AbilityFlavorText"]
-    generation: "MinimalGeneration"
+    generation: MinimalResource["Generation"]
     is_main_series: bool
     names: List["Name"]
     pokemon: List["AbilityPokemon"]
@@ -39,7 +43,7 @@ class Ability(NamedResource):
             AbilityFlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
         ]
-        self.generation = MinimalGeneration(data["generation"])
+        self.generation = MinimalResource(data["generation"])
         self.is_main_series = data["is_main_series"]
         self.names = [Name(name_data) for name_data in data["names"]]
         self.pokemon = [AbilityPokemon(pokemon_data) for pokemon_data in data["pokemon"]]
@@ -69,7 +73,7 @@ class AbilityPokemon:
 class AbilityEffectChange:
     effect_entry: "Effect"
     effect_entries: List["Effect"]
-    version_group: "MinimalVersionGroup"
+    version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
         self.effect_entry = [
@@ -81,7 +85,7 @@ class AbilityEffectChange:
             Effect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
         ]
-        self.version_group = MinimalVersionGroup(data["version_group"])
+        self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
         return f"<AbilityEffectChange effect_entry={self.effect_entry} effect_entries={self.effect_entries} version_group={self.version_group}>"
@@ -89,13 +93,13 @@ class AbilityEffectChange:
 
 class AbilityFlavorText:
     flavor_text: str
-    language: "MinimalLanguage"
-    version_group: "MinimalVersionGroup"
+    language: MinimalResource["Language"]
+    version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
         self.flavor_text = data["flavor_text"]
-        self.language = MinimalLanguage(data["language"])
-        self.version_group = MinimalVersionGroup(data["version_group"])
+        self.language = MinimalResource(data["language"])
+        self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
         return f"<AbilityFlavorText flavor_text={self.flavor_text} language={self.language} version_group={self.version_group}>"

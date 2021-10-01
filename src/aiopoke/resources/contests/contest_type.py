@@ -1,15 +1,18 @@
-from typing import List
-from ...minimal_resources import MinimalBerryFlavor
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility import Name, NamedResource
+
+if TYPE_CHECKING:
+    from ...resources.berries import BerryFlavor
 
 
 class ContestType(NamedResource):
-    berry_flavor: "MinimalBerryFlavor"
+    berry_flavor: MinimalResource["BerryFlavor"]
     names: List["ContestName"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.berry_flavor = MinimalBerryFlavor(data["berry_flavor"])
+        self.berry_flavor = MinimalResource(data["berry_flavor"])
         self.names = [ContestName(name_data) for name_data in data["names"]]
 
     def __repr__(self) -> str:

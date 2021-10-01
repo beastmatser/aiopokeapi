@@ -1,12 +1,5 @@
-from typing import List, Optional
-from ...minimal_resources import (
-    EvolutionChainUrl,
-    MinimalItemAttribute,
-    MinimalItemCategory,
-    MinimalItemFlingEffect,
-    MinimalPokemon,
-    MinimalVersion,
-)
+from typing import List, Optional, TYPE_CHECKING
+from ...minimal_resources import MinimalPokemon, MinimalResource, Url
 from ...utility import Sprite
 from ...utility import (
     Name,
@@ -17,16 +10,21 @@ from ...utility import (
     FlavorText,
 )
 
+if TYPE_CHECKING:
+    from . import ItemAttribute, ItemFlingEffect, ItemCategory
+    from ...resources import EvolutionChain, Version
+
 
 class Item(NamedResource):
-    attributes: List["MinimalItemAttribute"]
-    baby_trigger_form: Optional["EvolutionChainUrl"]
+    attributes: List[MinimalResource["ItemAttribute"]]
+    baby_trigger_for: Optional[Url["EvolutionChain"]]
+    category: MinimalResource["ItemCategory"]
     cost: int
     effect_entry: "VerboseEffect"
     effect_entries: List["VerboseEffect"]
     flavor_text_entry: "FlavorText"
     flavor_text_entries: List["FlavorText"]
-    fling_effect: Optional["MinimalItemFlingEffect"]
+    fling_effect: Optional[MinimalResource["ItemFlingEffect"]]
     fling_power: Optional[int]
     game_indices: List["GenerationGameIndex"]
     held_by_pokemon: List["ItemHolderPokemon"]
@@ -37,15 +35,15 @@ class Item(NamedResource):
     def __init__(self, data) -> None:
         super().__init__(data)
         self.attributes = [
-            MinimalItemAttribute(attribute_data)
+            MinimalResource(attribute_data)
             for attribute_data in data["attributes"]
         ]
         self.baby_trigger_for = (
-            EvolutionChainUrl(data["baby_trigger_for"]["url"])
+            Url(data["baby_trigger_for"]["url"])
             if data["baby_trigger_for"] is not None
             else None
         )
-        self.category = MinimalItemCategory(data["category"])
+        self.category = MinimalResource(data["category"])
         self.cost = data["cost"]
         self.effect_entry = [
             VerboseEffect(effect_entry_data)
@@ -66,7 +64,7 @@ class Item(NamedResource):
             for flavor_text_entry_data in data["flavor_text_entries"]
         ]
         self.fling_effect = (
-            MinimalItemFlingEffect(data["fling_effect"])
+            MinimalResource(data["fling_effect"])
             if data["fling_effect"] is not None
             else None
         )
@@ -86,7 +84,7 @@ class Item(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Item attributes={self.attributes} baby_trigger_form={self.baby_trigger_form} cost={self.cost} effect_entry={self.effect_entry} "
+            f"<Item attributes={self.attributes} baby_trigger_form={self.baby_trigger_for} cost={self.cost} effect_entry={self.effect_entry} "
             f"effect_entries={self.effect_entries} flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} "
             f"fling_effect={self.fling_effect} fling_power={self.fling_power} game_indices={self.game_indices} held_by_pokemon={self.held_by_pokemon} "
             f"id_={self.id_} machines={self.machines} name='{self.name}' names={self.name} sprite={self.sprite}>"
@@ -119,9 +117,12 @@ class ItemHolderPokemon:
 
 
 class ItemHolderPokemonVersionDetail:
+    rarity: int
+    version: MinimalResource["Version"]
+
     def __init__(self, data) -> None:
         self.rarity = data["rarity"]
-        self.version = MinimalVersion(data["version"])
+        self.version = MinimalResource(data["version"])
 
     def __repr__(self) -> str:
         return f"<ItemHolderPokemonVersionDetail rarity={self.rarity} version={self.version}>"

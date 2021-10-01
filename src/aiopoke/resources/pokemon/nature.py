@@ -1,17 +1,17 @@
-from typing import List, Optional
-from ...minimal_resources import (
-    MinimalPokeathlonStat,
-    MinimalMoveBattleStyle,
-    MinimalBerryFlavor,
-)
+from typing import List, Optional, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource
+
+if TYPE_CHECKING:
+    from . import PokeathlonStat
+    from ...resources import MoveBatteStyle, BerryFlavor
 
 
 class Nature(NamedResource):
-    decreased_stat: Optional["MinimalPokeathlonStat"]
-    hates_flavor: Optional["MinimalBerryFlavor"]
-    increased_stat: Optional["MinimalPokeathlonStat"]
-    likes_flavor: Optional["MinimalBerryFlavor"]
+    decreased_stat: Optional[MinimalResource["PokeathlonStat"]]
+    hates_flavor: Optional[MinimalResource["BerryFlavor"]]
+    increased_stat: Optional[MinimalResource["PokeathlonStat"]]
+    likes_flavor: Optional[MinimalResource["BerryFlavor"]]
     move_battle_style_preferences: List["MoveBattleStylePreference"]
     names: List["Name"]
     pokeathlon_stat_changes: List["NatureStatChange"]
@@ -19,22 +19,22 @@ class Nature(NamedResource):
     def __init__(self, data) -> None:
         super().__init__(data)
         self.decreased_stat = (
-            MinimalPokeathlonStat(data["decreased_stat"])
+            MinimalResource(data["decreased_stat"])
             if data["decreased_stat"] is not None
             else None
         )
         self.hates_flavor = (
-            MinimalBerryFlavor(data["hates_flavor"])
+            MinimalResource(data["hates_flavor"])
             if data["hates_flavor"] is not None
             else None
         )
         self.increased_stat = (
-            MinimalPokeathlonStat(data["increased_stat"])
+            MinimalResource(data["increased_stat"])
             if data["increased_stat"] is not None
             else None
         )
         self.likes_flavor = (
-            MinimalBerryFlavor(data["likes_flavor"])
+            MinimalResource(data["likes_flavor"])
             if data["likes_flavor"] is not None
             else None
         )
@@ -60,11 +60,11 @@ class Nature(NamedResource):
 
 class NatureStatChange:
     max_change: int
-    pokeathlon_stat: "MinimalPokeathlonStat"
+    pokeathlon_stat: MinimalResource["PokeathlonStat"]
 
     def __init__(self, data) -> None:
         self.max_change = data["max_change"]
-        self.pokeathlon_stat = MinimalPokeathlonStat(data["pokeathlon_stat"])
+        self.pokeathlon_stat = MinimalResource(data["pokeathlon_stat"])
 
     def __repr__(self) -> str:
         return f"<NatureStatChange max_change={self.max_change} pokeathlon_stat={self.pokeathlon_stat}>"
@@ -73,12 +73,12 @@ class NatureStatChange:
 class MoveBattleStylePreference:
     low_hp_preference: int
     high_hp_preference: int
-    move_battle_style: "MinimalMoveBattleStyle"
+    move_battle_style: MinimalResource["MoveBatteStyle"]
 
     def __init__(self, data) -> None:
         self.low_hp_preference = data["low_hp_preference"]
         self.high_hp_preference = data["high_hp_preference"]
-        self.move_battle_style = MinimalMoveBattleStyle(data["move_battle_style"])
+        self.move_battle_style = MinimalResource(data["move_battle_style"])
 
     def __repr__(self) -> str:
         return (

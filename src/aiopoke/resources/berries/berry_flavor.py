@@ -1,6 +1,9 @@
-from typing import List
-from ...minimal_resources import MinimalBerry
+from typing import List, TYPE_CHECKING
+from ...minimal_resources import MinimalResource
 from ...utility import Name, NamedResource
+
+if TYPE_CHECKING:
+    from . import Berry
 
 
 class BerryFlavor(NamedResource):
@@ -20,11 +23,11 @@ class BerryFlavor(NamedResource):
 
 class FlavorBerryMap:
     potency: int
-    flavor: "MinimalBerry"
+    berry: MinimalResource["Berry"]
 
     def __init__(self, data) -> None:
         self.potency = data["potency"]
-        self.berry = MinimalBerry(data["berry"])
+        self.berry = MinimalResource(data["berry"])
 
     def __repr__(self) -> str:
         return f"<FlavorBerryMap potency={self.potency} berry={self.berry}>"

@@ -1,25 +1,29 @@
-from typing import List, Optional
-from ...minimal_resources import CharacteristicUrl, MinimalNature, MinimalMove, MinimalMoveDamageClass
+from typing import List, Optional, TYPE_CHECKING
+from ...minimal_resources import MinimalResource, Url
 from ...utility import Name, NamedResource
+
+if TYPE_CHECKING:
+    from . import Characteristic, Nature
+    from ...resources import Move, MoveDamageClass
 
 
 class Stat(NamedResource):
     affecting_moves: "MoveStatAffectSets"
     affecting_natures: "NatureStatAffectSets"
-    characteristics: List["CharacteristicUrl"]
+    characteristics: List[Url["Characteristic"]]
     game_index: int
     is_battle_only: bool
-    move_damage_class: Optional["MinimalMoveDamageClass"]
+    move_damage_class: Optional[MinimalResource["MoveDamageClass"]]
     names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.affecting_moves = MoveStatAffectSets(data["affecting_moves"])
         self.affecting_natures = NatureStatAffectSets(data["affecting_natures"])
-        self.characteristics = [CharacteristicUrl(characteristic_data["url"]) for characteristic_data in data["characteristics"]]
+        self.characteristics = [Url(characteristic_data["url"]) for characteristic_data in data["characteristics"]]
         self.game_index = data["game_index"]
         self.is_battle_only = data["is_battle_only"]
-        self.move_damage_class = MinimalMoveDamageClass(data["move_damage_class"]) if data["move_damage_class"] is not None else None
+        self.move_damage_class = MinimalResource(data["move_damage_class"]) if data["move_damage_class"] is not None else None
         self.names = [Name(name_data) for name_data in data["names"]]
 
     def __repr__(self) -> str:
@@ -44,23 +48,23 @@ class MoveStatAffectSets:
 
 class MoveStatAffect:
     change: int
-    move: "MinimalMove"
+    move: MinimalResource["Move"]
 
     def __init__(self, data) -> None:
         self.change = data["change"]
-        self.move = MinimalMove(data["move"])
+        self.move = MinimalResource(data["move"])
 
     def __repr__(self) -> str:
         return f"<MoveStatAffect change={self.change} move={self.move}>"
 
 
 class NatureStatAffectSets:
-    increase: List["MinimalNature"]
-    decrease: List["MinimalNature"]
+    increase: List[MinimalResource["Nature"]]
+    decrease: List[MinimalResource["Nature"]]
 
     def __init__(self, data) -> None:
-        self.increase = [MinimalNature(increase_data) for increase_data in data["increase"]]
-        self.decrease = [MinimalNature(decrease_data) for decrease_data in data["decrease"]]
+        self.increase = [MinimalResource(increase_data) for increase_data in data["increase"]]
+        self.decrease = [MinimalResource(decrease_data) for decrease_data in data["decrease"]]
 
     def __repr__(self) -> str:
         return f"<NatureStatAffectSets increase={self.increase} decrease={self.decrease}>"
