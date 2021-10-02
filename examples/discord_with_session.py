@@ -1,16 +1,20 @@
+import aiohttp
 import aiopoke
 import asyncio
 import discord
 import inspect
 from discord.ext import commands
 
+
 # create out bot with the poke_client
 class Bot(commands.Bot):
+    session: aiohttp.ClientSession
     poke_client: aiopoke.AiopokeClient
 
-    def __init__(self, poke_client):
+    def __init__(self, session, poke_client):
         super().__init__(command_prefix="?")
 
+        self.session = session
         # this means that our poke_client object can be accessed trough self.bot.poke_client (in cogs)
         self.poke_client = poke_client
 
@@ -32,7 +36,7 @@ class PokemonCog(commands.Cog):
     async def pokemon(self, ctx: commands.Context, name_or_id):
         pokemon = await self.bot.poke_client.fetch_pokemon(name_or_id)
         if pokemon is None:
-            return await ctx.send(f"This is not a valid pokemon name or id!")
+            return await ctx.send("This is not a valid pokemon name or id!")
 
         pokemon_species = await pokemon.species.fetch()
 
@@ -49,16 +53,19 @@ class PokemonCog(commands.Cog):
                 Height: {pokemon.height}
                 Weight: {pokemon.weight}
                 """
-            )
-            )
+            ),
+        )
         embed.set_thumbnail(url=pokemon.sprites.front_default.url)
         await ctx.send(embed=embed)
 
 
 async def main():
-    async with aiopoke.AiopokeClient() as poke_client:
-        bot = Bot(poke_client)
-        await bot.start("TOKEN")
+    async with aiohttp.ClientSession() as session:
+        async with aiopoke.AiopokeClient(
+            session=session
+        ) as poke_client:  # this will use the existing session instead of creating a new one
+            bot = Bot(session, poke_client)
+            await bot.start("TOKEN")
 
 
 asyncio.run(main())
