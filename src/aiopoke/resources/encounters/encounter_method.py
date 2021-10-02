@@ -1,23 +1,26 @@
-from typing import List
-from ...utility.common_models import Name, NamedResource, Description
+from typing import Tuple
+
+from ...utility.common_models import Description, Name, NamedResource
 
 
 class EncounterMethod(NamedResource):
     description: str
-    descriptions: List["Description"]
+    descriptions: Tuple["Description"]
     order: int
-    names: List["Name"]
+    names: Tuple["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = [
+        self.description = tuple(
             name_data["name"]
             for name_data in data["names"]
             if name_data["language"]["name"] == "en"
-        ][0]
-        self.descriptions = [Description(description_data) for description_data in data["descriptions"]]
+        )[0]
+        self.descriptions = tuple(
+            Description(description_data) for description_data in data["descriptions"]
+        )
         self.order = data["order"]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
         return (

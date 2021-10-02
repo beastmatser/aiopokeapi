@@ -1,4 +1,5 @@
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
+
 from ...minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
@@ -14,7 +15,11 @@ class FlavorText:
     def __init__(self, data) -> None:
         self.flavor_text = data["flavor_text"]
         self.language = MinimalResource(data["language"])
-        self.version = MinimalResource(data["version"]) if data.get("version") is not None else None
+        self.version = (
+            MinimalResource(data["version"])
+            if data.get("version") is not None
+            else None
+        )
 
     def __repr__(self) -> str:
         return f"<FlavorText flavor_text='{self.flavor_text}' language={self.language} version={self.version}>"

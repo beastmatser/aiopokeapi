@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Optional, Tuple
 
 from ...minimal_resources import MinimalResource
 
@@ -32,19 +32,19 @@ class EvolutionChain:
 
 
 class ChainLink:
-    evolution_details: List["EvolutionDetail"]
-    evolves_to: List["ChainLink"]
+    evolution_details: Tuple["EvolutionDetail"]
+    evolves_to: Tuple["ChainLink"]
     is_baby: bool
     species: MinimalResource["PokemonSpecies"]
 
     def __init__(self, data) -> None:
-        self.evolution_details = [
+        self.evolution_details = tuple(
             EvolutionDetail(evolution_detail_data)
             for evolution_detail_data in data["evolution_details"]
-        ]
-        self.evolves_to = [
+        )
+        self.evolves_to = tuple(
             ChainLink(evolves_to_data) for evolves_to_data in data["evolves_to"]
-        ]
+        )
         self.is_baby = data["is_baby"]
         self.species = MinimalResource(data["species"])
 

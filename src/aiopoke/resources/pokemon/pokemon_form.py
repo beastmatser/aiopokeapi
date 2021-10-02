@@ -1,10 +1,11 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
-from ...utility import NamedResource, Name, Sprites
+from ...utility import Name, NamedResource, Sprites
 
 if TYPE_CHECKING:
+    from ...resources import NaturalGiftType, VersionGroup
     from . import Pokemon
-    from ...resources import VersionGroup, NaturalGiftType
 
 
 class PokemonForm(NamedResource):
@@ -14,10 +15,10 @@ class PokemonForm(NamedResource):
     is_default: bool
     is_mega: bool
     order: int
-    names: List["Name"]
+    names: Tuple["Name"]
     pokemon: MinimalResource["Pokemon"]
     sprites: "Sprites"
-    types: List["SlotNaturalGiftType"]
+    types: Tuple["SlotNaturalGiftType"]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
@@ -28,10 +29,12 @@ class PokemonForm(NamedResource):
         self.is_default = data["is_default"]
         self.is_mega = data["is_mega"]
         self.order = data["order"]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.names = tuple(Name(name_data) for name_data in data["names"])
         self.pokemon = MinimalResource(data["pokemon"])
         self.sprites = Sprites(data["sprites"])
-        self.types = [SlotNaturalGiftType(type_data) for type_data in data["types"]]
+        self.types = tuple(
+            SlotNaturalGiftType(type_data) for type_data in data["types"]
+        )
         self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:

@@ -1,31 +1,32 @@
-from typing import List
+from typing import Tuple
+
 from ...utility import Effect, FlavorText
 
 
 class ContestEffect:
     appeal: int
     effect_entry: "Effect"
-    effect_entries: List["Effect"]
+    effect_entries: Tuple["Effect"]
     flavor_text_entry: "FlavorText"
-    flavor_text_entries: List["FlavorText"]
+    flavor_text_entries: Tuple["FlavorText"]
     id_: int
     jam: int
 
     def __init__(self, data) -> None:
         self.appeal = data["appeal"]
-        self.effect_entry = [
+        self.effect_entry = tuple(
             Effect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
             if effect_entry_data["language"]["name"] == "en"
-        ][0]
-        self.effect_entries = [
+        )[0]
+        self.effect_entries = tuple(
             Effect(effect_entry_data) for effect_entry_data in data["effect_entries"]
-        ]
-        self.flavor_text_entry = [
+        )
+        self.flavor_text_entry = tuple(
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
             if flavor_text_entry_data["language"]["name"] == "en"
-        ][0]
+        )[0]
         self.flavor_text_entries = [
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]

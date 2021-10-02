@@ -1,6 +1,7 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
-from ...utility import Name, NamedResource, Description
+from ...utility import Description, Name, NamedResource
 
 if TYPE_CHECKING:
     from ...resources import Item
@@ -8,16 +9,22 @@ if TYPE_CHECKING:
 
 class ItemAttribute(NamedResource):
     description: str
-    descriptions: List["Description"]
-    items: List[MinimalResource["Item"]]
-    names: List["Name"]
+    descriptions: Tuple["Description"]
+    items: Tuple[MinimalResource["Item"]]
+    names: Tuple["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = [description_data["description"] for description_data in data["descriptions"] if description_data["language"]["name"] == "en"][0]
-        self.descriptions = [Description(description_data) for description_data in data["descriptions"]]
-        self.items = [MinimalResource(item_data) for item_data in data["items"]]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.description = tuple(
+            description_data["description"]
+            for description_data in data["descriptions"]
+            if description_data["language"]["name"] == "en"
+        )[0]
+        self.descriptions = tuple(
+            Description(description_data) for description_data in data["descriptions"]
+        )
+        self.items = tuple(MinimalResource(item_data) for item_data in data["items"])
+        self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
         return (

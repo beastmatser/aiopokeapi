@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from ...minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
@@ -14,4 +15,6 @@ class Description:
         self.language = MinimalResource(data["language"])
 
     def __repr__(self) -> str:
-        return f"<Description description='{self.description}' language={self.language}>"
+        return (
+            f"<Description description='{self.description}' language={self.language}>"
+        )

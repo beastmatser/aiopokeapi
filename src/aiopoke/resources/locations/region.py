@@ -1,28 +1,34 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
 from ...utility import Name, NamedResource
 
 if TYPE_CHECKING:
-    from . import Location
     from ...resources import Generation, Pokedex, VersionGroup
+    from . import Location
 
 
 class Region(NamedResource):
-    locations: List[MinimalResource["Location"]]
+    locations: Tuple[MinimalResource["Location"]]
     main_generation: MinimalResource["Generation"]
-    pokedexes: List[MinimalResource["Pokedex"]]
-    names: List["Name"]
-    version_groups: List[MinimalResource["VersionGroup"]]
+    pokedexes: Tuple[MinimalResource["Pokedex"]]
+    names: Tuple["Name"]
+    version_groups: Tuple[MinimalResource["VersionGroup"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.locations = [
+        self.locations = tuple(
             MinimalResource(location_data) for location_data in data["locations"]
-        ]
+        )
         self.main_generation = MinimalResource(data["main_generation"])
-        self.pokedexes = [MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.version_groups = [MinimalResource(version_group_data) for version_group_data in data["version_groups"]]
+        self.pokedexes = tuple(
+            MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]
+        )
+        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.version_groups = tuple(
+            MinimalResource(version_group_data)
+            for version_group_data in data["version_groups"]
+        )
 
     def __repr__(self) -> str:
         return (

@@ -1,4 +1,4 @@
-from typing import List, Optional, TYPE_CHECKING
+from typing import Tuple, Optional, TYPE_CHECKING
 from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource
 
@@ -12,9 +12,9 @@ class Nature(NamedResource):
     hates_flavor: Optional[MinimalResource["BerryFlavor"]]
     increased_stat: Optional[MinimalResource["PokeathlonStat"]]
     likes_flavor: Optional[MinimalResource["BerryFlavor"]]
-    move_battle_style_preferences: List["MoveBattleStylePreference"]
-    names: List["Name"]
-    pokeathlon_stat_changes: List["NatureStatChange"]
+    move_battle_style_preferences: Tuple["MoveBattleStylePreference"]
+    names: Tuple["Name"]
+    pokeathlon_stat_changes: Tuple["NatureStatChange"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -44,11 +44,11 @@ class Nature(NamedResource):
                 "move_battle_style_preferences"
             ]
         ]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.pokeathlon_stat_changes = [
+        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.pokeathlon_stat_changes = tuple(
             NatureStatChange(pokeathlon_stat_change_data)
             for pokeathlon_stat_change_data in data["pokeathlon_stat_changes"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (

@@ -1,4 +1,5 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
 from .encounter import Encounter
 
@@ -7,15 +8,15 @@ if TYPE_CHECKING:
 
 
 class VersionEncounterDetail:
-    encounter_details: List["Encounter"]
+    encounter_details: Tuple["Encounter"]
     max_chance: int
     version: MinimalResource["Version"]
 
     def __init__(self, data) -> None:
-        self.encounter_details = [
+        self.encounter_details = tuple(
             Encounter(encounter_details_data)
             for encounter_details_data in data["encounter_details"]
-        ]
+        )
         self.max_chance = data["max_chance"]
         self.version = MinimalResource(data["version"])
 

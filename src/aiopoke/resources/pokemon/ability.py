@@ -1,53 +1,56 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
+from ...utility import Effect, NamedResource, VerboseEffect
 from ...utility.common_models import Name
-from ...utility import NamedResource, Effect, VerboseEffect
 
 if TYPE_CHECKING:
-    from . import Pokemon
     from ...resources import Generation, VersionGroup
     from ...utility import Language
+    from . import Pokemon
 
 
 class Ability(NamedResource):
-    effect_changes: List["AbilityEffectChange"]
+    effect_changes: Tuple["AbilityEffectChange"]
     effect_entry: "VerboseEffect"
-    effect_entries: List["VerboseEffect"]
+    effect_entries: Tuple["VerboseEffect"]
     flavor_text_entry: "AbilityFlavorText"
-    flavor_text_entries: List["AbilityFlavorText"]
+    flavor_text_entries: Tuple["AbilityFlavorText"]
     generation: MinimalResource["Generation"]
     is_main_series: bool
-    names: List["Name"]
-    pokemon: List["AbilityPokemon"]
+    names: Tuple["Name"]
+    pokemon: Tuple["AbilityPokemon"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.effect_changes = [
+        self.effect_changes = tuple(
             AbilityEffectChange(effect_change_data)
             for effect_change_data in data["effect_changes"]
-        ]
-        self.effect_entry = [
+        )
+        self.effect_entry = tuple(
             VerboseEffect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
             if effect_entry_data["language"]["name"] == "en"
-        ][0]
-        self.effect_entries = [
+        )[0]
+        self.effect_entries = tuple(
             VerboseEffect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
-        ]
-        self.flavor_text_entry = [
+        )
+        self.flavor_text_entry = tuple(
             AbilityFlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
             if flavor_text_entry_data["language"]["name"] == "en"
-        ][0]
-        self.flavor_text_entries = [
+        )[0]
+        self.flavor_text_entries = tuple(
             AbilityFlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
-        ]
+        )
         self.generation = MinimalResource(data["generation"])
         self.is_main_series = data["is_main_series"]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.pokemon = [AbilityPokemon(pokemon_data) for pokemon_data in data["pokemon"]]
+        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.pokemon = tuple(
+            AbilityPokemon(pokemon_data) for pokemon_data in data["pokemon"]
+        )
 
     def __repr__(self) -> str:
         return (
@@ -73,19 +76,18 @@ class AbilityPokemon:
 
 class AbilityEffectChange:
     effect_entry: "Effect"
-    effect_entries: List["Effect"]
+    effect_entries: Tuple["Effect"]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:
-        self.effect_entry = [
+        self.effect_entry = tuple(
             Effect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
             if effect_entry_data["language"]["name"] == "en"
-        ][0]
-        self.effect_entries = [
-            Effect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
-        ]
+        )[0]
+        self.effect_entries = tuple(
+            Effect(effect_entry_data) for effect_entry_data in data["effect_entries"]
+        )
         self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:

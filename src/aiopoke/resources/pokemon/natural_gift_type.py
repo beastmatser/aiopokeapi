@@ -1,4 +1,4 @@
-from typing import List, TYPE_CHECKING
+from typing import Tuple, TYPE_CHECKING
 from ...minimal_resources import MinimalResource
 from ...utility import Name, NamedResource, GenerationGameIndex
 
@@ -13,26 +13,26 @@ if TYPE_CHECKING:
 
 class NaturalGiftType(NamedResource):
     damage_relations: "TypeRelations"
-    game_indices: List["GenerationGameIndex"]
+    game_indices: Tuple["GenerationGameIndex"]
     move_damage_class: MinimalResource["MoveDamageClass"]
-    moves: List[MinimalResource["Move"]]
-    names: List["Name"]
-    past_damage_relations: List["PastTypeRelation"]
-    pokemon: List["TypePokemon"]
+    moves: Tuple[MinimalResource["Move"]]
+    names: Tuple["Name"]
+    past_damage_relations: Tuple["PastTypeRelation"]
+    pokemon: Tuple["TypePokemon"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.damage_relations = TypeRelations(data["damage_relations"])
-        self.game_indices = [
+        self.game_indices = tuple(
             GenerationGameIndex(game_indice_data) for game_indice_data in data["game_indices"]
-        ]
+        )
         self.move_damage_class = MinimalResource(data["move_damage_class"])
-        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.past_damage_relations = [PastTypeRelation(past_damage_relation_data) for past_damage_relation_data in data["past_damage_relations"]]
-        self.pokemon = [
+        self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
+        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.past_damage_relations = tuple(PastTypeRelation(past_damage_relation_data) for past_damage_relation_data in data["past_damage_relations"])
+        self.pokemon = tuple(
             TypePokemon(pokemon_data) for pokemon_data in data["pokemon"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (
@@ -43,38 +43,38 @@ class NaturalGiftType(NamedResource):
 
 
 class TypeRelations:
-    double_damage_from: List[MinimalResource["NaturalGiftType"]]
-    double_damage_to: List[MinimalResource["NaturalGiftType"]]
-    half_damage_from: List[MinimalResource["NaturalGiftType"]]
-    half_damage_to: List[MinimalResource["NaturalGiftType"]]
-    no_damage_from: List[MinimalResource["NaturalGiftType"]]
-    no_damage_to: List[MinimalResource["NaturalGiftType"]]
+    double_damage_from: Tuple[MinimalResource["NaturalGiftType"]]
+    double_damage_to: Tuple[MinimalResource["NaturalGiftType"]]
+    half_damage_from: Tuple[MinimalResource["NaturalGiftType"]]
+    half_damage_to: Tuple[MinimalResource["NaturalGiftType"]]
+    no_damage_from: Tuple[MinimalResource["NaturalGiftType"]]
+    no_damage_to: Tuple[MinimalResource["NaturalGiftType"]]
 
     def __init__(self, data) -> None:
-        self.double_damage_from = [
+        self.double_damage_from = tuple(
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["double_damage_from"]
-        ]
-        self.double_damage_to = [
+        )
+        self.double_damage_to = tuple(
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["double_damage_to"]
-        ]
-        self.half_damage_from = [
+        )
+        self.half_damage_from = tuple(
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["half_damage_from"]
-        ]
-        self.half_damage_to = [
+        )
+        self.half_damage_to = tuple(
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["half_damage_to"]
-        ]
-        self.no_damage_from = [
+        )
+        self.no_damage_from = tuple(
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["no_damage_from"]
-        ]
-        self.no_damage_to = [
+        )
+        self.no_damage_to = tuple(
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["no_damage_to"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (

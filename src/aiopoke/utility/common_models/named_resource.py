@@ -1,5 +1,6 @@
 class NamedResource:
     """A resource with a name and id"""
+
     name: str
     id_: int
 
@@ -8,4 +9,8 @@ class NamedResource:
         self.id_ = data["id"]
 
     def __eq__(self, other: object) -> bool:
-        return isinstance(other, self.__class__) and other.name == self.name and other.id_ == self.id_
+        return (
+            isinstance(other, self.__class__)
+            and other.name == self.name
+            and other.id_ == self.id_
+        )

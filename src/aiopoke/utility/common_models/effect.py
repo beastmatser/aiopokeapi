@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from ...minimal_resources import MinimalResource
 
 if TYPE_CHECKING:

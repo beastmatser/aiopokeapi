@@ -1,63 +1,69 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
-from ..games.version_group import VersionGroupDetail
+from ...utility import NamedResource, VersionEncounterDetail, VersionGameIndex
 from ...utility.common_models.sprites import Sprites
-from ...utility import NamedResource, VersionGameIndex, VersionEncounterDetail
+from ..games.version_group import VersionGroupDetail
 
 if TYPE_CHECKING:
-    from . import Ability, PokemonSpecies, PokemonForm, Stat, NaturalGiftType
     from ...resources import (
         Generation,
-        Move,
-        MoveLearnMethod,
         Item,
+        LocationArea,
+        MoveLearnMethod,
         Version,
         VersionGroup,
-        LocationArea,
     )
+    from . import Ability, NaturalGiftType, PokemonForm, PokemonSpecies, Stat
 
 
 class Pokemon(NamedResource):
-    abilities: List["PokemonAbility"]
+    abilities: Tuple["PokemonAbility"]
     base_experience: int
-    forms: List[MinimalResource["PokemonForm"]]
-    game_indices: List["VersionGameIndex"]
+    forms: Tuple[MinimalResource["PokemonForm"]]
+    game_indices: Tuple["VersionGameIndex"]
     height: int
-    items: List["PokemonHeldItem"]
+    items: Tuple["PokemonHeldItem"]
     is_default: bool
-    location_area_encounters: List["PokemonLocationArea"]
-    moves: List["PokemonMove"]
+    location_area_encounters: Tuple["PokemonLocationArea"]
+    moves: Tuple["PokemonMove"]
     order: int
-    past_types: List["PastType"]
+    past_types: Tuple["PastType"]
     species: MinimalResource["PokemonSpecies"]
     sprites: "Sprites"
-    stats: List["PokemonStat"]
-    types: List["PokemonType"]
+    stats: Tuple["PokemonStat"]
+    types: Tuple["PokemonType"]
     weight: int
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.abilities = [
+        self.abilities = tuple(
             PokemonAbility(ability_data) for ability_data in data["abilities"]
-        ]
+        )
         self.base_experience = data["base_experience"]
         self.forms = [MinimalResource(form_data) for form_data in data["forms"]]
-        self.game_indices = [
-            VersionGameIndex(game_indice_data) for game_indice_data in data["game_indices"]
-        ]
+        self.game_indices = tuple(
+            VersionGameIndex(game_indice_data)
+            for game_indice_data in data["game_indices"]
+        )
         self.height = data["height"]
-        self.held_items = [PokemonHeldItem(item_data) for item_data in data["held_items"]]
+        self.held_items = tuple(
+            PokemonHeldItem(item_data) for item_data in data["held_items"]
+        )
         self.is_default = data["is_default"]
-        self.location_area_encounters = [PokemonLocationArea(location_area_encounter_data) for location_area_encounter_data in data["location_area_encounters"]]
-        self.moves = [PokemonMove(move_data) for move_data in data["moves"]]
+        self.location_area_encounters = tuple(
+            PokemonLocationArea(location_area_encounter_data)
+            for location_area_encounter_data in data["location_area_encounters"]
+        )
+        self.moves = tuple(PokemonMove(move_data) for move_data in data["moves"])
         self.order = data["order"]
-        self.past_types = [PastType(past_type_data) for past_type_data in data["past_types"]]
+        self.past_types = tuple(
+            PastType(past_type_data) for past_type_data in data["past_types"]
+        )
         self.species = MinimalResource(data["species"])
         self.sprites = Sprites(data["sprites"])
-        self.stats = [PokemonStat(stat_data) for stat_data in data["stats"]]
-        self.types = [
-            PokemonType(type_data) for type_data in data["types"]
-        ]
+        self.stats = tuple(PokemonStat(stat_data) for stat_data in data["stats"])
+        self.types = tuple(PokemonType(type_data) for type_data in data["types"])
         self.weight = data["weight"]
 
     def __repr__(self) -> str:
@@ -98,14 +104,19 @@ class PokemonType:
 
 class PokemonHeldItem:
     item: MinimalResource["Item"]
-    version_details: List["PokemonHeldItemVersion"]
+    version_details: Tuple["PokemonHeldItemVersion"]
 
     def __init__(self, data) -> None:
         self.item = MinimalResource(data["item"])
-        self.version_details = [PokemonHeldItemVersion(version_detail_data) for version_detail_data in data["version_details"]]
+        self.version_details = tuple(
+            PokemonHeldItemVersion(version_detail_data)
+            for version_detail_data in data["version_details"]
+        )
 
     def __repr__(self) -> str:
-        return f"<PokemonHeldItem item={self.item} version_details={self.version_details}>"
+        return (
+            f"<PokemonHeldItem item={self.item} version_details={self.version_details}>"
+        )
 
 
 class PokemonHeldItemVersion:
@@ -122,11 +133,14 @@ class PokemonHeldItemVersion:
 
 class PokemonMove:
     move: MinimalResource["Version"]
-    version_group_details: List["VersionGroupDetail"]
+    version_group_details: Tuple["VersionGroupDetail"]
 
     def __init__(self, data) -> None:
         self.move = MinimalResource(data["move"])
-        self.version_group_details = [VersionGroupDetail(version_group_detail_data) for version_group_detail_data in data["version_group_details"]]
+        self.version_group_details = tuple(
+            VersionGroupDetail(version_group_detail_data)
+            for version_group_detail_data in data["version_group_details"]
+        )
 
     def __repr__(self) -> str:
         return f"<PokemonMove move={self.move} version_group_details={self.version_group_details}>"
@@ -162,11 +176,11 @@ class PokemonStat:
 
 class PastType:
     generation: MinimalResource["Generation"]
-    types: List["PokemonType"]
+    types: Tuple["PokemonType"]
 
     def __init__(self, data) -> None:
         self.generation = MinimalResource(data["generation"])
-        self.types = [PokemonType(type_data) for type_data in data["types"]]
+        self.types = tuple(PokemonType(type_data) for type_data in data["types"])
 
     def __repr__(self) -> str:
         return f"<PastType generation={self.generation} types={self.types}>"
@@ -174,14 +188,14 @@ class PastType:
 
 class PokemonLocationArea:
     location_area: MinimalResource["LocationArea"]
-    version_details: List["VersionEncounterDetail"]
+    version_details: Tuple["VersionEncounterDetail"]
 
     def __init__(self, data) -> None:
         self.location_area = MinimalResource(data["location_area"])
-        self.version_details = [
+        self.version_details = tuple(
             VersionEncounterDetail(version_detail_data)
             for version_detail_data in data["version_details"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return f"<PokemonLocationArea location_area={self.location_area} version_details={self.version_details}>"

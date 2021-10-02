@@ -1,6 +1,7 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
-from ...utility.common_models import Name, NamedResource, Description
+from ...utility.common_models import Description, Name, NamedResource
 
 if TYPE_CHECKING:
     from ...resources import VersionGroup
@@ -8,25 +9,25 @@ if TYPE_CHECKING:
 
 class MoveLearnMethod(NamedResource):
     description: str
-    descriptions: List["Description"]
-    names: List["Name"]
-    version_groups: List[MinimalResource["VersionGroup"]]
+    descriptions: Tuple["Description"]
+    names: Tuple["Name"]
+    version_groups: Tuple[MinimalResource["VersionGroup"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = [
+        self.description = tuple(
             description_data["description"]
             for description_data in data["descriptions"]
             if description_data["language"]["name"] == "en"
-        ][0]
-        self.descriptions = [
+        )[0]
+        self.descriptions = tuple(
             Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.version_groups = [
+        )
+        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.version_groups = tuple(
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (

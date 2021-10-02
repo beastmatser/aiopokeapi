@@ -1,4 +1,5 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name, NamedResource
 
@@ -7,16 +8,16 @@ if TYPE_CHECKING:
 
 
 class PalParkArea(NamedResource):
-    pokemon_encounters: List["PalParkEncounterSpecies"]
-    names: List["Name"]
+    pokemon_encounters: Tuple["PalParkEncounterSpecies"]
+    names: Tuple["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.pokemon_encounters = [
+        self.pokemon_encounters = tuple(
             PalParkEncounterSpecies(pokemon_encounter_data)
             for pokemon_encounter_data in data["pokemon_encounters"]
-        ]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        )
+        self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
         return f"<PalParkArea id_={self.id_} pokemon_encounters={self.pokemon_encounters} name='{self.name}' names={self.names}>"

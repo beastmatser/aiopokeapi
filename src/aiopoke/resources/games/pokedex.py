@@ -1,41 +1,44 @@
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Tuple
+
 from ...minimal_resources import MinimalResource
-from ...utility import Name, NamedResource, Description
+from ...utility import Description, Name, NamedResource
 
 if TYPE_CHECKING:
-    from ...resources import (PokemonSpecies, Region, VersionGroup)
+    from ...resources import PokemonSpecies, Region, VersionGroup
 
 
 class Pokedex(NamedResource):
     description: str
-    descriptions: List["Description"]
+    descriptions: Tuple["Description"]
     is_main_series: bool
-    pokemon_entries: List["PokemonEntry"]
+    pokemon_entries: Tuple["PokemonEntry"]
     region: Optional[MinimalResource["Region"]]
-    version_groups: List[MinimalResource["VersionGroup"]]
-    names: List["Name"]
+    version_groups: Tuple[MinimalResource["VersionGroup"]]
+    names: Tuple["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = [
+        self.description = tuple(
             description_data["description"]
             for description_data in data["descriptions"]
             if description_data["language"]["name"] == "en"
-        ][0]
-        self.descriptions = [Description(description_data) for description_data in data["descriptions"]]
+        )[0]
+        self.descriptions = tuple(
+            Description(description_data) for description_data in data["descriptions"]
+        )
         self.is_main_series = data["is_main_series"]
-        self.pokemon_entries = [
+        self.pokemon_entries = tuple(
             PokemonEntry(pokemon_entry_data)
             for pokemon_entry_data in data["pokemon_entries"]
-        ]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        )
+        self.names = tuple(Name(name_data) for name_data in data["names"])
         self.region = (
             MinimalResource(data["region"]) if data["region"] is not None else None
         )
-        self.version_groups = [
+        self.version_groups = tuple(
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (

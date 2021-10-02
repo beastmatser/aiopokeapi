@@ -1,7 +1,7 @@
-import aiofiles
 import os
 from typing import Optional
 
+import aiofiles
 
 OptionalSprite = Optional["Sprite"]
 
@@ -143,12 +143,18 @@ class GenerationIIISprites:
             data["firered-leafgreen"]["front_shiny"]
         )
 
-        self.ruby_sapphire_back_default = Sprite.from_url(data["ruby-sapphire"]["back_default"])
-        self.ruby_sapphire_back_shiny = Sprite.from_url(data["ruby-sapphire"]["back_shiny"])
+        self.ruby_sapphire_back_default = Sprite.from_url(
+            data["ruby-sapphire"]["back_default"]
+        )
+        self.ruby_sapphire_back_shiny = Sprite.from_url(
+            data["ruby-sapphire"]["back_shiny"]
+        )
         self.ruby_sapphire_front_default = Sprite.from_url(
             data["ruby-sapphire"]["front_default"]
         )
-        self.ruby_sapphire_front_shiny = Sprite.from_url(data["ruby-sapphire"]["front_shiny"])
+        self.ruby_sapphire_front_shiny = Sprite.from_url(
+            data["ruby-sapphire"]["front_shiny"]
+        )
 
 
 class GenerationIVSprites:
@@ -178,17 +184,27 @@ class GenerationIVSprites:
     platinum_front_shiny_female: OptionalSprite
 
     def __init__(self, data) -> None:
-        self.diamond_pearl_back_default = Sprite.from_url(data["diamond-pearl"]["back_default"])
-        self.diamond_pearl_back_female = Sprite.from_url(data["diamond-pearl"]["back_female"])
-        self.diamond_pearl_back_shiny = Sprite.from_url(data["diamond-pearl"]["back_shiny"])
+        self.diamond_pearl_back_default = Sprite.from_url(
+            data["diamond-pearl"]["back_default"]
+        )
+        self.diamond_pearl_back_female = Sprite.from_url(
+            data["diamond-pearl"]["back_female"]
+        )
+        self.diamond_pearl_back_shiny = Sprite.from_url(
+            data["diamond-pearl"]["back_shiny"]
+        )
         self.diamond_pearl_back_shiny_female = Sprite.from_url(
             data["diamond-pearl"]["back_shiny_female"]
         )
         self.diamond_pearl_front_default = Sprite.from_url(
             data["diamond-pearl"]["front_default"]
         )
-        self.diamond_pearl_front_female = Sprite.from_url(data["diamond-pearl"]["front_female"])
-        self.diamond_pearl_front_shiny = Sprite.from_url(data["diamond-pearl"]["front_shiny"])
+        self.diamond_pearl_front_female = Sprite.from_url(
+            data["diamond-pearl"]["front_female"]
+        )
+        self.diamond_pearl_front_shiny = Sprite.from_url(
+            data["diamond-pearl"]["front_shiny"]
+        )
         self.diamond_pearl_front_shiny_female = Sprite.from_url(
             data["diamond-pearl"]["front_shiny_female"]
         )
@@ -221,7 +237,9 @@ class GenerationIVSprites:
         self.platinum_back_default = Sprite.from_url(data["platinum"]["back_default"])
         self.platinum_back_female = Sprite.from_url(data["platinum"]["back_female"])
         self.platinum_back_shiny = Sprite.from_url(data["platinum"]["back_shiny"])
-        self.platinum_back_shiny_female = Sprite.from_url(data["platinum"]["back_shiny_female"])
+        self.platinum_back_shiny_female = Sprite.from_url(
+            data["platinum"]["back_shiny_female"]
+        )
         self.platinum_front_default = Sprite.from_url(data["platinum"]["front_default"])
         self.platinum_front_female = Sprite.from_url(data["platinum"]["front_female"])
         self.platinum_front_shiny = Sprite.from_url(data["platinum"]["front_shiny"])
@@ -274,15 +292,25 @@ class GenerationVSprites:
             data["black-white"]["animated"]["back_default"]
         )
 
-        self.black_white_back_default = Sprite.from_url(data["black-white"]["back_default"])
-        self.black_white_back_female = Sprite.from_url(data["black-white"]["back_female"])
+        self.black_white_back_default = Sprite.from_url(
+            data["black-white"]["back_default"]
+        )
+        self.black_white_back_female = Sprite.from_url(
+            data["black-white"]["back_female"]
+        )
         self.black_white_back_shiny = Sprite.from_url(data["black-white"]["back_shiny"])
         self.black_white_back_shiny_female = Sprite.from_url(
             data["black-white"]["back_shiny_female"]
         )
-        self.black_white_front_default = Sprite.from_url(data["black-white"]["front_default"])
-        self.black_white_front_female = Sprite.from_url(data["black-white"]["front_female"])
-        self.black_white_front_shiny = Sprite.from_url(data["black-white"]["front_shiny"])
+        self.black_white_front_default = Sprite.from_url(
+            data["black-white"]["front_default"]
+        )
+        self.black_white_front_female = Sprite.from_url(
+            data["black-white"]["front_female"]
+        )
+        self.black_white_front_shiny = Sprite.from_url(
+            data["black-white"]["front_shiny"]
+        )
         self.black_white_front_shiny_female = Sprite.from_url(
             data["black-white"]["back_default"]
         )
@@ -359,7 +387,7 @@ class Sprite:
 
     def __init__(self, url) -> None:
         self.url = url
-        self.file_extention = url[url.rfind(".") + 1:]
+        self.file_extention = url[url.rfind(".") + 1 :]
         self.bytes_ = None
 
     @classmethod

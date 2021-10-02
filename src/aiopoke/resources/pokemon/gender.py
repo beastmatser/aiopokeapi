@@ -1,4 +1,5 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
 from ...utility.common_models import NamedResource
 
@@ -7,19 +8,19 @@ if TYPE_CHECKING:
 
 
 class Gender(NamedResource):
-    pokemon_species_details: List["PokemonSpeciesGender"]
-    required_for_evolution: List[MinimalResource["PokemonSpecies"]]
+    pokemon_species_details: Tuple["PokemonSpeciesGender"]
+    required_for_evolution: Tuple[MinimalResource["PokemonSpecies"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.pokemon_species_details = [
+        self.pokemon_species_details = tuple(
             PokemonSpeciesGender(pokemon_species_detail_data)
             for pokemon_species_detail_data in data["pokemon_species_details"]
-        ]
-        self.required_for_evolution = [
+        )
+        self.required_for_evolution = tuple(
             MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["required_for_evolution"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (

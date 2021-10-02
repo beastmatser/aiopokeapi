@@ -1,4 +1,5 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
 from ...utility import Description
 
@@ -8,23 +9,25 @@ if TYPE_CHECKING:
 
 class Characteristic:
     description: str
-    descriptions: List["Description"]
+    descriptions: Tuple["Description"]
     gene_modulo: int
     highest_stat: MinimalResource["Stat"]
     id_: int
-    possible_values: List[int]
+    possible_values: Tuple[int]
 
     def __init__(self, data) -> None:
-        self.description = [
+        self.description = tuple(
             name_data["name"]
             for name_data in data["names"]
             if name_data["language"]["name"] == "en"
-        ][0]
-        self.descriptions = [Description(description_data) for description_data in data["descriptions"]]
+        )[0]
+        self.descriptions = tuple(
+            Description(description_data) for description_data in data["descriptions"]
+        )
         self.gene_modulo = data["gene_modulo"]
         self.highest_stat = MinimalResource(data["highest_stat"])
         self.id_ = data["id"]
-        self.possible_values = data["possible_values"]
+        self.possible_values = tuple(data["possible_values"])
 
     def __repr__(self) -> str:
         return (

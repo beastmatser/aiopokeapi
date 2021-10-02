@@ -1,6 +1,7 @@
-from typing import List, TYPE_CHECKING
-from ...utility import FlavorText
+from typing import TYPE_CHECKING, Tuple
+
 from ...minimal_resources import MinimalResource
+from ...utility import FlavorText
 
 if TYPE_CHECKING:
     from ...resources.moves import Move
@@ -9,23 +10,23 @@ if TYPE_CHECKING:
 class SuperContestEffect:
     appeal: int
     flavor_text_entry: "FlavorText"
-    flavor_text_entries: List["FlavorText"]
+    flavor_text_entries: Tuple["FlavorText"]
     id_: int
-    moves: List[MinimalResource["Move"]]
+    moves: Tuple[MinimalResource["Move"]]
 
     def __init__(self, data) -> None:
         self.appeal = data["appeal"]
-        self.flavor_text_entry = [
+        self.flavor_text_entry = tuple(
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
             if flavor_text_entry_data["language"]["name"] == "en"
-        ][0]
-        self.flavor_text_entries = [
+        )[0]
+        self.flavor_text_entries = tuple(
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
-        ]
+        )
         self.id_ = data["id"]
-        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
+        self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
 
     def __repr__(self) -> str:
         return (

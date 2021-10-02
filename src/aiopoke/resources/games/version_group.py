@@ -1,40 +1,37 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Tuple
 
 from aiopoke.resources.games.version import Version
+
 from ...minimal_resources import MinimalResource
 from ...utility import NamedResource
 
 if TYPE_CHECKING:
-    from ...resources import (
-        Region,
-        Pokedex,
-        MoveLearnMethod,
-    )
+    from ...resources import MoveLearnMethod, Pokedex, Region
 
 
 class VersionGroup(NamedResource):
     generation: MinimalResource["Region"]
-    move_learn_methods: List[MinimalResource["MoveLearnMethod"]]
+    move_learn_methods: Tuple[MinimalResource["MoveLearnMethod"]]
     order: int
-    pokedexes: List[MinimalResource["Pokedex"]]
-    regions: List[MinimalResource["Region"]]
-    versions: List[MinimalResource["Version"]]
+    pokedexes: Tuple[MinimalResource["Pokedex"]]
+    regions: Tuple[MinimalResource["Region"]]
+    versions: Tuple[MinimalResource["Version"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.generation = MinimalResource(data["generation"])
-        self.move_learn_methods = [
+        self.move_learn_methods = tuple(
             MinimalResource(move_learn_method_data)
             for move_learn_method_data in data["move_learn_methods"]
-        ]
+        )
         self.order = data["order"]
-        self.pokedexes = [
+        self.pokedexes = tuple(
             MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]
-        ]
+        )
         self.regions = [MinimalResource(region_data) for region_data in data["regions"]]
-        self.versions = [
+        self.versions = tuple(
             MinimalResource(version_data) for version_data in data["versions"]
-        ]
+        )
 
     def __repr__(self) -> str:
         return (
