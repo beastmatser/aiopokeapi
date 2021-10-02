@@ -4,7 +4,7 @@ import discord
 import inspect
 from discord.ext import commands
 
-# create out bot wiht the poke_client
+# create out bot with the poke_client
 class Bot(commands.Bot):
     poke_client: aiopoke.AiopokeClient
 
