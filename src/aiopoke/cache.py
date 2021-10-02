@@ -1,5 +1,4 @@
-# type: ignore
-from typing import Any, Callable, Coroutine, Dict, Optional, Union, TYPE_CHECKING, TypeVar
+from typing import Any, Awaitable, Callable, Dict, Optional, Union, TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
     from .aiopoke_client import AiopokeClient
@@ -8,19 +7,18 @@ X = TypeVar("X")
 
 
 # cache decorator
-def cache(endpoint: str) -> Callable[[Callable[["AiopokeClient", str], X]], Callable[..., X]]:
-    def decorator(func: Callable[["AiopokeClient", str], X]) -> Callable[..., X]:
+def cache(endpoint: str) -> Callable[[Callable[["AiopokeClient", Union[str, int]], X]], Callable[["AiopokeClient", Union[str, int]], X]]:
+    def decorator(func: Callable[["AiopokeClient", Union[str, int]], X]) -> Callable[["AiopokeClient", Union[str, int]], X]:
         async def call(client: "AiopokeClient", name_or_id: Union[str, int]) -> X:
             cached_item: Optional[X] = client._cache.get(f"{endpoint}_{name_or_id}")
             if cached_item is not None:
                 return cached_item
 
-            data = await func(client, name_or_id)
-            obj: X = client.build(endpoint, data)
-            client._cache.put(f"{endpoint}", obj)
+            obj: X = await func(client, name_or_id)  # type: ignore
+            client._cache.put(endpoint, obj)
             return obj
 
-        return call
+        return call  # type: ignore
     return decorator
 
 
@@ -48,3 +46,6 @@ class Cache:
         self._cache[f"{endpoint.replace('-', '_')}_{obj.id_}"] = obj
         if hasattr(obj, "name"):
             self._aliases[f"{endpoint}_{obj.name}"] = str(obj.id_)
+
+    def is_cached(self, obj: Any) -> bool:
+        return obj in self._cache.values()

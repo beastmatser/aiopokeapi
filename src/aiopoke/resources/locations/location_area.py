@@ -1,10 +1,10 @@
 from typing import List, TYPE_CHECKING
-from ...minimal_resources import MinimalResource, MinimalPokemon
+from ...minimal_resources import MinimalResource
 from ...utility import Name, VersionEncounterDetail, NamedResource
 
 if TYPE_CHECKING:
     from . import Location
-    from ...resources import EncounterMethod, Version
+    from ...resources import EncounterMethod, Pokemon, Version
 
 
 class LocationArea(NamedResource):
@@ -36,11 +36,11 @@ class LocationArea(NamedResource):
 
 
 class PokemonEncounter:
-    pokemon: "MinimalPokemon"
+    pokemon: MinimalResource["Pokemon"]
     version_details: List["VersionEncounterDetail"]
 
     def __init__(self, data) -> None:
-        self.pokemon = MinimalPokemon(data["pokemon"])
+        self.pokemon = MinimalResource(data["pokemon"])
         self.version_details = [
             VersionEncounterDetail(version_detail_data)
             for version_detail_data in data["version_details"]

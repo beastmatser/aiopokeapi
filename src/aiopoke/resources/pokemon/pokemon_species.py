@@ -1,13 +1,9 @@
 from typing import List, TYPE_CHECKING
-from ...minimal_resources import (
-    MinimalResource,
-    MinimalPokemon,
-    Url
-)
+from ...minimal_resources import MinimalResource, Url
 from ...utility import Name, NamedResource, FlavorText, Description
 
 if TYPE_CHECKING:
-    from . import GrowthRate, EggGroup, PokemonHabitat, PokemonShape, PokemonColor
+    from . import GrowthRate, EggGroup, Pokemon, PokemonHabitat, PokemonShape, PokemonColor
     from ...resources import (
         EvolutionChain,
         Generation,
@@ -142,11 +138,11 @@ class PalParkEncounterArea:
 
 class PokemonSpeciesVariety:
     is_default: bool
-    pokemon: "MinimalPokemon"
+    pokemon: MinimalResource["Pokemon"]
 
     def __init__(self, data) -> None:
         self.is_default = data["is_default"]
-        self.pokemon = MinimalPokemon(data["pokemon"])
+        self.pokemon = MinimalResource(data["pokemon"])
 
     def __repr__(self) -> str:
         return f"<PokemonSpeciesVariety is_default={self.is_default} pokemon={self.pokemon}>"

@@ -1,10 +1,6 @@
 from typing import TYPE_CHECKING, List, Optional
 
-from ...minimal_resources import (
-    MinimalPokemon,
-    MinimalResource,
-    Url
-)
+from ...minimal_resources import MinimalResource, Url
 from ...utility import MachineVersionDetail, Name, NamedResource, VerboseEffect
 from ..pokemon.ability import AbilityEffectChange
 
@@ -14,6 +10,7 @@ if TYPE_CHECKING:
         ContestType,
         Generation,
         NaturalGiftType,
+        Pokemon,
         Stat,
         VersionGroup,
     )
@@ -33,7 +30,7 @@ class Move(NamedResource):
     flavor_text_entry: "MoveFlavorText"
     flavor_text_entries: List["MoveFlavorText"]
     generation: MinimalResource["Generation"]
-    learned_by_pokemon: List["MinimalPokemon"]
+    learned_by_pokemon: List[MinimalResource["Pokemon"]]
     machines: List["MachineVersionDetail"]
     meta: "MoveMetaData"
     names: List["Name"]
@@ -76,7 +73,7 @@ class Move(NamedResource):
         ]
         self.generation = MinimalResource(data["generation"])
         self.learned_by_pokemon = [
-            MinimalPokemon(pokemon_data) for pokemon_data in data["learned_by_pokemon"]
+            MinimalResource(pokemon_data) for pokemon_data in data["learned_by_pokemon"]
         ]
         self.machines = [
             MachineVersionDetail(machine_data) for machine_data in data["machines"]

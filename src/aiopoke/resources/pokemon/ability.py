@@ -1,9 +1,10 @@
 from typing import List, TYPE_CHECKING
-from ...minimal_resources import MinimalResource, MinimalPokemon
+from ...minimal_resources import MinimalResource
 from ...utility.common_models import Name
 from ...utility import NamedResource, Effect, VerboseEffect
 
 if TYPE_CHECKING:
+    from . import Pokemon
     from ...resources import Generation, VersionGroup
     from ...utility import Language
 
@@ -59,12 +60,12 @@ class Ability(NamedResource):
 class AbilityPokemon:
     is_hidden: bool
     slot: int
-    pokemon: "MinimalPokemon"
+    pokemon: MinimalResource["Pokemon"]
 
     def __init__(self, data) -> None:
         self.is_hidden = data["is_hidden"]
         self.slot = data["slot"]
-        self.pokemon = MinimalPokemon(data["pokemon"])
+        self.pokemon = MinimalResource(data["pokemon"])
 
     def __repr__(self) -> str:
         return f"<AbilityPokemon is_hidden={self.is_hidden} slot={self.slot} pokemon={self.pokemon}>"

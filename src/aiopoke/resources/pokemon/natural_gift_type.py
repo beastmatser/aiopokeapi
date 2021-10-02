@@ -1,8 +1,9 @@
 from typing import List, TYPE_CHECKING
-from ...minimal_resources import MinimalResource, MinimalPokemon
+from ...minimal_resources import MinimalResource
 from ...utility import Name, NamedResource, GenerationGameIndex
 
 if TYPE_CHECKING:
+    from . import Pokemon
     from ...resources import (
         Generation,
         Move,
@@ -97,11 +98,11 @@ class PastTypeRelation:
 
 class TypePokemon:
     slot: int
-    pokemon: "MinimalPokemon"
+    pokemon: MinimalResource["Pokemon"]
 
     def __init__(self, data) -> None:
         self.slot = data["slot"]
-        self.pokemon = data["pokemon"]
+        self.pokemon = MinimalResource(data["pokemon"])
 
     def __repr__(self) -> str:
         return f"<TypePokemon slot={self.slot} pokemon={self.pokemon}>"

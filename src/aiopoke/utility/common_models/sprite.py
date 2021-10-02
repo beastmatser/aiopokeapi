@@ -19,7 +19,7 @@ class Sprite:
 
         return cls(url)
 
-    async def save(self, client, *, path: Optional[str] = None) -> None:
+    async def save(self, *, path: Optional[str] = None) -> None:
         if path is None:
             path = os.getcwd()
 
@@ -31,13 +31,21 @@ class Sprite:
                 "You can not set the file extension, this is to avoid file corruption. Use os.system() instead"
             )
 
+        from ...aiopoke_client import AiopokeClient  # type: ignore
+
+        client = AiopokeClient()  # this will return an existing instance
+
         if self.bytes_ is None:
             bytes_ = await self.read(client)
 
         async with aiofiles.open(path + "/." + self.file_extention, "wb") as f:
             await f.write(bytes_)
 
-    async def read(self, client) -> bytes:
+    async def read(self) -> bytes:
+        from ...aiopoke_client import AiopokeClient  # type: ignore
+
+        client = AiopokeClient()  # this will return an existing instance
+
         async with client.session.get(self.url) as response:
             bytes_: bytes = await response.read()
             self.bytes_ = bytes_

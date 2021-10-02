@@ -1,5 +1,5 @@
 from typing import List, Optional, TYPE_CHECKING
-from ...minimal_resources import MinimalPokemon, MinimalResource, Url
+from ...minimal_resources import MinimalResource, Url
 from ...utility import Sprite
 from ...utility import (
     Name,
@@ -12,7 +12,7 @@ from ...utility import (
 
 if TYPE_CHECKING:
     from . import ItemAttribute, ItemFlingEffect, ItemCategory
-    from ...resources import EvolutionChain, Version
+    from ...resources import EvolutionChain, Pokemon, Version
 
 
 class Item(NamedResource):
@@ -102,11 +102,11 @@ class ItemSprites:
 
 
 class ItemHolderPokemon:
-    pokemon: "MinimalPokemon"
+    pokemon: MinimalResource["Pokemon"]
     version_details: List["ItemHolderPokemonVersionDetail"]
 
     def __init__(self, data) -> None:
-        self.pokemon = MinimalPokemon(data["pokemon"])
+        self.pokemon = MinimalResource(data["pokemon"])
         self.version_details = [
             ItemHolderPokemonVersionDetail(version_detail_data)
             for version_detail_data in data["version_details"]
