@@ -36,7 +36,7 @@ class Sprite:
         client = AiopokeClient()  # this will return an existing instance
 
         if self.bytes_ is None:
-            bytes_ = await self.read(client)
+            bytes_ = await self.read()
 
         async with aiofiles.open(path + "/." + self.file_extention, "wb") as f:
             await f.write(bytes_)
@@ -46,7 +46,7 @@ class Sprite:
 
         client = AiopokeClient()  # this will return an existing instance
 
-        async with client.session.get(self.url) as response:
+        async with client.session.get(self.url) as response:  # type: ignore
             bytes_: bytes = await response.read()
             self.bytes_ = bytes_
 
