@@ -11,11 +11,11 @@ if TYPE_CHECKING:
 
 class VersionGroup(NamedResource):
     generation: MinimalResource["Region"]
-    move_learn_methods: Tuple[MinimalResource["MoveLearnMethod"]]
+    move_learn_methods: Tuple[MinimalResource["MoveLearnMethod"], ...]
     order: int
-    pokedexes: Tuple[MinimalResource["Pokedex"]]
-    regions: Tuple[MinimalResource["Region"]]
-    versions: Tuple[MinimalResource["Version"]]
+    pokedexes: Tuple[MinimalResource["Pokedex"], ...]
+    regions: Tuple[MinimalResource["Region"], ...]
+    versions: Tuple[MinimalResource["Version"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -28,7 +28,7 @@ class VersionGroup(NamedResource):
         self.pokedexes = tuple(
             MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]
         )
-        self.regions = [MinimalResource(region_data) for region_data in data["regions"]]
+        self.regions = tuple(MinimalResource(region_data) for region_data in data["regions"])
         self.versions = tuple(
             MinimalResource(version_data) for version_data in data["versions"]
         )

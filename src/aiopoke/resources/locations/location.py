@@ -8,10 +8,10 @@ if TYPE_CHECKING:
 
 
 class Location(NamedResource):
-    areas: Tuple[MinimalResource["LocationArea"]]
-    game_indices: Tuple["GenerationGameIndex"]
+    areas: Tuple[MinimalResource["LocationArea"], ...]
+    game_indices: Tuple["GenerationGameIndex", ...]
     region: MinimalResource["Region"]
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

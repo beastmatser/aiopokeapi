@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class BerryFirmness(NamedResource):
-    berries: Tuple[MinimalResource["Berry"]]
-    names: Tuple["Name"]
+    berries: Tuple[MinimalResource["Berry"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

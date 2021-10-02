@@ -9,9 +9,9 @@ if TYPE_CHECKING:
 
 class MoveTarget(NamedResource):
     description: str
-    descriptions: Tuple["Description"]
-    moves: Tuple[MinimalResource["Move"]]
-    names: Tuple["Name"]
+    descriptions: Tuple["Description", ...]
+    moves: Tuple[MinimalResource["Move"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

@@ -10,9 +10,9 @@ if TYPE_CHECKING:
 class SuperContestEffect:
     appeal: int
     flavor_text_entry: "FlavorText"
-    flavor_text_entries: Tuple["FlavorText"]
+    flavor_text_entries: Tuple["FlavorText", ...]
     id_: int
-    moves: Tuple[MinimalResource["Move"]]
+    moves: Tuple[MinimalResource["Move"], ...]
 
     def __init__(self, data) -> None:
         self.appeal = data["appeal"]

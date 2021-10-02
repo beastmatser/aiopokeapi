@@ -9,9 +9,9 @@ if TYPE_CHECKING:
 
 class ItemAttribute(NamedResource):
     description: str
-    descriptions: Tuple["Description"]
-    items: Tuple[MinimalResource["Item"]]
-    names: Tuple["Name"]
+    descriptions: Tuple["Description", ...]
+    items: Tuple[MinimalResource["Item"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

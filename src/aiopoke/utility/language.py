@@ -7,7 +7,7 @@ class Language(NamedResource):
     official: bool
     iso3166: str
     iso639: str
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

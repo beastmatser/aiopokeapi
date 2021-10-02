@@ -9,10 +9,10 @@ if TYPE_CHECKING:
 
 class GrowthRate(NamedResource):
     description: str
-    descriptions: Tuple["Description"]
+    descriptions: Tuple["Description", ...]
     formula: str
-    levels: Tuple["GrowthRateExperienceLevel"]
-    pokemon_species: Tuple[MinimalResource["PokemonSpecies"]]
+    levels: Tuple["GrowthRateExperienceLevel", ...]
+    pokemon_species: Tuple[MinimalResource["PokemonSpecies"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

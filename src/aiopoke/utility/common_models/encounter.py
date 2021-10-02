@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 class Encounter:
     min_level: int
     max_level: int
-    condition_values: Tuple[MinimalResource["EncounterConditionValue"]]
+    condition_values: Tuple[MinimalResource["EncounterConditionValue"], ...]
     chance: int
     method: MinimalResource["EncounterMethod"]
 

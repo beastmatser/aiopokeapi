@@ -11,15 +11,15 @@ if TYPE_CHECKING:
 
 
 class Ability(NamedResource):
-    effect_changes: Tuple["AbilityEffectChange"]
+    effect_changes: Tuple["AbilityEffectChange", ...]
     effect_entry: "VerboseEffect"
-    effect_entries: Tuple["VerboseEffect"]
+    effect_entries: Tuple["VerboseEffect", ...]
     flavor_text_entry: "AbilityFlavorText"
-    flavor_text_entries: Tuple["AbilityFlavorText"]
+    flavor_text_entries: Tuple["AbilityFlavorText", ...]
     generation: MinimalResource["Generation"]
     is_main_series: bool
-    names: Tuple["Name"]
-    pokemon: Tuple["AbilityPokemon"]
+    names: Tuple["Name", ...]
+    pokemon: Tuple["AbilityPokemon", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -76,7 +76,7 @@ class AbilityPokemon:
 
 class AbilityEffectChange:
     effect_entry: "Effect"
-    effect_entries: Tuple["Effect"]
+    effect_entries: Tuple["Effect", ...]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:

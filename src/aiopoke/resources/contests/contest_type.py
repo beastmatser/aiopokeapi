@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class ContestType(NamedResource):
     berry_flavor: MinimalResource["BerryFlavor"]
-    names: Tuple["ContestName"]
+    names: Tuple["ContestName", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

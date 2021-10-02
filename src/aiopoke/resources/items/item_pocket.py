@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class ItemPocket(NamedResource):
-    categories: Tuple[MinimalResource["ItemCategory"]]
-    names: Tuple["Name"]
+    categories: Tuple[MinimalResource["ItemCategory"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

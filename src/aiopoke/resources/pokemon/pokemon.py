@@ -18,21 +18,21 @@ if TYPE_CHECKING:
 
 
 class Pokemon(NamedResource):
-    abilities: Tuple["PokemonAbility"]
+    abilities: Tuple["PokemonAbility", ...]
     base_experience: int
-    forms: Tuple[MinimalResource["PokemonForm"]]
-    game_indices: Tuple["VersionGameIndex"]
+    forms: Tuple[MinimalResource["PokemonForm"], ...]
+    game_indices: Tuple["VersionGameIndex", ...]
     height: int
-    items: Tuple["PokemonHeldItem"]
+    items: Tuple["PokemonHeldItem", ...]
     is_default: bool
-    location_area_encounters: Tuple["PokemonLocationArea"]
-    moves: Tuple["PokemonMove"]
+    location_area_encounters: Tuple["PokemonLocationArea", ...]
+    moves: Tuple["PokemonMove", ...]
     order: int
-    past_types: Tuple["PastType"]
+    past_types: Tuple["PastType", ...]
     species: MinimalResource["PokemonSpecies"]
     sprites: "Sprites"
-    stats: Tuple["PokemonStat"]
-    types: Tuple["PokemonType"]
+    stats: Tuple["PokemonStat", ...]
+    types: Tuple["PokemonType", ...]
     weight: int
 
     def __init__(self, data) -> None:
@@ -41,7 +41,7 @@ class Pokemon(NamedResource):
             PokemonAbility(ability_data) for ability_data in data["abilities"]
         )
         self.base_experience = data["base_experience"]
-        self.forms = [MinimalResource(form_data) for form_data in data["forms"]]
+        self.forms = tuple(MinimalResource(form_data) for form_data in data["forms"])
         self.game_indices = tuple(
             VersionGameIndex(game_indice_data)
             for game_indice_data in data["game_indices"]
@@ -104,7 +104,7 @@ class PokemonType:
 
 class PokemonHeldItem:
     item: MinimalResource["Item"]
-    version_details: Tuple["PokemonHeldItemVersion"]
+    version_details: Tuple["PokemonHeldItemVersion", ...]
 
     def __init__(self, data) -> None:
         self.item = MinimalResource(data["item"])
@@ -133,7 +133,7 @@ class PokemonHeldItemVersion:
 
 class PokemonMove:
     move: MinimalResource["Version"]
-    version_group_details: Tuple["VersionGroupDetail"]
+    version_group_details: Tuple["VersionGroupDetail", ...]
 
     def __init__(self, data) -> None:
         self.move = MinimalResource(data["move"])
@@ -176,7 +176,7 @@ class PokemonStat:
 
 class PastType:
     generation: MinimalResource["Generation"]
-    types: Tuple["PokemonType"]
+    types: Tuple["PokemonType", ...]
 
     def __init__(self, data) -> None:
         self.generation = MinimalResource(data["generation"])
@@ -188,7 +188,7 @@ class PastType:
 
 class PokemonLocationArea:
     location_area: MinimalResource["LocationArea"]
-    version_details: Tuple["VersionEncounterDetail"]
+    version_details: Tuple["VersionEncounterDetail", ...]
 
     def __init__(self, data) -> None:
         self.location_area = MinimalResource(data["location_area"])

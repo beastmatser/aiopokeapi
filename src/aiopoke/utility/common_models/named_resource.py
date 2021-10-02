@@ -10,7 +10,5 @@ class NamedResource:
 
     def __eq__(self, other: object) -> bool:
         return (
-            isinstance(other, self.__class__)
-            and other.name == self.name
-            and other.id_ == self.id_
+            isinstance(other, self.__class__) and other.name == self.name and other.id_ == self.id_
         )

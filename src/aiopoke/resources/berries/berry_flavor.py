@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class BerryFlavor(NamedResource):
-    berries: Tuple["FlavorBerryMap"]
-    names: Tuple["Name"]
+    berries: Tuple["FlavorBerryMap", ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

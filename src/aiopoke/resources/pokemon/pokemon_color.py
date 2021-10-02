@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class PokemonColor(NamedResource):
-    names: Tuple["Name"]
-    pokemon_species: Tuple[MinimalResource["PokemonSpecies"]]
+    names: Tuple["Name", ...]
+    pokemon_species: Tuple[MinimalResource["PokemonSpecies"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

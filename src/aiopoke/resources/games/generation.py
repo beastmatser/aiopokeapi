@@ -15,13 +15,13 @@ if TYPE_CHECKING:
 
 
 class Generation(NamedResource):
-    abilities: Tuple[MinimalResource["Ability"]]
+    abilities: Tuple[MinimalResource["Ability"], ...]
     main_region: MinimalResource["Region"]
-    moves: Tuple[MinimalResource["Move"]]
-    pokemon_species: Tuple[MinimalResource["PokemonSpecies"]]
-    types: Tuple[MinimalResource["NaturalGiftType"]]
-    version_groups: Tuple[MinimalResource["VersionGroup"]]
-    names: Tuple["Name"]
+    moves: Tuple[MinimalResource["Move"], ...]
+    pokemon_species: Tuple[MinimalResource["PokemonSpecies"], ...]
+    types: Tuple[MinimalResource["NaturalGiftType"], ...]
+    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

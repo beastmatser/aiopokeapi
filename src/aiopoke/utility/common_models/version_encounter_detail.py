@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 class VersionEncounterDetail:
-    encounter_details: Tuple["Encounter"]
+    encounter_details: Tuple["Encounter", ...]
     max_chance: int
     version: MinimalResource["Version"]
 

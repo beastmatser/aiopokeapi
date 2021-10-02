@@ -15,10 +15,10 @@ class PokemonForm(NamedResource):
     is_default: bool
     is_mega: bool
     order: int
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
     pokemon: MinimalResource["Pokemon"]
     sprites: "Sprites"
-    types: Tuple["SlotNaturalGiftType"]
+    types: Tuple["SlotNaturalGiftType", ...]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(self, data) -> None:

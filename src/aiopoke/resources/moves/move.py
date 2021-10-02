@@ -26,19 +26,19 @@ class Move(NamedResource):
     damage_class: MinimalResource["MoveDamageClass"]
     effect_chance: Optional[int]
     effect_entry: "VerboseEffect"
-    effect_entries: Tuple["VerboseEffect"]
+    effect_entries: Tuple["VerboseEffect", ...]
     flavor_text_entry: "MoveFlavorText"
-    flavor_text_entries: Tuple["MoveFlavorText"]
+    flavor_text_entries: Tuple["MoveFlavorText", ...]
     generation: MinimalResource["Generation"]
-    learned_by_pokemon: Tuple[MinimalResource["Pokemon"]]
-    machines: Tuple["MachineVersionDetail"]
+    learned_by_pokemon: Tuple[MinimalResource["Pokemon"], ...]
+    machines: Tuple["MachineVersionDetail", ...]
     meta: "MoveMetaData"
-    names: Tuple["Name"]
-    past_values: Tuple["PastMoveStatValues"]
+    names: Tuple["Name", ...]
+    past_values: Tuple["PastMoveStatValues", ...]
     power: int
     pp: int
     priority: int
-    stat_changes: Tuple["MoveStatChange"]
+    stat_changes: Tuple["MoveStatChange", ...]
     type_: MinimalResource["NaturalGiftType"]
 
     def __init__(self, data) -> None:
@@ -120,8 +120,8 @@ class ContestComboSets:
 
 
 class ContestComboDetail:
-    use_before: Optional[Tuple[MinimalResource["Move"]]]
-    use_after: Optional[Tuple[MinimalResource["Move"]]]
+    use_before: Optional[Tuple[MinimalResource["Move"], ...]]
+    use_after: Optional[Tuple[MinimalResource["Move"], ...]]
 
     def __init__(self, data) -> None:
         self.use_before = (
@@ -207,7 +207,7 @@ class PastMoveStatValues:
     power: int
     pp: int
     effect_entry: "VerboseEffect"
-    effect_entries: Tuple["VerboseEffect"]
+    effect_entries: Tuple["VerboseEffect", ...]
     type_: MinimalResource["NaturalGiftType"]
     version_group: MinimalResource["VersionGroup"]
 

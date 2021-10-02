@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class EvolutionTrigger(NamedResource):
-    pokemon_species: Tuple[MinimalResource["PokemonSpecies"]]
-    names: Tuple["Name"]
+    pokemon_species: Tuple[MinimalResource["PokemonSpecies"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

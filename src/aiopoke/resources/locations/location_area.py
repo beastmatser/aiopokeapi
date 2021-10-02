@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 
 
 class LocationArea(NamedResource):
-    encounter_method_rates: Tuple["EncounterMethodRate"]
-    pokemon_encounters: Tuple["PokemonEncounter"]
+    encounter_method_rates: Tuple["EncounterMethodRate", ...]
+    pokemon_encounters: Tuple["PokemonEncounter", ...]
     location: MinimalResource["Location"]
     game_index: int
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -38,7 +38,7 @@ class LocationArea(NamedResource):
 
 class PokemonEncounter:
     pokemon: MinimalResource["Pokemon"]
-    version_details: Tuple["VersionEncounterDetail"]
+    version_details: Tuple["VersionEncounterDetail", ...]
 
     def __init__(self, data) -> None:
         self.pokemon = MinimalResource(data["pokemon"])
@@ -53,7 +53,7 @@ class PokemonEncounter:
 
 class EncounterMethodRate:
     encounter_method: MinimalResource["EncounterMethod"]
-    version_details: Tuple["EncounterVersionDetail"]
+    version_details: Tuple["EncounterVersionDetail", ...]
 
     def __init__(self, data) -> None:
         self.encounter_method = MinimalResource(data["encounter_method"])

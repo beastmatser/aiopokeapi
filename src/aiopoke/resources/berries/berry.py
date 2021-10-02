@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 class Berry(NamedResource):
     firmness: MinimalResource["BerryFirmness"]
-    flavors: Tuple["BerryFlavorMap"]
+    flavors: Tuple["BerryFlavorMap", ...]
     growth_time: int
     max_harvest: int
     natural_gift_power: int

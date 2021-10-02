@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 
 
 class Region(NamedResource):
-    locations: Tuple[MinimalResource["Location"]]
+    locations: Tuple[MinimalResource["Location"], ...]
     main_generation: MinimalResource["Generation"]
-    pokedexes: Tuple[MinimalResource["Pokedex"]]
-    names: Tuple["Name"]
-    version_groups: Tuple[MinimalResource["VersionGroup"]]
+    pokedexes: Tuple[MinimalResource["Pokedex"], ...]
+    names: Tuple["Name", ...]
+    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

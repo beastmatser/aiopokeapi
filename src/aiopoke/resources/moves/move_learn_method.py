@@ -9,9 +9,9 @@ if TYPE_CHECKING:
 
 class MoveLearnMethod(NamedResource):
     description: str
-    descriptions: Tuple["Description"]
-    names: Tuple["Name"]
-    version_groups: Tuple[MinimalResource["VersionGroup"]]
+    descriptions: Tuple["Description", ...]
+    names: Tuple["Name", ...]
+    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

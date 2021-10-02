@@ -5,9 +5,9 @@ from ...utility.common_models import Description, Name, NamedResource
 
 class EncounterMethod(NamedResource):
     description: str
-    descriptions: Tuple["Description"]
+    descriptions: Tuple["Description", ...]
     order: int
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

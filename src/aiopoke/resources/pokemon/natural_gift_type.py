@@ -13,12 +13,12 @@ if TYPE_CHECKING:
 
 class NaturalGiftType(NamedResource):
     damage_relations: "TypeRelations"
-    game_indices: Tuple["GenerationGameIndex"]
+    game_indices: Tuple["GenerationGameIndex", ...]
     move_damage_class: MinimalResource["MoveDamageClass"]
-    moves: Tuple[MinimalResource["Move"]]
-    names: Tuple["Name"]
-    past_damage_relations: Tuple["PastTypeRelation"]
-    pokemon: Tuple["TypePokemon"]
+    moves: Tuple[MinimalResource["Move"], ...]
+    names: Tuple["Name", ...]
+    past_damage_relations: Tuple["PastTypeRelation", ...]
+    pokemon: Tuple["TypePokemon", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -43,12 +43,12 @@ class NaturalGiftType(NamedResource):
 
 
 class TypeRelations:
-    double_damage_from: Tuple[MinimalResource["NaturalGiftType"]]
-    double_damage_to: Tuple[MinimalResource["NaturalGiftType"]]
-    half_damage_from: Tuple[MinimalResource["NaturalGiftType"]]
-    half_damage_to: Tuple[MinimalResource["NaturalGiftType"]]
-    no_damage_from: Tuple[MinimalResource["NaturalGiftType"]]
-    no_damage_to: Tuple[MinimalResource["NaturalGiftType"]]
+    double_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
+    double_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
+    half_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
+    half_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
+    no_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
+    no_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
 
     def __init__(self, data) -> None:
         self.double_damage_from = tuple(

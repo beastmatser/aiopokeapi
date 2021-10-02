@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class PokeathlonStat(NamedResource):
     affecting_natures: "NaturePokeathlonStatAffectSets"
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -23,8 +23,8 @@ class PokeathlonStat(NamedResource):
 
 
 class NaturePokeathlonStatAffectSets:
-    increase: Tuple["NaturePokeathlonStatAffect"]
-    decrease: Tuple["NaturePokeathlonStatAffect"]
+    increase: Tuple["NaturePokeathlonStatAffect", ...]
+    decrease: Tuple["NaturePokeathlonStatAffect", ...]
 
     def __init__(self, data) -> None:
         self.increase = tuple(

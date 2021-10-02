@@ -10,11 +10,11 @@ if TYPE_CHECKING:
 class Stat(NamedResource):
     affecting_moves: "MoveStatAffectSets"
     affecting_natures: "NatureStatAffectSets"
-    characteristics: Tuple[Url["Characteristic"]]
+    characteristics: Tuple[Url["Characteristic"], ...]
     game_index: int
     is_battle_only: bool
     move_damage_class: Optional[MinimalResource["MoveDamageClass"]]
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -35,12 +35,12 @@ class Stat(NamedResource):
 
 
 class MoveStatAffectSets:
-    increase: Tuple["MoveStatAffect"]
-    decrease: Tuple["MoveStatAffect"]
+    increase: Tuple["MoveStatAffect", ...]
+    decrease: Tuple["MoveStatAffect", ...]
 
     def __init__(self, data) -> None:
-        self.increase = [MoveStatAffect(increase_data) for increase_data in data["increase"]]
-        self.decrease = [MoveStatAffect(decrease_data) for decrease_data in data["decrease"]]
+        self.increase = tuple(MoveStatAffect(increase_data) for increase_data in data["increase"])
+        self.decrease = tuple(MoveStatAffect(decrease_data) for decrease_data in data["decrease"])
 
     def __repr__(self) -> str:
         return f"<MoveStatAffectSets increase={self.increase} decrease={self.decrease}>"
@@ -59,8 +59,8 @@ class MoveStatAffect:
 
 
 class NatureStatAffectSets:
-    increase: Tuple[MinimalResource["Nature"]]
-    decrease: Tuple[MinimalResource["Nature"]]
+    increase: Tuple[MinimalResource["Nature"], ...]
+    decrease: Tuple[MinimalResource["Nature"], ...]
 
     def __init__(self, data) -> None:
         self.increase = tuple(MinimalResource(increase_data) for increase_data in data["increase"])

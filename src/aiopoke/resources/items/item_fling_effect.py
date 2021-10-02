@@ -9,8 +9,8 @@ if TYPE_CHECKING:
 
 class ItemFlingEffect(NamedResource):
     effect_entry: "Effect"
-    effect_entries: Tuple["Effect"]
-    items: Tuple[MinimalResource["Item"]]
+    effect_entries: Tuple["Effect", ...]
+    items: Tuple[MinimalResource["Item"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

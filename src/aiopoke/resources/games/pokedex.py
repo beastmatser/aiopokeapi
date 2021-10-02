@@ -9,12 +9,12 @@ if TYPE_CHECKING:
 
 class Pokedex(NamedResource):
     description: str
-    descriptions: Tuple["Description"]
+    descriptions: Tuple["Description", ...]
     is_main_series: bool
-    pokemon_entries: Tuple["PokemonEntry"]
+    pokemon_entries: Tuple["PokemonEntry", ...]
     region: Optional[MinimalResource["Region"]]
-    version_groups: Tuple[MinimalResource["VersionGroup"]]
-    names: Tuple["Name"]
+    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

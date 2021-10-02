@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 
 class Characteristic:
     description: str
-    descriptions: Tuple["Description"]
+    descriptions: Tuple["Description", ...]
     gene_modulo: int
     highest_stat: MinimalResource["Stat"]
     id_: int
-    possible_values: Tuple[int]
+    possible_values: Tuple[int, ...]
 
     def __init__(self, data) -> None:
         self.description = tuple(

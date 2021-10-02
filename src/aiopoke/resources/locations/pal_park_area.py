@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class PalParkArea(NamedResource):
-    pokemon_encounters: Tuple["PalParkEncounterSpecies"]
-    names: Tuple["Name"]
+    pokemon_encounters: Tuple["PalParkEncounterSpecies", ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

@@ -6,9 +6,9 @@ from ...utility import Effect, FlavorText
 class ContestEffect:
     appeal: int
     effect_entry: "Effect"
-    effect_entries: Tuple["Effect"]
+    effect_entries: Tuple["Effect", ...]
     flavor_text_entry: "FlavorText"
-    flavor_text_entries: Tuple["FlavorText"]
+    flavor_text_entries: Tuple["FlavorText", ...]
     id_: int
     jam: int
 
@@ -27,10 +27,10 @@ class ContestEffect:
             for flavor_text_entry_data in data["flavor_text_entries"]
             if flavor_text_entry_data["language"]["name"] == "en"
         )[0]
-        self.flavor_text_entries = [
+        self.flavor_text_entries = tuple(
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
-        ]
+        )
         self.id_ = data["id"]
         self.jam = data["jam"]
 

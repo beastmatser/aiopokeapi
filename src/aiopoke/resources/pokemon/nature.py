@@ -12,9 +12,9 @@ class Nature(NamedResource):
     hates_flavor: Optional[MinimalResource["BerryFlavor"]]
     increased_stat: Optional[MinimalResource["PokeathlonStat"]]
     likes_flavor: Optional[MinimalResource["BerryFlavor"]]
-    move_battle_style_preferences: Tuple["MoveBattleStylePreference"]
-    names: Tuple["Name"]
-    pokeathlon_stat_changes: Tuple["NatureStatChange"]
+    move_battle_style_preferences: Tuple["MoveBattleStylePreference", ...]
+    names: Tuple["Name", ...]
+    pokeathlon_stat_changes: Tuple["NatureStatChange", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -38,12 +38,12 @@ class Nature(NamedResource):
             if data["likes_flavor"] is not None
             else None
         )
-        self.move_battle_style_preferences = [
+        self.move_battle_style_preferences = tuple(
             MoveBattleStylePreference(move_battle_style_preference_data)
             for move_battle_style_preference_data in data[
                 "move_battle_style_preferences"
             ]
-        ]
+        )
         self.names = tuple(Name(name_data) for name_data in data["names"])
         self.pokeathlon_stat_changes = tuple(
             NatureStatChange(pokeathlon_stat_change_data)

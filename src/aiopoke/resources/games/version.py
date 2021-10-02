@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class Version(NamedResource):
     version_group: MinimalResource["VersionGroup"]
-    names: Tuple["Name"]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

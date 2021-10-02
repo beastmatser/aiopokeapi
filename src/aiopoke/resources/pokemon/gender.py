@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class Gender(NamedResource):
-    pokemon_species_details: Tuple["PokemonSpeciesGender"]
-    required_for_evolution: Tuple[MinimalResource["PokemonSpecies"]]
+    pokemon_species_details: Tuple["PokemonSpeciesGender", ...]
+    required_for_evolution: Tuple[MinimalResource["PokemonSpecies"], ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

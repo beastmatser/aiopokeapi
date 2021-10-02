@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class MoveAilment(NamedResource):
-    moves: Tuple[MinimalResource["Move"]]
-    names: Tuple["Name"]
+    moves: Tuple[MinimalResource["Move"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

@@ -17,17 +17,17 @@ class PokemonSpecies(NamedResource):
     base_happiness: int
     capture_rate: int
     color: MinimalResource["PokemonColor"]
-    egg_groups: Tuple[MinimalResource["EggGroup"]]
+    egg_groups: Tuple[MinimalResource["EggGroup"], ...]
     evolution_chain: Url["EvolutionChain"]
     evolves_from_species: MinimalResource["PokemonSpecies"]
     flavor_text_entry: "FlavorText"
-    flavor_text_entries: Tuple["FlavorText"]
+    flavor_text_entries: Tuple["FlavorText", ...]
     form_description: str
-    form_descriptions: Tuple["Description"]
+    form_descriptions: Tuple["Description", ...]
     forms_switchable: bool
     gender_rate: int
     genus: "Genus"
-    genera: Tuple["Genus"]
+    genera: Tuple["Genus", ...]
     generation: MinimalResource["Generation"]
     growth_rate: MinimalResource["GrowthRate"]
     habitat: MinimalResource["PokemonHabitat"]
@@ -37,11 +37,11 @@ class PokemonSpecies(NamedResource):
     is_legendary: bool
     is_mythical: bool
     order: int
-    names: Tuple["Name"]
-    pal_park_encounters: Tuple["PalParkEncounterArea"]
-    pokedex_numbers: Tuple["PokemonSpeciesDexEntry"]
+    names: Tuple["Name", ...]
+    pal_park_encounters: Tuple["PalParkEncounterArea", ...]
+    pokedex_numbers: Tuple["PokemonSpeciesDexEntry", ...]
     shape: MinimalResource["PokemonShape"]
-    varieties: Tuple["PokemonSpeciesVariety"]
+    varieties: Tuple["PokemonSpeciesVariety", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)

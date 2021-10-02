@@ -17,20 +17,20 @@ if TYPE_CHECKING:
 
 
 class Item(NamedResource):
-    attributes: Tuple[MinimalResource["ItemAttribute"]]
+    attributes: Tuple[MinimalResource["ItemAttribute"], ...]
     baby_trigger_for: Optional[Url["EvolutionChain"]]
     category: MinimalResource["ItemCategory"]
     cost: int
     effect_entry: "VerboseEffect"
-    effect_entries: Tuple["VerboseEffect"]
+    effect_entries: Tuple["VerboseEffect", ...]
     flavor_text_entry: "FlavorText"
-    flavor_text_entries: Tuple["FlavorText"]
+    flavor_text_entries: Tuple["FlavorText", ...]
     fling_effect: Optional[MinimalResource["ItemFlingEffect"]]
     fling_power: Optional[int]
-    game_indices: Tuple["GenerationGameIndex"]
-    held_by_pokemon: Tuple["ItemHolderPokemon"]
-    machines: Tuple["MachineVersionDetail"]
-    names: Tuple["Name"]
+    game_indices: Tuple["GenerationGameIndex", ...]
+    held_by_pokemon: Tuple["ItemHolderPokemon", ...]
+    machines: Tuple["MachineVersionDetail", ...]
+    names: Tuple["Name", ...]
     sprite: Optional["Sprite"]
 
     def __init__(self, data) -> None:
@@ -103,7 +103,7 @@ class ItemSprites:
 
 class ItemHolderPokemon:
     pokemon: MinimalResource["Pokemon"]
-    version_details: Tuple["ItemHolderPokemonVersionDetail"]
+    version_details: Tuple["ItemHolderPokemonVersionDetail", ...]
 
     def __init__(self, data) -> None:
         self.pokemon = MinimalResource(data["pokemon"])

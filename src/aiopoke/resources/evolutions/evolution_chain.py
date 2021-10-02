@@ -32,8 +32,8 @@ class EvolutionChain:
 
 
 class ChainLink:
-    evolution_details: Tuple["EvolutionDetail"]
-    evolves_to: Tuple["ChainLink"]
+    evolution_details: Tuple["EvolutionDetail", ...]
+    evolves_to: Tuple["ChainLink", ...]
     is_baby: bool
     species: MinimalResource["PokemonSpecies"]
 

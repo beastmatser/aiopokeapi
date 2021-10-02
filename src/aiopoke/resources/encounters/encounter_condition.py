@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class EncounterCondition(NamedResource):
-    values: Tuple[MinimalResource["EncounterConditionValue"]]
-    names: Tuple["Name"]
+    values: Tuple[MinimalResource["EncounterConditionValue"], ...]
+    names: Tuple["Name", ...]
 
     def __init__(self, data) -> None:
         super().__init__(data)
