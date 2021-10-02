@@ -1,7 +1,5 @@
 import aiohttp
-from typing import Optional, Union
-
-
+from typing import Any, Dict, Optional, Union
 from .cache import Cache, cache
 from .resources import (
     Ability,
@@ -133,18 +131,20 @@ class AiopokeClient:
 
         await self.session.close()
 
-    async def _fetch(self, endpoint: str, name_or_id: Union[str, int]):
-        endpoint = endpoint.lower().replace(" ", "-")
-        if endpoint not in ENDPOINTS:
-            raise ValueError(f"'{endpoint}' is not a valid endpoint")
+    async def _get_session(self) -> aiohttp.ClientSession:
+        if self.session is None:
+            self.session = aiohttp.ClientSession()
 
+        return self.session
+
+    async def _fetch(self, endpoint: str, name_or_id: Union[str, int]) -> Dict[str, Any]:
         if self.session is None:
             self.session = aiohttp.ClientSession()
 
         url = f"https://pokeapi.co/api/v2/{endpoint}/{name_or_id}"
         async with self.session.get(url) as response:
             try:
-                data = await response.json()
+                data: Dict[str, Any] = await response.json()
             except aiohttp.ContentTypeError:
                 raise ValueError(f"An invalid value for endpoint: '{endpoint}' was passed in")
 
@@ -335,7 +335,8 @@ class AiopokeClient:
     @cache("pokemon")
     async def fetch_pokemon(self, name_or_id) -> Pokemon:
         data = await self._fetch("pokemon", name_or_id)
-        response = await self.session.get(f"https://pokeapi.co/api/v2/pokemon/{data['id']}/encounters")  # type: ignore
+        session = await self._get_session()
+        response = await session.get(f"https://pokeapi.co/api/v2/pokemon/{data['id']}/encounters")
         data["location_area_encounters"] = await response.json()
         return Pokemon(data)
 

@@ -38,11 +38,12 @@ class Sprite:
             await f.write(bytes_)
 
     async def read(self) -> bytes:
-        from ...aiopoke_client import AiopokeClient  # type: ignore
+        from ...aiopoke_client import AiopokeClient
 
         client = AiopokeClient()  # this will return an existing instance
+        session = await client._get_session()
 
-        async with client.session.get(self.url) as response:  # type: ignore
+        async with session.get(self.url) as response:
             bytes_: bytes = await response.read()
             self.bytes_ = bytes_
 

@@ -65,4 +65,4 @@ from .resources import (
     Stat,
 )
 
-from .aiopoke_client import AiopokeClient  # type: ignore
+from .aiopoke_client import AiopokeClient
