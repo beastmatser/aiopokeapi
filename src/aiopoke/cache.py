@@ -1,4 +1,13 @@
-from typing import Any, Awaitable, Callable, Dict, Optional, Union, TYPE_CHECKING, TypeVar
+from typing import (
+    Any,
+    Callable,
+    Coroutine,
+    Dict,
+    Optional,
+    Union,
+    TYPE_CHECKING,
+    TypeVar,
+)
 
 if TYPE_CHECKING:
     from .aiopoke_client import AiopokeClient
@@ -7,18 +16,25 @@ X = TypeVar("X")
 
 
 # cache decorator
-def cache(endpoint: str) -> Callable[[Callable[["AiopokeClient", Union[str, int]], X]], Callable[["AiopokeClient", Union[str, int]], X]]:
-    def decorator(func: Callable[["AiopokeClient", Union[str, int]], X]) -> Callable[["AiopokeClient", Union[str, int]], X]:
+def cache(
+    endpoint: str,
+) -> Callable[
+    [Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, X]]],
+    Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, X]],
+]:
+    def decorator(
+        func: Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, X]]
+    ) -> Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, X]]:
         async def call(client: "AiopokeClient", name_or_id: Union[str, int]) -> X:
             cached_item: Optional[X] = client._cache.get(f"{endpoint}_{name_or_id}")
             if cached_item is not None:
                 return cached_item
 
-            obj: X = await func(client, name_or_id)  # type: ignore
+            obj: X = await func(client, name_or_id)
             client._cache.put(endpoint, obj)
             return obj
 
-        return call  # type: ignore
+        return call
     return decorator
 
 
