@@ -63,7 +63,7 @@ class Pokemon(NamedResource):
     def __repr__(self) -> str:
         return (
             f"<Pokemon abilities={self.abilities} base_experience={self.base_experience} forms={self.forms} "
-            f"game_indices={self.game_indices} height={self.height} id_={self.id_} items={self.items} "
+            f"game_indices={self.game_indices} height={self.height} id_={self.id_} held_items={self.held_items} "
             f"is_default={self.is_default} location_area_encounters={self.location_area_encounters} moves={self.moves} name='{self.name}' "
             f"order={self.order} past_types={self.past_types} species={self.species} sprites={self.sprites} "
             f"stats={self.stats} types={self.types} weight={self.weight}>"
@@ -81,7 +81,7 @@ class PokemonAbility:
         self.ability = MinimalResource(data["ability"])
 
     def __repr__(self) -> str:
-        return f"<PokemonAbility is_hidden={self.is_hidden} slot={self.slot} pokemon={self.pokemon}>"
+        return f"<PokemonAbility is_hidden={self.is_hidden} slot={self.slot} pokemon={self.ability}>"
 
 
 class PokemonType:
