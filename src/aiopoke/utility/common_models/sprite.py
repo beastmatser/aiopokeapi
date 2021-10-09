@@ -1,6 +1,10 @@
-import aiofiles
 import os
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
+
+import aiofiles
+
+if TYPE_CHECKING:
+    from ...aiopoke_client import AiopokeClient
 
 
 class Sprite:
@@ -19,7 +23,7 @@ class Sprite:
 
         return cls(url)
 
-    async def save(self, *, path: Optional[str] = None) -> None:
+    async def save(self, client: "AiopokeClient", *, path: Optional[str] = None) -> None:
         if path is None:
             path = os.getcwd()
 
@@ -32,15 +36,12 @@ class Sprite:
             )
 
         if self.bytes_ is None:
-            bytes_ = await self.read()
+            bytes_ = await self.read(client)
 
         async with aiofiles.open(path + "/." + self.file_extention, "wb") as f:
             await f.write(bytes_)
 
-    async def read(self) -> bytes:
-        from ...aiopoke_client import AiopokeClient
-
-        client = AiopokeClient()  # this will return an existing instance
+    async def read(self, client: "AiopokeClient") -> bytes:
         session = await client._get_session()
 
         async with session.get(self.url) as response:
