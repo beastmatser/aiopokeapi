@@ -1,7 +1,7 @@
 import os
 from typing import Optional
 
-import aiofiles
+import aiofiles  # type: ignore
 
 OptionalSprite = Optional["Sprite"]
 
@@ -387,7 +387,7 @@ class Sprite:
 
     def __init__(self, url) -> None:
         self.url = url
-        self.file_extention = url[url.rfind(".") + 1:]
+        self.file_extention = url.split(".")[-1]
         self.bytes_ = None
 
     @classmethod

@@ -38,4 +38,4 @@ repos:
     hooks:
       - id: mypy
         files: ^src/
-        args: []
+        args: [--install-types, --non-interactive]

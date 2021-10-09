@@ -1,54 +1,59 @@
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing import Union
+
 import aiohttp
-from typing import Any, Dict, Optional, Union
-from .cache import Cache, cache
-from .resources import (
-    Ability,
-    Berry,
-    BerryFirmness,
-    BerryFlavor,
-    Characteristic,
-    ContestEffect,
-    ContestType,
-    EggGroup,
-    EncounterCondition,
-    EncounterConditionValue,
-    EncounterMethod,
-    EvolutionChain,
-    EvolutionTrigger,
-    Gender,
-    Generation,
-    GrowthRate,
-    Item,
-    ItemAttribute,
-    ItemCategory,
-    ItemFlingEffect,
-    ItemPocket,
-    Location,
-    LocationArea,
-    Machine,
-    Move,
-    MoveAilment,
-    MoveBatteStyle,
-    MoveCategory,
-    MoveDamageClass,
-    MoveLearnMethod,
-    MoveTarget,
-    NaturalGiftType,
-    Nature,
-    PalParkArea,
-    PokeathlonStat,
-    Pokedex,
-    Pokemon,
-    PokemonColor,
-    PokemonForm,
-    PokemonHabitat,
-    PokemonShape,
-    PokemonSpecies,
-    Region,
-    Stat,
-    SuperContestEffect,
-    Version,
-    VersionGroup,)
+
+from .cache import Cache
+from .cache import cache
+from .resources import Ability
+from .resources import Berry
+from .resources import BerryFirmness
+from .resources import BerryFlavor
+from .resources import Characteristic
+from .resources import ContestEffect
+from .resources import ContestType
+from .resources import EggGroup
+from .resources import EncounterCondition
+from .resources import EncounterConditionValue
+from .resources import EncounterMethod
+from .resources import EvolutionChain
+from .resources import EvolutionTrigger
+from .resources import Gender
+from .resources import Generation
+from .resources import GrowthRate
+from .resources import Item
+from .resources import ItemAttribute
+from .resources import ItemCategory
+from .resources import ItemFlingEffect
+from .resources import ItemPocket
+from .resources import Location
+from .resources import LocationArea
+from .resources import Machine
+from .resources import Move
+from .resources import MoveAilment
+from .resources import MoveBatteStyle
+from .resources import MoveCategory
+from .resources import MoveDamageClass
+from .resources import MoveLearnMethod
+from .resources import MoveTarget
+from .resources import NaturalGiftType
+from .resources import Nature
+from .resources import PalParkArea
+from .resources import PokeathlonStat
+from .resources import Pokedex
+from .resources import Pokemon
+from .resources import PokemonColor
+from .resources import PokemonForm
+from .resources import PokemonHabitat
+from .resources import PokemonShape
+from .resources import PokemonSpecies
+from .resources import Region
+from .resources import Stat
+from .resources import SuperContestEffect
+from .resources import Version
+from .resources import VersionGroup
 from .utility.language import Language
 
 ENDPOINTS = {
@@ -136,7 +141,9 @@ class AiopokeClient:
 
         return self.session
 
-    async def _fetch(self, endpoint: str, name_or_id: Union[str, int]) -> Dict[str, Any]:
+    async def _fetch(
+        self, endpoint: str, name_or_id: Union[str, int]
+    ) -> Dict[str, Any]:
         if self.session is None:
             self.session = aiohttp.ClientSession()
 
@@ -145,7 +152,9 @@ class AiopokeClient:
             try:
                 data: Dict[str, Any] = await response.json()
             except aiohttp.ContentTypeError:
-                raise ValueError(f"An invalid value for endpoint: '{endpoint}' was passed in")
+                raise ValueError(
+                    f"An invalid value for endpoint: '{endpoint}' was passed in"
+                )
 
         return data
 
@@ -335,7 +344,9 @@ class AiopokeClient:
     async def fetch_pokemon(self, name_or_id) -> Pokemon:
         data = await self._fetch("pokemon", name_or_id)
         session = await self._get_session()
-        response = await session.get(f"https://pokeapi.co/api/v2/pokemon/{data['id']}/encounters")
+        response = await session.get(
+            f"https://pokeapi.co/api/v2/pokemon/{data['id']}/encounters"
+        )
         data["location_area_encounters"] = await response.json()
         return Pokemon(data)
 
