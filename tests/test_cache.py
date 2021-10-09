@@ -12,6 +12,6 @@ async def test_cache(client: aiopoke.AiopokeClient):
     assert cache.is_cached(encounter_condition)
 
     move = await client.fetch_move(1)
-    contest_effect = await move.contest_effect.fetch()
+    contest_effect = await move.contest_effect.fetch(client)
 
     assert isinstance(contest_effect, aiopoke.ContestEffect)
