@@ -48,8 +48,7 @@ from .resources import (
     Stat,
     SuperContestEffect,
     Version,
-    VersionGroup,
-)
+    VersionGroup,)
 from .utility.language import Language
 
 ENDPOINTS = {
