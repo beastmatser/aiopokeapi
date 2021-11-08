@@ -1,4 +1,4 @@
 include *.txt
 include tox.ini
-recursive-include src *.typed
+recursive-include aiopoke *.typed
 recursive-include tests *.py

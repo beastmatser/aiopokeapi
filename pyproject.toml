@@ -10,7 +10,7 @@ testpaths = [
 ]
 
 [tool.mypy]
-mypy_path = "src"
+mypy_path = "aiopoke"
 check_untyped_defs = true
 disallow_any_generics = true
 ignore_missing_imports = true
