@@ -113,8 +113,8 @@ def cache_objects(cls: Type["AiopokeClient"]):
     def wrapper(*args, **kwargs):
         for func in cls.__dict__:
             if func.startswith("fetch"):
-                decorator = cache(func.split("func_")[0].replace("_", "-"))
-                decorator(cls.__dict__[func])
+                decorator = cache(func.split("fetch_")[1].replace("_", "-").strip())
+                setattr(cls, func, decorator(cls.__dict__[func]))
 
         return cls(*args, **kwargs)
 
