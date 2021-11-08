@@ -75,7 +75,7 @@ class Url(Generic[T]):
             "region": client.fetch_region,
             "stat": client.fetch_stat,
             "super-contest-effect": client.fetch_super_contest_effect,
-            "type": client.fetch_natural_gift_type,
+            "type": client.fetch_type,
             "version": client.fetch_version,
             "version-group": client.fetch_version_group,
         }
