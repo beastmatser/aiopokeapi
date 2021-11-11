@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Dict
 from typing import Optional
+from typing import Type
 from typing import Union
 
 import aiohttp
@@ -108,6 +109,19 @@ ENDPOINTS = {
 }
 
 
+def cache_objects(cls: Type["AiopokeClient"]):
+    def wrapper(*args, **kwargs):
+        for func in cls.__dict__:
+            if func.startswith("fetch"):
+                decorator = cache(func.split("fetch_")[1].replace("_", "-").strip())
+                setattr(cls, func, decorator(cls.__dict__[func]))
+
+        return cls(*args, **kwargs)
+
+    return wrapper
+
+
+@cache_objects
 class AiopokeClient:
     __instance: Optional["AiopokeClient"] = None
 
