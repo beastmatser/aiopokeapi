@@ -1,4 +1,7 @@
+include *.in
 include *.txt
+include *.yaml
 include tox.ini
+recursive-include aiopoke *.py
 recursive-include aiopoke *.typed
 recursive-include tests *.py
