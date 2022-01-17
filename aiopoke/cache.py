@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import Any
 from typing import Callable
 from typing import Coroutine
@@ -19,13 +17,13 @@ U = TypeVar("U")
 def cache(
     endpoint: str,
 ) -> Callable[
-    [Callable[[AiopokeClient, Union[str, int]], Coroutine[Any, Any, U]]],
-    Callable[[AiopokeClient, Union[str, int]], Coroutine[Any, Any, U]],
+    [Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, U]]],
+    Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, U]],
 ]:
     def outer(
-        coro: Callable[[AiopokeClient, Union[str, int]], Coroutine[Any, Any, U]]
-    ) -> Callable[[AiopokeClient, Union[str, int]], Coroutine[Any, Any, U]]:
-        async def inner(client: AiopokeClient, name_or_id: Union[str, int]) -> U:
+        coro: Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, U]]
+    ) -> Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, U]]:
+        async def inner(client: "AiopokeClient", name_or_id: Union[str, int]) -> U:
             cached_item: Optional[U] = client._cache.get(endpoint, name_or_id)
 
             if cached_item is not None:
@@ -40,7 +38,7 @@ def cache(
     return outer
 
 
-BASE_CACHE = {
+BASE_CACHE: Dict[str, Dict[str, Any]] = {
     "ability": {},
     "berry": {},
     "berry-firmness": {},
@@ -95,11 +93,11 @@ BASE_CACHE = {
 class Cache:
     cache: Dict[str, Dict[str, Any]] = BASE_CACHE
 
-    def get(self, endpoint: str, id: int) -> Any:
-        return self.cache[endpoint].get(id)
+    def get(self, endpoint: str, id: Union[str, int]) -> Any:
+        return self.cache[endpoint].get(str(id))
 
-    def put(self, endpoint: str, id: int, obj: Any) -> None:
-        self.cache[endpoint][id] = obj
+    def put(self, endpoint: str, id: Union[str, int], obj: Any) -> None:
+        self.cache[endpoint][str(id)] = obj
 
     def has(self, endpoint: str, obj: Any) -> bool:
         return obj in self.cache[endpoint].values()

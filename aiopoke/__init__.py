@@ -4,7 +4,7 @@ __license__ = "MIT"
 __copyright__ = "Copyright 2021-present beastmatser"
 __version__ = "0.0.8a"
 
-from typing import Literal, NamedTuple
+from typing import NamedTuple
 
 from .aiopoke_client import AiopokeClient
 from .objects.resources import (
@@ -79,7 +79,7 @@ class VersionInfo(NamedTuple):
     major: int
     minor: int
     micro: int
-    releaselevel: Literal["alpha", "beta", "candidate", "final"]
+    releaselevel: str  # must be one of the following: alpha, beta, candidate, or final
 
     def __repr__(self) -> str:
         return f"{self.major}.{self.minor}.{self.micro}-{self.releaselevel}"
