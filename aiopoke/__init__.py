@@ -7,7 +7,7 @@ __version__ = "0.0.8a"
 from typing import Literal, NamedTuple
 
 from .aiopoke_client import AiopokeClient
-from .resources import (
+from .objects.resources import (
     Ability,
     Berry,
     BerryFirmness,
@@ -56,7 +56,7 @@ from .resources import (
     Version,
     VersionGroup,
 )
-from .utility import (
+from .objects.utility import (
     Description,
     Effect,
     Encounter,
