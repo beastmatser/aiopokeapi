@@ -8,5 +8,5 @@ async def test_client(client: aiopoke.AiopokeClient):
     berry_flavor = await berry.flavors[0].flavor.fetch(client)
 
     assert hasattr(berry, "name")
-    assert hasattr(berry, "id_")
+    assert hasattr(berry, "id")
     assert isinstance(berry_flavor, aiopoke.BerryFlavor)

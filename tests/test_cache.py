@@ -9,7 +9,7 @@ async def test_cache(client: aiopoke.AiopokeClient):
 
     cache = client._cache
     assert cache.has("pokemon", pokemon)
-    assert cache.has("encounter_condition", encounter_condition)
+    assert cache.has("encounter-condition", encounter_condition)
 
     move = await client.fetch_move(1)
     contest_effect = await move.contest_effect.fetch(client)
