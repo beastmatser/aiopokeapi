@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import aiofiles
 
 if TYPE_CHECKING:
-    from ....aiopoke_client import AiopokeClient
+    from aiopoke.aiopoke_client import AiopokeClient
 
 
 class Sprite:

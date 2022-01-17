@@ -3,7 +3,7 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ....minimal_resources import Url
+from aiopoke.minimal_resources import Url
 from ...utility import MachineVersionDetail
 from ...utility import Name
 from ...utility import NamedResource

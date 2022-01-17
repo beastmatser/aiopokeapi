@@ -2,7 +2,7 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ....minimal_resources import Url
+from aiopoke.minimal_resources import Url
 from ...utility import Description
 from ...utility import FlavorText
 from ...utility import Name

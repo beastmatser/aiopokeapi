@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ....minimal_resources import Url
+from aiopoke.minimal_resources import Url
 
 if TYPE_CHECKING:
     from ...resources import Machine, VersionGroup
