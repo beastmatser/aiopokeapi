@@ -88,7 +88,7 @@ class Item(NamedResource):
             f"<Item attributes={self.attributes} baby_trigger_form={self.baby_trigger_for} cost={self.cost} effect_entry={self.effect_entry} "
             f"effect_entries={self.effect_entries} flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} "
             f"fling_effect={self.fling_effect} fling_power={self.fling_power} game_indices={self.game_indices} held_by_pokemon={self.held_by_pokemon} "
-            f"id_={self.id_} machines={self.machines} name='{self.name}' names={self.name} sprite={self.sprite}>"
+            f"id_={self.id} machines={self.machines} name='{self.name}' names={self.name} sprite={self.sprite}>"
         )
 
 

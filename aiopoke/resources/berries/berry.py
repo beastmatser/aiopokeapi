@@ -37,7 +37,7 @@ class Berry(NamedResource):
     def __repr__(self) -> str:
         return (
             f"<Berry firmness='{self.firmness}' flavors={self.flavors} growth_time={self.growth_time} "
-            f"id_={self.id_} max_harvest={self.max_harvest} name={self.name} "
+            f"id_={self.id} max_harvest={self.max_harvest} name={self.name} "
             f"natural_gift_power={self.natural_gift_power} natural_gift_type={self.natural_gift_type} "
             f"soil_dryness={self.soil_dryness} smoothness={self.smoothness} size={self.size}>"
         )

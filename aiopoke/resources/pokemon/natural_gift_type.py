@@ -44,7 +44,7 @@ class NaturalGiftType(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<NaturalGiftType damage_relations={self.damage_relations} game_indices={self.game_indices} id_={self.id_} "
+            f"<NaturalGiftType damage_relations={self.damage_relations} game_indices={self.game_indices} id_={self.id} "
             f"move_damage_class={self.move_damage_class} move={self.moves} name='{self.name}' names={self.names} "
             f"past_damage_relations={self.past_damage_relations} pokemon={self.pokemon}>"
         )

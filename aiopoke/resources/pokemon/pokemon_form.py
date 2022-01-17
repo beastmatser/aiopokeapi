@@ -42,7 +42,7 @@ class PokemonForm(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<PokemonForm form_name='{self.form_name}' form_order={self.form_order} id_={self.id_} is_battle_only={self.is_battle_only} "
+            f"<PokemonForm form_name='{self.form_name}' form_order={self.form_order} id_={self.id} is_battle_only={self.is_battle_only} "
             f"is_default={self.is_default} is_mega={self.is_mega} order={self.order} name='{self.name}' names={self.names} "
             f"pokemon={self.pokemon} sprites={self.sprites} types={self.types} version_group={self.version_group}>"
         )

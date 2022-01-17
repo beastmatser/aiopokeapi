@@ -45,7 +45,7 @@ class Generation(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Generation abilities={self.abilities} id_={self.id_} main_region={self.main_region} "
+            f"<Generation abilities={self.abilities} id_={self.id} main_region={self.main_region} "
             f"moves={self.moves} name='{self.name}' pokemon_species={self.pokemon_species} "
             f"types={self.types} version_groups={self.version_groups}"
         )

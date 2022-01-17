@@ -34,7 +34,7 @@ class LocationArea(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<LocationArea encounter_method_rates={self.encounter_method_rates} id_={self.id_} pokemon_encounters={self.pokemon_encounters} "
+            f"<LocationArea encounter_method_rates={self.encounter_method_rates} id_={self.id} pokemon_encounters={self.pokemon_encounters} "
             f"location={self.location} game_index={self.game_index} name='{self.name}' names={self.names}>"
         )
 

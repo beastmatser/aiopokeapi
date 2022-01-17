@@ -21,7 +21,7 @@ class BerryFlavor(NamedResource):
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
-        return f"<BerryFlavor berries={self.berries} id_={self.id_} name={self.name} names={self.names}>"
+        return f"<BerryFlavor berries={self.berries} id_={self.id} name={self.name} names={self.names}>"
 
 
 class FlavorBerryMap:

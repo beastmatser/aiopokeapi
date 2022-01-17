@@ -31,6 +31,6 @@ class MoveDamageClass(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<MoveDamageClass description='{self.description}' descriptions={self.descriptions} id_={self.id_} "
+            f"<MoveDamageClass description='{self.description}' descriptions={self.descriptions} id_={self.id} "
             f"moves={self.moves} name='{self.name}' names={self.names}>"
         )

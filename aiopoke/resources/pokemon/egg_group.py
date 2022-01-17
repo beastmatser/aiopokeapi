@@ -22,4 +22,4 @@ class EggGroup(NamedResource):
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
-        return f"<EggGroup id_={self.id_} pokemon_species={self.pokemon_species} name='{self.name}' names={self.names}>"
+        return f"<EggGroup id_={self.id} pokemon_species={self.pokemon_species} name='{self.name}' names={self.names}>"

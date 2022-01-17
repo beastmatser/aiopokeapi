@@ -38,7 +38,7 @@ class GrowthRate(NamedResource):
     def __repr__(self) -> str:
         return (
             f"<AbilityFlavorText description='{self.description}' descriptions={self.descriptions} formula='{self.formula}' "
-            f"id_={self.id_} levels={self.levels} name='{self.name}' pokemon_species={self.pokemon_species}"
+            f"id_={self.id} levels={self.levels} name='{self.name}' pokemon_species={self.pokemon_species}"
         )
 
 

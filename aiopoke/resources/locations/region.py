@@ -34,6 +34,6 @@ class Region(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Region id_={self.id_} locations={self.locations} main_generation={self.main_generation} "
+            f"<Region id_={self.id} locations={self.locations} main_generation={self.main_generation} "
             f"pokedexes={self.pokedexes} name='{self.name}' names={self.names} version_groups={self.version_groups}>"
         )

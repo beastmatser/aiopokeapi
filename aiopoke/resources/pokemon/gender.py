@@ -25,7 +25,7 @@ class Gender(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Gender id_={self.id_} name={self.name} pokemon_species_details={self.pokemon_species_details} "
+            f"<Gender id_={self.id} name={self.name} pokemon_species_details={self.pokemon_species_details} "
             f"required_for_evolution={self.required_for_evolution}>"
         )
 

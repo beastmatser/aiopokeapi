@@ -22,7 +22,7 @@ class PalParkArea(NamedResource):
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
-        return f"<PalParkArea id_={self.id_} pokemon_encounters={self.pokemon_encounters} name='{self.name}' names={self.names}>"
+        return f"<PalParkArea id_={self.id} pokemon_encounters={self.pokemon_encounters} name='{self.name}' names={self.names}>"
 
 
 class PalParkEncounterSpecies:

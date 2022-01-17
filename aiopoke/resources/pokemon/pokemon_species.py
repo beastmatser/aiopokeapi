@@ -117,7 +117,7 @@ class PokemonSpecies(NamedResource):
             f"form_description='{self.form_description}' form_descriptions={self.form_descriptions} forms_switchable={self.forms_switchable} "
             f"gender_rate={self.gender_rate} genus={self.genus} genera={self.genera} generation={self.generation} "
             f"growth_rate={self.growth_rate} habitat={self.habitat} has_gender_differences={self.has_gender_differences} "
-            f"hatch_counter={self.hatch_counter} id_={self.id_} is_baby={self.is_baby} is_legendary={self.is_legendary} is_mythical={self.is_mythical} "
+            f"hatch_counter={self.hatch_counter} id_={self.id} is_baby={self.is_baby} is_legendary={self.is_legendary} is_mythical={self.is_mythical} "
             f"order={self.order} name='{self.name}' names={self.names} pal_park_encounters={self.pal_park_encounters} "
             f"pokedex_numbers={self.pokedex_numbers} shape={self.shape} varieties={self.varieties}>"
         )

@@ -103,7 +103,7 @@ class Move(NamedResource):
         return (
             f"<Move accuracy={self.accuracy} contest_combos={self.contest_combos} contest_effect={self.contest_effect} contest_type={self.contest_type} "
             f"damage_class={self.damage_class} effect_chance={self.effect_chance} effect_entry={self.effect_entry} effect_entries={self.effect_entries} "
-            f"flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} generation={self.generation} id_={self.id_} "
+            f"flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} generation={self.generation} id_={self.id} "
             f"learned_by_pokemon={self.learned_by_pokemon} machines={self.machines} meta={self.meta} name='{self.name}' names={self.names} "
             f"past_values={self.past_values} power={self.power} pp={self.pp} priority={self.priority} stat_changes={self.stat_changes} type_={self.type_}>"
         )

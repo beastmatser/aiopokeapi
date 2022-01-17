@@ -27,4 +27,4 @@ class Location(NamedResource):
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
-        return f"<Location areas={self.areas} game_indices={self.game_indices} id_={self.id_} region={self.region} name='{self.name}' names={self.names}>"
+        return f"<Location areas={self.areas} game_indices={self.game_indices} id_={self.id} region={self.region} name='{self.name}' names={self.names}>"

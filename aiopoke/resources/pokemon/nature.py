@@ -56,7 +56,7 @@ class Nature(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Nature decreased_stat={self.decreased_stat} hates_flavor={self.hates_flavor} increased_stat={self.increased_stat} id_={self.id_} "
+            f"<Nature decreased_stat={self.decreased_stat} hates_flavor={self.hates_flavor} increased_stat={self.increased_stat} id_={self.id} "
             f"likes_flavor={self.likes_flavor} move_battle_style_preferences={self.move_battle_style_preferences} "
             f"name='{self.name}' names={self.names} pokeathlon_stat_changes={self.pokeathlon_stat_changes}>"
         )

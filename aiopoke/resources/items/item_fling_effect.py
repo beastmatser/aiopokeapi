@@ -27,4 +27,4 @@ class ItemFlingEffect(NamedResource):
         )
 
     def __repr__(self) -> str:
-        return f"<ItemFlingEffect effect_entry={self.effect_entry} effect_entries={self.effect_entries} id_={self.id_} items={self.items} name='{self.name}'>"
+        return f"<ItemFlingEffect effect_entry={self.effect_entry} effect_entries={self.effect_entries} id_={self.id} items={self.items} name='{self.name}'>"

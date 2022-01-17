@@ -31,6 +31,6 @@ class ItemAttribute(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<ItemAttribute description='{self.description}' descriptions={self.descriptions} id_={self.id_} "
+            f"<ItemAttribute description='{self.description}' descriptions={self.descriptions} id_={self.id} "
             f"items={self.items} names={self.names}>"
         )

@@ -19,4 +19,4 @@ class Version(NamedResource):
         self.version_group = MinimalResource(data["version_group"])
 
     def __repr__(self) -> str:
-        return f"<Version id_={self.id_} name='{self.name}' names={self.names} version_group={self.version_group}>"
+        return f"<Version id_={self.id} name='{self.name}' names={self.names} version_group={self.version_group}>"

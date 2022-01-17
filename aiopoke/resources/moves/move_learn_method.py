@@ -34,6 +34,6 @@ class MoveLearnMethod(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<MoveLearnMethod description='{self.description}' descriptions={self.descriptions} id_={self.id_} "
+            f"<MoveLearnMethod description='{self.description}' descriptions={self.descriptions} id_={self.id} "
             f"name='{self.name}' version_groups={self.version_groups}>"
         )

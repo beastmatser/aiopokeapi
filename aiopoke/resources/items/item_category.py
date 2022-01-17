@@ -21,4 +21,4 @@ class ItemCategory(NamedResource):
         self.pocket = MinimalResource(data["pocket"])
 
     def __repr__(self) -> str:
-        return f"<ItemCategory id_{self.id_} items={self.items} name='{self.name}' names={self.names} pocket={self.pocket}>"
+        return f"<ItemCategory id_{self.id} items={self.items} name='{self.name}' names={self.names} pocket={self.pocket}>"

@@ -27,4 +27,4 @@ class MoveCategory(NamedResource):
         self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
 
     def __repr__(self) -> str:
-        return f"<MoveCategory description='{self.description}' descriptions={self.descriptions} id_={self.id_} moves={self.moves} name='{self.name}'>"
+        return f"<MoveCategory description='{self.description}' descriptions={self.descriptions} id_={self.id} moves={self.moves} name='{self.name}'>"

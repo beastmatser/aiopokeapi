@@ -46,7 +46,7 @@ class Pokedex(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Pokedex description={self.description} descriptions={self.descriptions} id_={self.id_} "
+            f"<Pokedex description={self.description} descriptions={self.descriptions} id_={self.id} "
             f"is_main_series={self.is_main_series} name='{self.name}' pokemon_entries={self.pokemon_entries} "
             f"names={self.names} region={self.region} version_groups={self.version_groups}>"
         )

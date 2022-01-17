@@ -27,5 +27,5 @@ class EncounterMethod(NamedResource):
     def __repr__(self) -> str:
         return (
             f"<EncounterMethod description='{self.description}' descriptions={self.descriptions} order={self.order} "
-            f"id_={self.id_} name='{self.name}' names={self.names}>"
+            f"id_={self.id} name='{self.name}' names={self.names}>"
         )

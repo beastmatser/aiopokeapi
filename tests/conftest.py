@@ -1,6 +1,5 @@
 import aiopoke
 import pytest
-import asyncio
 
 
 @pytest.fixture

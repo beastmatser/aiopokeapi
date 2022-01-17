@@ -59,7 +59,7 @@ class Ability(NamedResource):
         return (
             f"<Ability effect_changes={self.effect_changes} effect_entries={self.effect_entries} "
             f"flavor_text_entries={self.flavor_text_entries} generation={self.generation}"
-            f"id_={self.id_} is_main_series={self.is_main_series} name='{self.name}' pokemon={self.pokemon}"
+            f"id_={self.id} is_main_series={self.is_main_series} name='{self.name}' pokemon={self.pokemon}"
         )
 
 

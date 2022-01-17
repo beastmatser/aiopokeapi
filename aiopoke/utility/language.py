@@ -19,6 +19,6 @@ class Language(NamedResource):
 
     def __repr__(self) -> str:
         return (
-            f"<Language id_={self.id_} official={self.official} iso3166={self.iso3166} iso639={self.iso639} "
+            f"<Language id_={self.id} official={self.official} iso3166={self.iso3166} iso639={self.iso639} "
             f"name='{self.name}' names={self.names}>"
         )

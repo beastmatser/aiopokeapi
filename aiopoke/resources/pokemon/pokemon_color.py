@@ -22,4 +22,4 @@ class PokemonColor(NamedResource):
         )
 
     def __repr__(self) -> str:
-        return f"<PokemonColor id_={self.id_} name='{self.name}' names={self.names} pokemon_species={self.pokemon_species}>"
+        return f"<PokemonColor id_={self.id} name='{self.name}' names={self.names} pokemon_species={self.pokemon_species}>"

@@ -19,4 +19,4 @@ class MoveAilment(NamedResource):
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
     def __repr__(self) -> str:
-        return f"<MoveAilment id_={self.id_} moves={self.moves} name={self.name} names={self.names}>"
+        return f"<MoveAilment id_={self.id} moves={self.moves} name={self.name} names={self.names}>"

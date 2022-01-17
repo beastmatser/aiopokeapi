@@ -41,7 +41,7 @@ class Stat(NamedResource):
     def __repr__(self) -> str:
         return (
             f"<Stat affecting_moves={self.affecting_moves} affecting_natures={self.affecting_natures} characteristics={self.characteristics} "
-            f"game_index={self.game_index} id_={self.id_} is_battle_only={self.is_battle_only} move_damage_class={self.move_damage_class} "
+            f"game_index={self.game_index} id_={self.id} is_battle_only={self.is_battle_only} move_damage_class={self.move_damage_class} "
             f"name='{self.name}' names={self.names}>"
         )
 
