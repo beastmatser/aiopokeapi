@@ -2,7 +2,7 @@ from typing import Optional
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from ....minimal_resources import MinimalResource
+from aiopoke.minimal_resources import MinimalResource
 from ....minimal_resources import Url
 from ...utility import Name
 from ...utility import NamedResource

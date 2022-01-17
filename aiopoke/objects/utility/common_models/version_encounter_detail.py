@@ -1,7 +1,7 @@
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from ....minimal_resources import MinimalResource
+from aiopoke.minimal_resources import MinimalResource
 from .encounter import Encounter
 
 if TYPE_CHECKING:

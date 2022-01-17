@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from ....minimal_resources import MinimalResource
+from aiopoke.minimal_resources import MinimalResource
 from ....minimal_resources import Url
 
 if TYPE_CHECKING:

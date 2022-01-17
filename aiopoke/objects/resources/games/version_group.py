@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from ...resources.games.version import Version
 
-from ....minimal_resources import MinimalResource
+from aiopoke.minimal_resources import MinimalResource
 from ...utility import NamedResource
 
 if TYPE_CHECKING:
