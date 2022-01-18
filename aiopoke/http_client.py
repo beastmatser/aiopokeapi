@@ -15,4 +15,5 @@ class HttpClient:
         async with self._session.get(
             f"https://pokeapi.co/api/v2/{endpoint}"
         ) as response:
-            return await response.json()
+            data: Dict[str, Any] = await response.json()
+            return data
