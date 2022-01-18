@@ -5,6 +5,7 @@ from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import Sprites
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import NaturalGiftType, VersionGroup
@@ -40,21 +41,11 @@ class PokemonForm(NamedResource):
         )
         self.version_group = MinimalResource(data["version_group"])
 
-    def __repr__(self) -> str:
-        return (
-            f"<PokemonForm form_name='{self.form_name}' form_order={self.form_order} id_={self.id} is_battle_only={self.is_battle_only} "
-            f"is_default={self.is_default} is_mega={self.is_mega} order={self.order} name='{self.name}' names={self.names} "
-            f"pokemon={self.pokemon} sprites={self.sprites} types={self.types} version_group={self.version_group}>"
-        )
 
-
-class SlotNaturalGiftType:
+class SlotNaturalGiftType(Resource):
     type_: MinimalResource[MinimalResource["NaturalGiftType"]]
     slot: int
 
     def __init__(self, data) -> None:
         self.type_ = MinimalResource(data["type"])
         self.slot = data["slot"]
-
-    def __repr__(self) -> str:
-        return f"<SlotNaturalGiftType type_={self.type_} slot={self.slot}>"

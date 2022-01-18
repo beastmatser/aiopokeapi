@@ -4,11 +4,12 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
+from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
 from aiopoke.objects.utility import MachineVersionDetail
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import VerboseEffect
-from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import (
@@ -21,7 +22,11 @@ if TYPE_CHECKING:
         VersionGroup,
     )
     from aiopoke.objects.utility import Language
-    from aiopoke.objects.resources.moves import MoveAilment, MoveCategory, MoveDamageClass
+    from aiopoke.objects.resources.moves import (
+        MoveAilment,
+        MoveCategory,
+        MoveDamageClass,
+    )
 
 
 class Move(NamedResource):
@@ -99,17 +104,8 @@ class Move(NamedResource):
         )
         self.type_ = MinimalResource(data["type"])
 
-    def __repr__(self) -> str:
-        return (
-            f"<Move accuracy={self.accuracy} contest_combos={self.contest_combos} contest_effect={self.contest_effect} contest_type={self.contest_type} "
-            f"damage_class={self.damage_class} effect_chance={self.effect_chance} effect_entry={self.effect_entry} effect_entries={self.effect_entries} "
-            f"flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} generation={self.generation} id_={self.id} "
-            f"learned_by_pokemon={self.learned_by_pokemon} machines={self.machines} meta={self.meta} name='{self.name}' names={self.names} "
-            f"past_values={self.past_values} power={self.power} pp={self.pp} priority={self.priority} stat_changes={self.stat_changes} type_={self.type_}>"
-        )
 
-
-class ContestComboSets:
+class ContestComboSets(Resource):
     normal: Optional["ContestComboDetail"]
     super: Optional["ContestComboDetail"]
 
@@ -121,11 +117,8 @@ class ContestComboSets:
             ContestComboDetail(data["super"]) if data["super"] is not None else None
         )
 
-    def __repr__(self) -> str:
-        return f"<ContestComboSets normal={self.normal} super={self.super}>"
 
-
-class ContestComboDetail:
+class ContestComboDetail(Resource):
     use_before: Optional[Tuple[MinimalResource["Move"], ...]]
     use_after: Optional[Tuple[MinimalResource["Move"], ...]]
 
@@ -141,11 +134,8 @@ class ContestComboDetail:
             else None
         )
 
-    def __repr__(self) -> str:
-        return f"<ContestComboDetail use_before={self.use_before} use_after={self.use_after}>"
 
-
-class MoveFlavorText:
+class MoveFlavorText(Resource):
     flavor_text: str
     language: MinimalResource["Language"]
     version_group: MinimalResource["VersionGroup"]
@@ -155,11 +145,8 @@ class MoveFlavorText:
         self.language = MinimalResource(data["language"])
         self.version_group = MinimalResource(data["version_group"])
 
-    def __repr__(self) -> str:
-        return f"<MoveFlavorText flavor_text='{self.flavor_text}' language={self.language} version_group={self.version_group}>"
 
-
-class MoveMetaData:
+class MoveMetaData(Resource):
     ailment: MinimalResource["MoveAilment"]
     category: MinimalResource["MoveCategory"]
     min_hits: int
@@ -187,15 +174,8 @@ class MoveMetaData:
         self.flinch_chance = data["flinch_chance"]
         self.stat_chance = data["stat_chance"]
 
-    def __repr__(self) -> str:
-        return (
-            f"<MoveMetaData ailment={self.ailment} category={self.category} min_hits={self.min_hits} max_hits={self.max_hits} "
-            f"min_turns={self.min_turns} max_turns={self.max_turns} drain={self.drain} healing={self.healing} "
-            f"crit_rate={self.crit_rate} ailment_chance={self.ailment_chance} flinch_chance={self.flinch_chance} stat_chance={self.stat_chance}>"
-        )
 
-
-class MoveStatChange:
+class MoveStatChange(Resource):
     change: int
     stat: MinimalResource["Stat"]
 
@@ -203,11 +183,8 @@ class MoveStatChange:
         self.change = data["change"]
         self.stat = MinimalResource(data["stat"])
 
-    def __repr__(self) -> str:
-        return f"<MoveStatChange change={self.change} stat={self.stat}>"
 
-
-class PastMoveStatValues:
+class PastMoveStatValues(Resource):
     accuracy: int
     effect_chance: int
     power: int
@@ -233,9 +210,3 @@ class PastMoveStatValues:
         )
         self.type_ = MinimalResource(data["type"])
         self.version_group = MinimalResource(data["version_group"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<PastMoveStatValues accuracy={self.accuracy} effect_chance={self.effect_chance} power={self.power} pp={self.pp} "
-            f"effect_entry={self.effect_entry} effect_entries={self.effect_entries} type_={self.type_}>"
-        )

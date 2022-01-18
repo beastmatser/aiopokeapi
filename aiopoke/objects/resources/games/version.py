@@ -17,6 +17,3 @@ class Version(NamedResource):
         super().__init__(data)
         self.names = tuple(Name(name_data) for name_data in data["names"])
         self.version_group = MinimalResource(data["version_group"])
-
-    def __repr__(self) -> str:
-        return f"<Version id_={self.id} name='{self.name}' names={self.names} version_group={self.version_group}>"

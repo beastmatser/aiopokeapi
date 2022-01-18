@@ -1,4 +1,7 @@
-class NamedResource:
+from aiopoke.resource import Resource
+
+
+class NamedResource(Resource):
     """A resource with a name and id"""
 
     name: str

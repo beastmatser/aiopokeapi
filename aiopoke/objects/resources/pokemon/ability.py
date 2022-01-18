@@ -6,6 +6,7 @@ from aiopoke.objects.utility import Effect
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import VerboseEffect
 from aiopoke.objects.utility.common_models import Name
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import Generation, VersionGroup
@@ -55,15 +56,8 @@ class Ability(NamedResource):
             AbilityPokemon(pokemon_data) for pokemon_data in data["pokemon"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<Ability effect_changes={self.effect_changes} effect_entries={self.effect_entries} "
-            f"flavor_text_entries={self.flavor_text_entries} generation={self.generation}"
-            f"id_={self.id} is_main_series={self.is_main_series} name='{self.name}' pokemon={self.pokemon}"
-        )
 
-
-class AbilityPokemon:
+class AbilityPokemon(Resource):
     is_hidden: bool
     slot: int
     pokemon: MinimalResource["Pokemon"]
@@ -73,11 +67,8 @@ class AbilityPokemon:
         self.slot = data["slot"]
         self.pokemon = MinimalResource(data["pokemon"])
 
-    def __repr__(self) -> str:
-        return f"<AbilityPokemon is_hidden={self.is_hidden} slot={self.slot} pokemon={self.pokemon}>"
 
-
-class AbilityEffectChange:
+class AbilityEffectChange(Resource):
     effect_entry: "Effect"
     effect_entries: Tuple["Effect", ...]
     version_group: MinimalResource["VersionGroup"]
@@ -93,9 +84,6 @@ class AbilityEffectChange:
         )
         self.version_group = MinimalResource(data["version_group"])
 
-    def __repr__(self) -> str:
-        return f"<AbilityEffectChange effect_entry={self.effect_entry} effect_entries={self.effect_entries} version_group={self.version_group}>"
-
 
 class AbilityFlavorText:
     flavor_text: str
@@ -106,6 +94,3 @@ class AbilityFlavorText:
         self.flavor_text = data["flavor_text"]
         self.language = MinimalResource(data["language"])
         self.version_group = MinimalResource(data["version_group"])
-
-    def __repr__(self) -> str:
-        return f"<AbilityFlavorText flavor_text={self.flavor_text} language={self.language} version_group={self.version_group}>"

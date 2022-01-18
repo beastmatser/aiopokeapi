@@ -28,9 +28,3 @@ class ItemAttribute(NamedResource):
         )
         self.items = tuple(MinimalResource(item_data) for item_data in data["items"])
         self.names = tuple(Name(name_data) for name_data in data["names"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<ItemAttribute description='{self.description}' descriptions={self.descriptions} id_={self.id} "
-            f"items={self.items} names={self.names}>"
-        )

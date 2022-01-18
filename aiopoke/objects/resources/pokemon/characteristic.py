@@ -3,12 +3,13 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import Description
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import Stat
 
 
-class Characteristic:
+class Characteristic(Resource):
     description: str
     descriptions: Tuple["Description", ...]
     gene_modulo: int
@@ -29,9 +30,3 @@ class Characteristic:
         self.highest_stat = MinimalResource(data["highest_stat"])
         self.id_ = data["id"]
         self.possible_values = tuple(data["possible_values"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<Characteristic description='{self.description}' descriptions={self.descriptions} gene_modulo={self.gene_modulo} "
-            f"id_={self.id_} possible_values={self.possible_values}>"
-        )

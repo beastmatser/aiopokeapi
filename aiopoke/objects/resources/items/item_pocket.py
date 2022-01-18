@@ -20,6 +20,3 @@ class ItemPocket(NamedResource):
             for item_category_data in data["categories"]
         )
         self.names = tuple(Name(name_data) for name_data in data["names"])
-
-    def __repr__(self) -> str:
-        return f"<ItemPocket categories={self.categories} id_={self.id} name='{self.name}' names={self.names}>"

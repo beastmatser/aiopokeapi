@@ -5,6 +5,7 @@ from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import GenerationGameIndex
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import Pokemon
@@ -42,15 +43,8 @@ class NaturalGiftType(NamedResource):
             TypePokemon(pokemon_data) for pokemon_data in data["pokemon"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<NaturalGiftType damage_relations={self.damage_relations} game_indices={self.game_indices} id_={self.id} "
-            f"move_damage_class={self.move_damage_class} move={self.moves} name='{self.name}' names={self.names} "
-            f"past_damage_relations={self.past_damage_relations} pokemon={self.pokemon}>"
-        )
 
-
-class TypeRelations:
+class TypeRelations(Resource):
     double_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
     double_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
     half_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
@@ -84,13 +78,6 @@ class TypeRelations:
             for natural_gift_type in data["no_damage_to"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<DamageRelations double_damage_from={self.double_damage_from} double_damage_to={self.double_damage_from} "
-            f"half_damage_from={self.half_damage_from} no_damage_from={self.no_damage_from} "
-            f"no_damage_from={self.no_damage_from} no_damage_to={self.no_damage_to}>"
-        )
-
 
 class PastTypeRelation:
     damage_relations: "TypeRelations"
@@ -100,17 +87,11 @@ class PastTypeRelation:
         self.damage_relations = TypeRelations(data["damage_relations"])
         self.generation = MinimalResource(data["generation"])
 
-    def __repr__(self) -> str:
-        return f"<PastTypeRelation damage_relations={self.damage_relations} generation={self.generation}>"
 
-
-class TypePokemon:
+class TypePokemon(Resource):
     slot: int
     pokemon: MinimalResource["Pokemon"]
 
     def __init__(self, data) -> None:
         self.slot = data["slot"]
         self.pokemon = MinimalResource(data["pokemon"])
-
-    def __repr__(self) -> str:
-        return f"<TypePokemon slot={self.slot} pokemon={self.pokemon}>"

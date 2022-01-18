@@ -7,6 +7,7 @@ from aiopoke.objects.utility import Description
 from aiopoke.objects.utility import FlavorText
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import (
@@ -17,7 +18,12 @@ if TYPE_CHECKING:
         PokemonShape,
         PokemonColor,
     )
-    from aiopoke.objects.resources import EvolutionChain, Generation, Pokedex, PalParkArea
+    from aiopoke.objects.resources import (
+        EvolutionChain,
+        Generation,
+        Pokedex,
+        PalParkArea,
+    )
     from aiopoke.objects.utility import Language
 
 
@@ -110,20 +116,8 @@ class PokemonSpecies(NamedResource):
             PokemonSpeciesVariety(variety_data) for variety_data in data["varieties"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<PokemonSpecies base_happiness={self.base_happiness} capture_rate={self.capture_rate} color={self.color} egg_groups={self.egg_groups} "
-            f"evolution_chain={self.evolution_chain} flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} "
-            f"form_description='{self.form_description}' form_descriptions={self.form_descriptions} forms_switchable={self.forms_switchable} "
-            f"gender_rate={self.gender_rate} genus={self.genus} genera={self.genera} generation={self.generation} "
-            f"growth_rate={self.growth_rate} habitat={self.habitat} has_gender_differences={self.has_gender_differences} "
-            f"hatch_counter={self.hatch_counter} id_={self.id} is_baby={self.is_baby} is_legendary={self.is_legendary} is_mythical={self.is_mythical} "
-            f"order={self.order} name='{self.name}' names={self.names} pal_park_encounters={self.pal_park_encounters} "
-            f"pokedex_numbers={self.pokedex_numbers} shape={self.shape} varieties={self.varieties}>"
-        )
 
-
-class Genus:
+class Genus(Resource):
     genus: str
     language: MinimalResource["Language"]
 
@@ -131,11 +125,8 @@ class Genus:
         self.genus = data["genus"]
         self.language = MinimalResource(data["language"])
 
-    def __repr__(self) -> str:
-        return f"<Genus genus='{self.genus}' language={self.language}>"
 
-
-class PokemonSpeciesDexEntry:
+class PokemonSpeciesDexEntry(Resource):
     entry_number: int
     pokedex: MinimalResource["Pokedex"]
 
@@ -143,11 +134,8 @@ class PokemonSpeciesDexEntry:
         self.entry_number = data["entry_number"]
         self.pokedex = MinimalResource(data["pokedex"])
 
-    def __repr__(self) -> str:
-        return f"<PokemonSpeciesDexEntry entry_number={self.entry_number} pokedex={self.pokedex}>"
 
-
-class PalParkEncounterArea:
+class PalParkEncounterArea(Resource):
     base_score: int
     rate: int
     area: MinimalResource["PalParkArea"]
@@ -157,17 +145,11 @@ class PalParkEncounterArea:
         self.rate = data["rate"]
         self.area = MinimalResource(data["area"])
 
-    def __repr__(self) -> str:
-        return f"<PalParkEncounterArea base_score={self.base_score} rate={self.rate} area={self.area}>"
 
-
-class PokemonSpeciesVariety:
+class PokemonSpeciesVariety(Resource):
     is_default: bool
     pokemon: MinimalResource["Pokemon"]
 
     def __init__(self, data) -> None:
         self.is_default = data["is_default"]
         self.pokemon = MinimalResource(data["pokemon"])
-
-    def __repr__(self) -> str:
-        return f"<PokemonSpeciesVariety is_default={self.is_default} pokemon={self.pokemon}>"

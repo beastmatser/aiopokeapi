@@ -2,11 +2,12 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
+from aiopoke.objects.resources.games.version_group import VersionGroupDetail
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import VersionEncounterDetail
 from aiopoke.objects.utility import VersionGameIndex
 from aiopoke.objects.utility.common_models.sprites import Sprites
-from aiopoke.objects.resources.games.version_group import VersionGroupDetail
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import (
@@ -17,7 +18,12 @@ if TYPE_CHECKING:
         Version,
         VersionGroup,
     )
-    from aiopoke.objects.resources.pokemon import Ability, NaturalGiftType, PokemonForm, PokemonSpecies
+    from aiopoke.objects.resources.pokemon import (
+        Ability,
+        NaturalGiftType,
+        PokemonForm,
+        PokemonSpecies,
+    )
 
 
 class Pokemon(NamedResource):
@@ -69,17 +75,8 @@ class Pokemon(NamedResource):
         self.types = tuple(PokemonType(type_data) for type_data in data["types"])
         self.weight = data["weight"]
 
-    def __repr__(self) -> str:
-        return (
-            f"<Pokemon abilities={self.abilities} base_experience={self.base_experience} forms={self.forms} "
-            f"game_indices={self.game_indices} height={self.height} id_={self.id} held_items={self.held_items} "
-            f"is_default={self.is_default} location_area_encounters={self.location_area_encounters} moves={self.moves} name='{self.name}' "
-            f"order={self.order} past_types={self.past_types} species={self.species} sprites={self.sprites} "
-            f"stats={self.stats} types={self.types} weight={self.weight}>"
-        )
 
-
-class PokemonAbility:
+class PokemonAbility(Resource):
     is_hidden: bool
     slot: int
     ability: MinimalResource["Ability"]
@@ -89,11 +86,8 @@ class PokemonAbility:
         self.slot = data["slot"]
         self.ability = MinimalResource(data["ability"])
 
-    def __repr__(self) -> str:
-        return f"<PokemonAbility is_hidden={self.is_hidden} slot={self.slot} pokemon={self.ability}>"
 
-
-class PokemonType:
+class PokemonType(Resource):
     slot: int
     type_: MinimalResource["NaturalGiftType"]
 
@@ -101,11 +95,8 @@ class PokemonType:
         self.slot = data["slot"]
         self.type_ = MinimalResource(data["type"])
 
-    def __repr__(self) -> str:
-        return f"<PokemonType slot={self.slot} type_={self.type_}>"
 
-
-class PokemonHeldItem:
+class PokemonHeldItem(Resource):
     item: MinimalResource["Item"]
     version_details: Tuple["PokemonHeldItemVersion", ...]
 
@@ -116,13 +107,8 @@ class PokemonHeldItem:
             for version_detail_data in data["version_details"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<PokemonHeldItem item={self.item} version_details={self.version_details}>"
-        )
 
-
-class PokemonHeldItemVersion:
+class PokemonHeldItemVersion(Resource):
     rarity: int
     version: MinimalResource["Version"]
 
@@ -130,11 +116,8 @@ class PokemonHeldItemVersion:
         self.rarity = data["rarity"]
         self.version = MinimalResource(data["version"])
 
-    def __repr__(self) -> str:
-        return f"<PokemonHeldItemVersion rarity={self.rarity} version={self.version}>"
 
-
-class PokemonMove:
+class PokemonMove(Resource):
     move: MinimalResource["Version"]
     version_group_details: Tuple["VersionGroupDetail", ...]
 
@@ -145,11 +128,8 @@ class PokemonMove:
             for version_group_detail_data in data["version_group_details"]
         )
 
-    def __repr__(self) -> str:
-        return f"<PokemonMove move={self.move} version_group_details={self.version_group_details}>"
 
-
-class PokemonMoveVersion:
+class PokemonMoveVersion(Resource):
     move_learn_method: MinimalResource["MoveLearnMethod"]
     version_group: MinimalResource["VersionGroup"]
     level_learned_at: int
@@ -159,11 +139,8 @@ class PokemonMoveVersion:
         self.version_group = MinimalResource(data["version_group"])
         self.level_learned_at = data["level_learned_at"]
 
-    def __repr__(self) -> str:
-        return f"<PokemonHeldItem move_learn_method={self.move_learn_method} version_group={self.version_group} level_learned_at={self.level_learned_at}>"
 
-
-class PokemonStat:
+class PokemonStat(Resource):
     base_stat: int
     effort: int
     stat: MinimalResource["PokemonStat"]
@@ -173,11 +150,8 @@ class PokemonStat:
         self.effort = data["effort"]
         self.stat = MinimalResource(data["stat"])
 
-    def __repr__(self) -> str:
-        return f"<PokemonStat base_stat={self.base_stat} effort={self.effort} stat={self.stat}>"
 
-
-class PastType:
+class PastType(Resource):
     generation: MinimalResource["Generation"]
     types: Tuple["PokemonType", ...]
 
@@ -185,11 +159,8 @@ class PastType:
         self.generation = MinimalResource(data["generation"])
         self.types = tuple(PokemonType(type_data) for type_data in data["types"])
 
-    def __repr__(self) -> str:
-        return f"<PastType generation={self.generation} types={self.types}>"
 
-
-class PokemonLocationArea:
+class PokemonLocationArea(Resource):
     location_area: MinimalResource["LocationArea"]
     version_details: Tuple["VersionEncounterDetail", ...]
 
@@ -199,6 +170,3 @@ class PokemonLocationArea:
             VersionEncounterDetail(version_detail_data)
             for version_detail_data in data["version_details"]
         )
-
-    def __repr__(self) -> str:
-        return f"<PokemonLocationArea location_area={self.location_area} version_details={self.version_details}>"

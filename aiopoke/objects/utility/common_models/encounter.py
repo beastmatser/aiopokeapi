@@ -2,12 +2,13 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import EncounterConditionValue, EncounterMethod
 
 
-class Encounter:
+class Encounter(Resource):
     min_level: int
     max_level: int
     condition_values: Tuple[MinimalResource["EncounterConditionValue"], ...]
@@ -23,9 +24,3 @@ class Encounter:
         )
         self.chance = data["chance"]
         self.method = MinimalResource(data["method"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<Encounter min_level={self.min_level} max_level={self.max_level} condition_values={self.condition_values} "
-            f"chance={self.chance} method={self.method}>"
-        )

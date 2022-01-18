@@ -11,10 +11,15 @@ from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import Sprite
 from aiopoke.objects.utility import VerboseEffect
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import EvolutionChain, Pokemon, Version
-    from aiopoke.objects.resources.items import ItemAttribute, ItemCategory, ItemFlingEffect
+    from aiopoke.objects.resources.items import (
+        ItemAttribute,
+        ItemCategory,
+        ItemFlingEffect,
+    )
 
 
 class Item(NamedResource):
@@ -83,26 +88,15 @@ class Item(NamedResource):
         self.names = tuple(Name(name_data) for name_data in data["names"])
         self.sprite = Sprite(data["sprites"]["default"])
 
-    def __repr__(self) -> str:
-        return (
-            f"<Item attributes={self.attributes} baby_trigger_form={self.baby_trigger_for} cost={self.cost} effect_entry={self.effect_entry} "
-            f"effect_entries={self.effect_entries} flavor_text_entry={self.flavor_text_entry} flavor_text_entries={self.flavor_text_entries} "
-            f"fling_effect={self.fling_effect} fling_power={self.fling_power} game_indices={self.game_indices} held_by_pokemon={self.held_by_pokemon} "
-            f"id_={self.id} machines={self.machines} name='{self.name}' names={self.name} sprite={self.sprite}>"
-        )
 
-
-class ItemSprites:
+class ItemSprites(Resource):
     default: Optional["Sprite"]
 
     def __init__(self, data) -> None:
         self.default = Sprite.from_url(data["default"])
 
-    def __repr__(self) -> str:
-        return f"<ItemSprites default={self.default}>"
 
-
-class ItemHolderPokemon:
+class ItemHolderPokemon(Resource):
     pokemon: MinimalResource["Pokemon"]
     version_details: Tuple["ItemHolderPokemonVersionDetail", ...]
 
@@ -113,17 +107,11 @@ class ItemHolderPokemon:
             for version_detail_data in data["version_details"]
         )
 
-    def __repr__(self) -> str:
-        return f"<ItemHolderPokemon pokemon={self.pokemon} version_details={self.version_details}>"
 
-
-class ItemHolderPokemonVersionDetail:
+class ItemHolderPokemonVersionDetail(Resource):
     rarity: int
     version: MinimalResource["Version"]
 
     def __init__(self, data) -> None:
         self.rarity = data["rarity"]
         self.version = MinimalResource(data["version"])
-
-    def __repr__(self) -> str:
-        return f"<ItemHolderPokemonVersionDetail rarity={self.rarity} version={self.version}>"

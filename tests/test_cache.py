@@ -1,5 +1,5 @@
-import pytest
 import aiopoke
+import pytest
 
 
 @pytest.mark.asyncio
@@ -12,6 +12,6 @@ async def test_cache(client: aiopoke.AiopokeClient):
     assert cache.has("encounter-condition", encounter_condition)
 
     move = await client.fetch_move(1)
-    contest_effect = await move.contest_effect.fetch(client)
+    contest_effect = await move.contest_effect.fetch()
 
     assert isinstance(contest_effect, aiopoke.ContestEffect)

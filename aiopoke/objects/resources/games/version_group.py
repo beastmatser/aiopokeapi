@@ -1,10 +1,10 @@
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from aiopoke.objects.resources.games.version import Version
-
 from aiopoke.minimal_resources import MinimalResource
+from aiopoke.objects.resources.games.version import Version
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import MoveLearnMethod, Pokedex, Region
@@ -36,14 +36,8 @@ class VersionGroup(NamedResource):
             MinimalResource(version_data) for version_data in data["versions"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<VersionGroup generation={self.generation} move_learn_methods={self.move_learn_methods} "
-            f"order={self.order} pokedexes={self.pokedexes} regions={self.regions} versions={self.versions}>"
-        )
 
-
-class VersionGroupDetail:
+class VersionGroupDetail(Resource):
     level_learned_at: int
     move_learn_method: MinimalResource["MoveLearnMethod"]
     version_group: MinimalResource["VersionGroup"]
@@ -52,6 +46,3 @@ class VersionGroupDetail:
         self.level_learned_at = data["level_learned_at"]
         self.move_learn_method = MinimalResource(data["move_learn_method"])
         self.version_group = MinimalResource(data["version_group"])
-
-    def __repr__(self) -> str:
-        return f"<VersionGroupDetail level_learned_at={self.level_learned_at} move_learn_method={self.move_learn_method} version_group={self.version_group}>"

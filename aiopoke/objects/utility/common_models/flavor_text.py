@@ -2,13 +2,14 @@ from typing import Optional
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import Version
     from aiopoke.objects.utility import Language
 
 
-class FlavorText:
+class FlavorText(Resource):
     flavor_text: str
     language: MinimalResource["Language"]
     version: Optional[MinimalResource["Version"]]
@@ -21,6 +22,3 @@ class FlavorText:
             if data.get("version") is not None
             else None
         )
-
-    def __repr__(self) -> str:
-        return f"<FlavorText flavor_text='{self.flavor_text}' language={self.language} version={self.version}>"

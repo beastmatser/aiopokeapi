@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon.natural_gift_type import NaturalGiftType
@@ -34,16 +35,8 @@ class Berry(NamedResource):
         self.smoothness = data["smoothness"]
         self.size = data["size"]
 
-    def __repr__(self) -> str:
-        return (
-            f"<Berry firmness='{self.firmness}' flavors={self.flavors} growth_time={self.growth_time} "
-            f"id_={self.id} max_harvest={self.max_harvest} name={self.name} "
-            f"natural_gift_power={self.natural_gift_power} natural_gift_type={self.natural_gift_type} "
-            f"soil_dryness={self.soil_dryness} smoothness={self.smoothness} size={self.size}>"
-        )
 
-
-class BerryFlavorMap:
+class BerryFlavorMap(Resource):
     potency: int
     flavor: MinimalResource["BerryFlavor"]
 

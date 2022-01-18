@@ -25,6 +25,3 @@ class ItemFlingEffect(NamedResource):
         self.effect_entries = tuple(
             Effect(effect_entry_data) for effect_entry_data in data["effect_entries"]
         )
-
-    def __repr__(self) -> str:
-        return f"<ItemFlingEffect effect_entry={self.effect_entry} effect_entries={self.effect_entries} id_={self.id} items={self.items} name='{self.name}'>"

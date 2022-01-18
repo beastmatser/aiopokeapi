@@ -20,6 +20,3 @@ class EvolutionTrigger(NamedResource):
             for pokemon_species_data in data["pokemon_species"]
         )
         self.names = tuple(Name(name_data) for name_data in data["names"])
-
-    def __repr__(self) -> str:
-        return f"<EvolutionTrigger id_={self.id} name='{self.name}' names={self.names} pokemon_species={self.pokemon_species}>"

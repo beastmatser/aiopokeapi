@@ -3,12 +3,13 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import FlavorText
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.moves import Move
 
 
-class SuperContestEffect:
+class SuperContestEffect(Resource):
     appeal: int
     flavor_text_entry: "FlavorText"
     flavor_text_entries: Tuple["FlavorText", ...]
@@ -28,9 +29,3 @@ class SuperContestEffect:
         )
         self.id_ = data["id"]
         self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<SuperContestEffect appeal={self.appeal} flavor_text_entry={self.flavor_text_entry} "
-            f"flavor_text_entries={self.flavor_text_entries} id_={self.id_} moves={self.moves}>"
-        )

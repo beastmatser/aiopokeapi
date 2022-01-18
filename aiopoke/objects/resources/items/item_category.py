@@ -19,6 +19,3 @@ class ItemCategory(NamedResource):
         self.items = tuple(MinimalResource(item_data) for item_data in data["items"])
         self.names = tuple(Name(name_data) for name_data in data["names"])
         self.pocket = MinimalResource(data["pocket"])
-
-    def __repr__(self) -> str:
-        return f"<ItemCategory id_{self.id} items={self.items} name='{self.name}' names={self.names} pocket={self.pocket}>"

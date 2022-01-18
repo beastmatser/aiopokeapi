@@ -26,6 +26,3 @@ class PokemonShape(NamedResource):
             MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["pokemon_species"]
         )
-
-    def __repr__(self) -> str:
-        return f"<PokemonColor awesome_name='{self.awesome_name}' id_={self.id} name='{self.name}' names={self.names} pokemon_species={self.pokemon_species}>"

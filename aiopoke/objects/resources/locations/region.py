@@ -31,9 +31,3 @@ class Region(NamedResource):
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
         )
-
-    def __repr__(self) -> str:
-        return (
-            f"<Region id_={self.id} locations={self.locations} main_generation={self.main_generation} "
-            f"pokedexes={self.pokedexes} name='{self.name}' names={self.names} version_groups={self.version_groups}>"
-        )

@@ -6,6 +6,7 @@ from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import Characteristic, Nature
@@ -38,15 +39,8 @@ class Stat(NamedResource):
         )
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
-    def __repr__(self) -> str:
-        return (
-            f"<Stat affecting_moves={self.affecting_moves} affecting_natures={self.affecting_natures} characteristics={self.characteristics} "
-            f"game_index={self.game_index} id_={self.id} is_battle_only={self.is_battle_only} move_damage_class={self.move_damage_class} "
-            f"name='{self.name}' names={self.names}>"
-        )
 
-
-class MoveStatAffectSets:
+class MoveStatAffectSets(Resource):
     increase: Tuple["MoveStatAffect", ...]
     decrease: Tuple["MoveStatAffect", ...]
 
@@ -58,11 +52,8 @@ class MoveStatAffectSets:
             MoveStatAffect(decrease_data) for decrease_data in data["decrease"]
         )
 
-    def __repr__(self) -> str:
-        return f"<MoveStatAffectSets increase={self.increase} decrease={self.decrease}>"
 
-
-class MoveStatAffect:
+class MoveStatAffect(Resource):
     change: int
     move: MinimalResource["Move"]
 
@@ -70,11 +61,8 @@ class MoveStatAffect:
         self.change = data["change"]
         self.move = MinimalResource(data["move"])
 
-    def __repr__(self) -> str:
-        return f"<MoveStatAffect change={self.change} move={self.move}>"
 
-
-class NatureStatAffectSets:
+class NatureStatAffectSets(Resource):
     increase: Tuple[MinimalResource["Nature"], ...]
     decrease: Tuple[MinimalResource["Nature"], ...]
 
@@ -84,9 +72,4 @@ class NatureStatAffectSets:
         )
         self.decrease = tuple(
             MinimalResource(decrease_data) for decrease_data in data["decrease"]
-        )
-
-    def __repr__(self) -> str:
-        return (
-            f"<NatureStatAffectSets increase={self.increase} decrease={self.decrease}>"
         )

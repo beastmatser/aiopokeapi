@@ -3,12 +3,13 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility.common_models.encounter import Encounter
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import Version
 
 
-class VersionEncounterDetail:
+class VersionEncounterDetail(Resource):
     encounter_details: Tuple["Encounter", ...]
     max_chance: int
     version: MinimalResource["Version"]
@@ -20,6 +21,3 @@ class VersionEncounterDetail:
         )
         self.max_chance = data["max_chance"]
         self.version = MinimalResource(data["version"])
-
-    def __repr__(self) -> str:
-        return f"<VersionEncounterDetail encounter_details={self.encounter_details} max_change={self.max_chance} version={self.version}>"

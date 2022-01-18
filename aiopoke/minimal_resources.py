@@ -3,32 +3,47 @@ from typing import Callable
 from typing import Coroutine
 from typing import Dict
 from typing import Generic
+from typing import Optional
 from typing import TYPE_CHECKING
 from typing import TypeVar
 from typing import Union
+
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.aiopoke_client import AiopokeClient
 
 T = TypeVar("T")
-U = TypeVar("U")
 
 
-class Url(Generic[T]):
+class Url(Resource, Generic[T]):
     url: str
-    id_: int
+    id: int
     endpoint: str
 
     def __init__(self, data) -> None:
         self.url = data["url"]
 
-        self.id_ = int(self.url.split("/")[-2])
+        self.id = int(self.url.split("/")[-2])
         self.endpoint = self.url.split("/")[-3]
 
-    def __repr__(self) -> str:
-        return f"<{self.__class__.__name__} id_={self.id_} endpoint='{self.endpoint}'>"
+    @property
+    def client(self) -> Optional["AiopokeClient"]:
+        if hasattr(self, "_client"):
+            return self._client
+        return None
 
-    async def fetch(self, client: "AiopokeClient") -> T:
+    @classmethod
+    def link(cls, client):
+        cls._client = client
+
+    async def fetch(self, *, client: Optional["AiopokeClient"] = None) -> T:
+        client = self.client or client
+        if client is None:
+            raise ValueError(
+                "A client must be provided, if you create your own instances of this class"
+            )
+
         build_map: Dict[str, Callable[[Union[str, int]], Coroutine[Any, Any, Any]]] = {
             "ability": client.fetch_ability,
             "berry": client.fetch_berry,
@@ -80,19 +95,16 @@ class Url(Generic[T]):
             "version-group": client.fetch_version_group,
         }
 
-        obj: T = await build_map[self.endpoint](self.id_)
+        obj: T = await build_map[self.endpoint](self.id)
         return obj
 
 
 class MinimalResource(Url[T]):
     name: str
     url: str
-    id_: int
+    id: int
     endpoint: str
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.name = data["name"]
-
-    def __repr__(self) -> str:
-        return f"<{self.__class__.__name__} name='{self.name}' id_={self.id_} endpoint='{self.endpoint}'>"

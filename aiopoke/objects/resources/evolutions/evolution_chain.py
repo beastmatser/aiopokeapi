@@ -3,6 +3,7 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import (
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
     )
 
 
-class EvolutionChain:
+class EvolutionChain(Resource):
     baby_trigger_item: Optional[MinimalResource["Item"]]
     chain: "ChainLink"
     id_: int
@@ -29,11 +30,8 @@ class EvolutionChain:
         self.chain = ChainLink(data["chain"])
         self.id_ = data["id"]
 
-    def __repr__(self) -> str:
-        return f"<EvolutionChain baby_trigger_item={self.baby_trigger_item} chain={self.chain} id_={self.id_}>"
 
-
-class ChainLink:
+class ChainLink(Resource):
     evolution_details: Tuple["EvolutionDetail", ...]
     evolves_to: Tuple["ChainLink", ...]
     is_baby: bool
@@ -50,11 +48,8 @@ class ChainLink:
         self.is_baby = data["is_baby"]
         self.species = MinimalResource(data["species"])
 
-    def __repr__(self) -> str:
-        return f"<ChainLink evolution_details={self.evolution_details} evolves_to={self.evolves_to} is_baby={self.is_baby} species={self.species}>"
 
-
-class EvolutionDetail:
+class EvolutionDetail(Resource):
     gender: Optional[int]
     held_item: Optional[MinimalResource["Item"]]
     item: Optional[MinimalResource["Item"]]
@@ -123,13 +118,3 @@ class EvolutionDetail:
         )
         self.trigger = MinimalResource(data["trigger"])
         self.turn_upside_down = data["turn_upside_down"]
-
-    def __repr__(self) -> str:
-        return (
-            f"<EvolutionDetail gender={self.gender} held_item={self.held_item} item={self.item} known_move={self.known_move} "
-            f"known_move_type={self.known_move_type} location={self.location} min_affection={self.min_affection} "
-            f"min_beauty={self.min_beauty} min_happiness={self.min_happiness} min_level={self.min_level} "
-            f"needs_overworld_rain={self.needs_overworld_rain} party_species={self.party_species} party_type={self.party_type} "
-            f"relative_physical_stats={self.relative_physical_stats} time_of_day='{self.time_of_day}' trade_species={self.trade_species} "
-            f"trigger={self.trigger} turn_upside_down={self.turn_upside_down}>"
-        )

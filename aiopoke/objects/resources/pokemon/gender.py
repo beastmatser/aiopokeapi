@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility.common_models import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import PokemonSpecies
@@ -23,20 +24,11 @@ class Gender(NamedResource):
             for pokemon_species_data in data["required_for_evolution"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<Gender id_={self.id} name={self.name} pokemon_species_details={self.pokemon_species_details} "
-            f"required_for_evolution={self.required_for_evolution}>"
-        )
 
-
-class PokemonSpeciesGender:
+class PokemonSpeciesGender(Resource):
     pokemon_species: MinimalResource["PokemonSpecies"]
     rate: int
 
     def __init__(self, data) -> None:
         self.pokemon_species = MinimalResource(data["pokemon_species"])
         self.rate = data["rate"]
-
-    def __repr__(self) -> str:
-        return f"<PokemonSpeciesGender pokemon_species={self.pokemon_species} rate={self.rate}>"

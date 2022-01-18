@@ -6,6 +6,7 @@ from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import Description
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import PokemonSpecies, Region, VersionGroup
@@ -44,21 +45,11 @@ class Pokedex(NamedResource):
             for version_group_data in data["version_groups"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<Pokedex description={self.description} descriptions={self.descriptions} id_={self.id} "
-            f"is_main_series={self.is_main_series} name='{self.name}' pokemon_entries={self.pokemon_entries} "
-            f"names={self.names} region={self.region} version_groups={self.version_groups}>"
-        )
 
-
-class PokemonEntry:
+class PokemonEntry(Resource):
     entry_number: int
     pokemon_species: MinimalResource["PokemonSpecies"]
 
     def __init__(self, data) -> None:
         self.entry_number = data["entry_number"]
         self.pokemon_species = MinimalResource(data["pokemon_species"])
-
-    def __repr__(self) -> str:
-        return f"<PokemonEntry entry_number={self.entry_number} pokemon_species={self.pokemon_species}>"

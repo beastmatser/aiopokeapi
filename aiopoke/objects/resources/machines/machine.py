@@ -1,12 +1,13 @@
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import Item, Move, VersionGroup
 
 
-class Machine:
+class Machine(Resource):
     id: int
     item: MinimalResource["Item"]
     move: MinimalResource["Move"]
@@ -17,6 +18,3 @@ class Machine:
         self.item = MinimalResource(data["item"])
         self.move = MinimalResource(data["move"])
         self.version_group = MinimalResource(data["version_group"])
-
-    def __repr__(self) -> str:
-        return f"<Machine id_={self.id} item={self.item} move={self.move} version_group={self.version_group}>"

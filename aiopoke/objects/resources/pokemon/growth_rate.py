@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import Description
 from aiopoke.objects.utility import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import PokemonSpecies
@@ -35,20 +36,11 @@ class GrowthRate(NamedResource):
             for pokemon_species_data in data["pokemon_species"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<AbilityFlavorText description='{self.description}' descriptions={self.descriptions} formula='{self.formula}' "
-            f"id_={self.id} levels={self.levels} name='{self.name}' pokemon_species={self.pokemon_species}"
-        )
 
-
-class GrowthRateExperienceLevel:
+class GrowthRateExperienceLevel(Resource):
     level: int
     experience: int
 
     def __init__(self, data) -> None:
         self.level = data["level"]
         self.experience = data["experience"]
-
-    def __repr__(self) -> str:
-        return f"<GrowthRateExperienceLevel level={self.level} experience={self.experience}>"

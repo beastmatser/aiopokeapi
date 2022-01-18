@@ -5,6 +5,7 @@ from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import VersionEncounterDetail
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import EncounterMethod, Pokemon, Version
@@ -32,14 +33,8 @@ class LocationArea(NamedResource):
         self.game_index = data["game_index"]
         self.names = tuple(Name(name_data) for name_data in data["names"])
 
-    def __repr__(self) -> str:
-        return (
-            f"<LocationArea encounter_method_rates={self.encounter_method_rates} id_={self.id} pokemon_encounters={self.pokemon_encounters} "
-            f"location={self.location} game_index={self.game_index} name='{self.name}' names={self.names}>"
-        )
 
-
-class PokemonEncounter:
+class PokemonEncounter(Resource):
     pokemon: MinimalResource["Pokemon"]
     version_details: Tuple["VersionEncounterDetail", ...]
 
@@ -50,11 +45,8 @@ class PokemonEncounter:
             for version_detail_data in data["version_details"]
         )
 
-    def __repr__(self) -> str:
-        return f"<PokemonEncounter pokemon={self.pokemon} version_details={self.version_details}>"
 
-
-class EncounterMethodRate:
+class EncounterMethodRate(Resource):
     encounter_method: MinimalResource["EncounterMethod"]
     version_details: Tuple["EncounterVersionDetail", ...]
 
@@ -65,17 +57,11 @@ class EncounterMethodRate:
             for encounter_version_detail in data["version_details"]
         )
 
-    def __repr__(self) -> str:
-        return f"<EncounterMethodRate encounter_method={self.encounter_method} version_details={self.version_details}>"
 
-
-class EncounterVersionDetail:
+class EncounterVersionDetail(Resource):
     rate: int
     version: MinimalResource["Version"]
 
     def __init__(self, data) -> None:
         self.rate = data["rate"]
         self.version = MinimalResource(data["version"])
-
-    def __repr__(self) -> str:
-        return f"<EncounterVersionDetail rate={self.rate} version={self.version}>"

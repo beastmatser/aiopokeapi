@@ -31,9 +31,3 @@ class MoveLearnMethod(NamedResource):
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
         )
-
-    def __repr__(self) -> str:
-        return (
-            f"<MoveLearnMethod description='{self.description}' descriptions={self.descriptions} id_={self.id} "
-            f"name='{self.name}' version_groups={self.version_groups}>"
-        )

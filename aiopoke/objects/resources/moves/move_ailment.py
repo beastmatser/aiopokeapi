@@ -17,6 +17,3 @@ class MoveAilment(NamedResource):
         super().__init__(data)
         self.moves = tuple(MinimalResource(item_data) for item_data in data["moves"])
         self.names = tuple(Name(name_data) for name_data in data["names"])
-
-    def __repr__(self) -> str:
-        return f"<MoveAilment id_={self.id} moves={self.moves} name={self.name} names={self.names}>"

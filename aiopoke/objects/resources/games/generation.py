@@ -42,10 +42,3 @@ class Generation(NamedResource):
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
         )
-
-    def __repr__(self) -> str:
-        return (
-            f"<Generation abilities={self.abilities} id_={self.id} main_region={self.main_region} "
-            f"moves={self.moves} name='{self.name}' pokemon_species={self.pokemon_species} "
-            f"types={self.types} version_groups={self.version_groups}"
-        )

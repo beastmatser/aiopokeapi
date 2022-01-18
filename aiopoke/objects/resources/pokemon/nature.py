@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility.common_models import Name
 from aiopoke.objects.utility.common_models import NamedResource
+from aiopoke.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import PokeathlonStat
@@ -54,15 +55,8 @@ class Nature(NamedResource):
             for pokeathlon_stat_change_data in data["pokeathlon_stat_changes"]
         )
 
-    def __repr__(self) -> str:
-        return (
-            f"<Nature decreased_stat={self.decreased_stat} hates_flavor={self.hates_flavor} increased_stat={self.increased_stat} id_={self.id} "
-            f"likes_flavor={self.likes_flavor} move_battle_style_preferences={self.move_battle_style_preferences} "
-            f"name='{self.name}' names={self.names} pokeathlon_stat_changes={self.pokeathlon_stat_changes}>"
-        )
 
-
-class NatureStatChange:
+class NatureStatChange(Resource):
     max_change: int
     pokeathlon_stat: MinimalResource["PokeathlonStat"]
 
@@ -70,11 +64,8 @@ class NatureStatChange:
         self.max_change = data["max_change"]
         self.pokeathlon_stat = MinimalResource(data["pokeathlon_stat"])
 
-    def __repr__(self) -> str:
-        return f"<NatureStatChange max_change={self.max_change} pokeathlon_stat={self.pokeathlon_stat}>"
 
-
-class MoveBattleStylePreference:
+class MoveBattleStylePreference(Resource):
     low_hp_preference: int
     high_hp_preference: int
     move_battle_style: MinimalResource["MoveBatteStyle"]
@@ -83,9 +74,3 @@ class MoveBattleStylePreference:
         self.low_hp_preference = data["low_hp_preference"]
         self.high_hp_preference = data["high_hp_preference"]
         self.move_battle_style = MinimalResource(data["move_battle_style"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<MoveBattleStylePreference low_hp_preference={self.low_hp_preference} high_hp_preference={self.high_hp_preference} "
-            f"move_battle_style={self.move_battle_style}>"
-        )

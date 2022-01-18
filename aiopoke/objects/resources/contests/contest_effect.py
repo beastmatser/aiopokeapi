@@ -2,9 +2,10 @@ from typing import Tuple
 
 from aiopoke.objects.utility import Effect
 from aiopoke.objects.utility import FlavorText
+from aiopoke.resource import Resource
 
 
-class ContestEffect:
+class ContestEffect(Resource):
     appeal: int
     effect_entry: "Effect"
     effect_entries: Tuple["Effect", ...]
@@ -34,10 +35,3 @@ class ContestEffect:
         )
         self.id_ = data["id"]
         self.jam = data["jam"]
-
-    def __repr__(self) -> str:
-        return (
-            f"<ContestEffect appeal={self.appeal} effect_entry={self.effect_entry} "
-            f"effect_entries={self.effect_entries} flavor_text_entry={self.flavor_text_entry} "
-            f"flavor_text_entries={self.flavor_text_entries} id_={self.id_} jam={self.jam}>"
-        )

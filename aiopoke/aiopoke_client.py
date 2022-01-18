@@ -5,9 +5,9 @@ from typing import Type
 from typing import Union
 
 import aiohttp
-
 from aiopoke.cache import Cache
 from aiopoke.cache import cache
+from aiopoke.minimal_resources import Url
 from aiopoke.objects.resources import Ability
 from aiopoke.objects.resources import Berry
 from aiopoke.objects.resources import BerryFirmness
@@ -136,6 +136,7 @@ class AiopokeClient:
     def __init__(self, *, session=None) -> None:
         self.session = session
         self._cache = Cache()
+        Url.link(self)
 
     def __init_subclass__(cls) -> None:
         (base,) = tuple(

@@ -28,9 +28,3 @@ class MoveDamageClass(NamedResource):
         )
         self.names = tuple(Name(name_data) for name_data in data["names"])
         self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
-
-    def __repr__(self) -> str:
-        return (
-            f"<MoveDamageClass description='{self.description}' descriptions={self.descriptions} id_={self.id} "
-            f"moves={self.moves} name='{self.name}' names={self.names}>"
-        )
