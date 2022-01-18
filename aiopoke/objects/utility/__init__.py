@@ -14,7 +14,7 @@ from .common_models import VersionGameIndex
 from .common_models import VersionGroupFlavorText
 from .language import Language
 
-__all__ = [
+__all__ = (
     "Language",
     "Description",
     "Effect",
@@ -30,4 +30,4 @@ __all__ = [
     "VersionEncounterDetail",
     "VersionGameIndex",
     "VersionGroupFlavorText",
-]
+)

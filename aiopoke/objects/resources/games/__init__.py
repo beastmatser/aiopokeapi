@@ -4,4 +4,4 @@ from .version import Version
 from .version_group import VersionGroup
 
 
-__all__ = ["Generation", "Pokedex", "VersionGroup", "Version"]
+__all__ = ("Generation", "Pokedex", "VersionGroup", "Version")

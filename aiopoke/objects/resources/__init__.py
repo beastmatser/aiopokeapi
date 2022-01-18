@@ -46,7 +46,7 @@ from .pokemon import PokemonShape
 from .pokemon import PokemonSpecies
 from .pokemon import Stat
 
-__all__ = [
+__all__ = (
     "Berry",
     "BerryFirmness",
     "BerryFlavor",
@@ -94,4 +94,4 @@ __all__ = [
     "PokemonSpecies",
     "Pokemon",
     "Stat",
-]
+)

@@ -14,7 +14,7 @@ from .pokemon_shape import PokemonShape
 from .pokemon_species import PokemonSpecies
 from .stat import Stat
 
-__all__ = [
+__all__ = (
     "Ability",
     "Characteristic",
     "EggGroup",
@@ -30,4 +30,4 @@ __all__ = [
     "PokemonSpecies",
     "Pokemon",
     "Stat",
-]
+)

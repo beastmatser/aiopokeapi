@@ -14,7 +14,7 @@ from .version_game_index import VersionGameIndex
 from .version_group_flavor_text import VersionGroupFlavorText
 
 
-__all__ = [
+__all__ = (
     "Description",
     "Effect",
     "Encounter",
@@ -29,4 +29,4 @@ __all__ = [
     "VersionEncounterDetail",
     "VersionGameIndex",
     "VersionGroupFlavorText",
-]
+)

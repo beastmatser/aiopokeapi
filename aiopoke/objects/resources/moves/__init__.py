@@ -6,7 +6,7 @@ from .move_damage_class import MoveDamageClass
 from .move_learn_method import MoveLearnMethod
 from .move_target import MoveTarget
 
-__all__ = [
+__all__ = (
     "MoveAilment",
     "MoveBatteStyle",
     "MoveCategory",
@@ -14,4 +14,4 @@ __all__ = [
     "MoveLearnMethod",
     "MoveTarget",
     "Move",
-]
+)
