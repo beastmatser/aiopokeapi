@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Effect, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -14,9 +14,12 @@ class ItemFlingEffect(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         effect_entries: List[Dict[str, Any]],
         items: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.effect_entries = [
             Effect(**effect_entry) for effect_entry in effect_entries
         ]

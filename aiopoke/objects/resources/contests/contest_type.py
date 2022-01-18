@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -27,6 +27,6 @@ class ContestType(NamedResource):
 class ContestName(Name):
     color: str
 
-    def __init__(self, *, color: str, name: str) -> None:
-        super().__init__(name=name)
+    def __init__(self, *, color: str, name: str, language: Dict[str, Any]) -> None:
+        super().__init__(name=name, language=language)
         self.color = color

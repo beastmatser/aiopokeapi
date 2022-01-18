@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.objects.utility.language import Language
@@ -10,18 +10,23 @@ if TYPE_CHECKING:
 
 
 class PokemonShape(NamedResource):
-    awesome_name: str
+    awesome_names: List["AwesomeName"]
     names: List["Name"]
     pokemon_species: List[MinimalResource["PokemonSpecies"]]
 
     def __init__(
         self,
         *,
-        awesome_name: str,
+        id: int,
+        name: str,
+        awesome_names: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
         pokemon_species: List[Dict[str, Any]],
     ) -> None:
-        self.awesome_name = awesome_name
+        super().__init__(id=id, name=name)
+        self.awesome_names = [
+            AwesomeName(**awesome_name) for awesome_name in awesome_names
+        ]
         self.names = [Name(**name) for name in names]
         self.pokemon_species = [
             MinimalResource(**pokemon_species) for pokemon_species in pokemon_species
@@ -30,7 +35,7 @@ class PokemonShape(NamedResource):
 
 class AwesomeName(Resource):
     awesome_name: str
-    language: Language
+    language: MinimalResource["Language"]
 
     def __init__(
         self,
@@ -39,4 +44,4 @@ class AwesomeName(Resource):
         language: Dict[str, Any],
     ) -> None:
         self.awesome_name = awesome_name
-        self.language = Language(**language)
+        self.language = MinimalResource(**language)

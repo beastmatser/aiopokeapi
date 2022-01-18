@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -6,8 +6,8 @@ from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.berries import BerryFirmness, BerryFlavor
-    from aiopoke.objects.resources.pokemon.natural_gift_type import NaturalGiftType
     from aiopoke.objects.resources.items.item import Item
+    from aiopoke.objects.resources.pokemon.natural_gift_type import NaturalGiftType
 
 
 class Berry(NamedResource):

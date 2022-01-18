@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -21,6 +21,8 @@ class Nature(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         decreased_stat: Optional[Dict[str, Any]],
         hates_flavor: Optional[Dict[str, Any]],
         increased_stat: Optional[Dict[str, Any]],
@@ -29,6 +31,7 @@ class Nature(NamedResource):
         names: List[Dict[str, Any]],
         pokeathlon_stat_changes: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.decreased_stat = (
             MinimalResource(**decreased_stat) if decreased_stat is not None else None
         )

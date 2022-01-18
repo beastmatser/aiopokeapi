@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -18,12 +18,15 @@ class Region(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         locations: List[Dict[str, Any]],
         main_generation: Dict[str, Any],
         pokedexes: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
         version_groups: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.locations = [MinimalResource(**location) for location in locations]
         self.main_generation = MinimalResource(**main_generation)
         self.pokedexes = [MinimalResource(**pokedex) for pokedex in pokedexes]

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Name, NamedResource, Sprites
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
 class PokemonForm(NamedResource):
     form_name: str
+    form_names: List["Name"]
     form_order: int
     is_battle_only: bool
     is_default: bool
@@ -25,7 +26,10 @@ class PokemonForm(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         form_name: str,
+        form_names: List[Dict[str, Any]],
         form_order: int,
         is_battle_only: bool,
         is_default: bool,
@@ -37,7 +41,9 @@ class PokemonForm(NamedResource):
         types: List[Dict[str, Any]],
         version_group: Dict[str, Any],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.form_name = form_name
+        self.form_names = [Name(**name) for name in form_names]
         self.form_order = form_order
         self.is_battle_only = is_battle_only
         self.is_default = is_default

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Effect, NamedResource, VerboseEffect
 from aiopoke.objects.utility.common_models import Name
@@ -23,6 +23,8 @@ class Ability(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         effect_changes: List[Dict[str, Any]],
         effect_entries: List[Dict[str, Any]],
         flavor_text_entries: List[Dict[str, Any]],
@@ -31,6 +33,7 @@ class Ability(NamedResource):
         names: List[Dict[str, Any]],
         pokemon: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.effect_changes = [
             AbilityEffectChange(**effect_change) for effect_change in effect_changes
         ]
@@ -41,7 +44,7 @@ class Ability(NamedResource):
             AbilityFlavorText(**flavor_text_entry)
             for flavor_text_entry in flavor_text_entries
         ]
-        self.generation = Generation(**generation)
+        self.generation = MinimalResource(**generation)
         self.is_main_series = is_main_series
         self.names = [Name(**name) for name in names]
         self.pokemon = [AbilityPokemon(**pokemon) for pokemon in pokemon]

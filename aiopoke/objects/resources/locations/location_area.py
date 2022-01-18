@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Name, NamedResource, VersionEncounterDetail
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -19,12 +19,15 @@ class LocationArea(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         encounter_method_rates: List[Dict[str, Any]],
         pokemon_encounters: List[Dict[str, Any]],
         location: Dict[str, Any],
         game_index: int,
         names: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.encounter_method_rates = [
             EncounterMethodRate(**encounter_method_rate)
             for encounter_method_rate in encounter_method_rates

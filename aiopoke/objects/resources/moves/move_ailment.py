@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,7 +12,13 @@ class MoveAilment(NamedResource):
     names: List["Name"]
 
     def __init__(
-        self, *, moves: List[Dict[str, Any]], names: List[Dict[str, Any]]
+        self,
+        *,
+        id: int,
+        name: str,
+        moves: List[Dict[str, Any]],
+        names: List[Dict[str, Any]]
     ) -> None:
+        super().__init__(id=id, name=name)
         self.moves = [MinimalResource(**move) for move in moves]
         self.names = [Name(**name) for name in names]

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict
 
 from aiopoke.utils.minimal_resources import MinimalResource, Url
 from aiopoke.utils.resource import Resource
@@ -14,7 +14,7 @@ class MachineVersionDetail(Resource):
     def __init__(
         self,
         *,
-        machine: str,
+        machine: Dict[str, Any],
         version_group: Dict[str, Any],
     ):
         self.machine = Url(**machine)

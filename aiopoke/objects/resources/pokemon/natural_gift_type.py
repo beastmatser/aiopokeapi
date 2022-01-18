@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import GenerationGameIndex, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 class NaturalGiftType(NamedResource):
     damage_relations: "TypeRelations"
     game_indices: List["GenerationGameIndex"]
+    generation: MinimalResource["Generation"]
     move_damage_class: MinimalResource["MoveDamageClass"]
     moves: List[MinimalResource["Move"]]
     names: List["Name"]
@@ -21,18 +22,23 @@ class NaturalGiftType(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         damage_relations: Dict[str, Any],
         game_indices: List[Dict[str, Any]],
+        generation: Dict[str, Any],
         move_damage_class: Dict[str, Any],
         moves: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
         past_damage_relations: List[Dict[str, Any]],
         pokemon: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.damage_relations = TypeRelations(**damage_relations)
         self.game_indices = [
             GenerationGameIndex(**game_index) for game_index in game_indices
         ]
+        self.generation = MinimalResource(**generation)
         self.move_damage_class = MinimalResource(**move_damage_class)
         self.moves = [MinimalResource(**move) for move in moves]
         self.names = [Name(**name) for name in names]

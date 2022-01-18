@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from aiopoke.objects.utility import Effect, FlavorText
 from aiopoke.utils.resource import Resource

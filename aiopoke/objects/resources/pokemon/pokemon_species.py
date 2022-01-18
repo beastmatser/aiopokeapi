@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from aiopoke.objects.utility import Description, FlavorText, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource, Url
@@ -28,7 +28,7 @@ class PokemonSpecies(NamedResource):
     color: MinimalResource["PokemonColor"]
     egg_groups: List[MinimalResource["EggGroup"]]
     evolution_chain: Url["EvolutionChain"]
-    evolves_from_species: MinimalResource["PokemonSpecies"]
+    evolves_from_species: Optional[MinimalResource["PokemonSpecies"]]
     flavor_text_entries: List["FlavorText"]
     form_descriptions: List["Description"]
     forms_switchable: bool
@@ -52,17 +52,19 @@ class PokemonSpecies(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         base_happiness: int,
         capture_rate: int,
         color: Dict[str, Any],
         egg_groups: List[Dict[str, Any]],
-        evolution_chain: str,
-        evolves_from_species: Dict[str, Any],
+        evolution_chain: Dict[str, Any],
+        evolves_from_species: Optional[Dict[str, Any]],
         flavor_text_entries: List[Dict[str, Any]],
         form_descriptions: List[Dict[str, Any]],
         forms_switchable: bool,
         gender_rate: int,
-        genera: Dict[str, Any],
+        genera: List[Dict[str, Any]],
         generation: Dict[str, Any],
         growth_rate: Dict[str, Any],
         habitat: Dict[str, Any],
@@ -72,18 +74,23 @@ class PokemonSpecies(NamedResource):
         is_legendary: bool,
         is_mythical: bool,
         order: int,
-        names: Dict[str, Any],
+        names: List[Dict[str, Any]],
         pal_park_encounters: List[Dict[str, Any]],
         pokedex_numbers: List[Dict[str, Any]],
         shape: Dict[str, Any],
         varieties: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.base_happiness = base_happiness
         self.capture_rate = capture_rate
         self.color = MinimalResource(**color)
         self.egg_groups = [MinimalResource(**egg_group) for egg_group in egg_groups]
         self.evolution_chain = Url(**evolution_chain)
-        self.evolves_from_species = MinimalResource(**evolves_from_species)
+        self.evolves_from_species = (
+            MinimalResource(**evolves_from_species)
+            if evolves_from_species is not None
+            else None
+        )
         self.flavor_text_entries = [
             FlavorText(**flavor_text_entry) for flavor_text_entry in flavor_text_entries
         ]

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -13,8 +13,14 @@ class PalParkArea(NamedResource):
     names: List["Name"]
 
     def __init__(
-        self, pokemon_encounters: List[Dict[str, Any]], names: List[Dict[str, Any]]
+        self,
+        *,
+        id: int,
+        name: str,
+        pokemon_encounters: List[Dict[str, Any]],
+        names: List[Dict[str, Any]]
     ) -> None:
+        super().__init__(id=id, name=name)
         self.pokemon_encounters = [
             PalParkEncounterSpecies(**pokemon_encounters)
             for pokemon_encounters in pokemon_encounters

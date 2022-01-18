@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 
@@ -10,8 +10,16 @@ class Language(NamedResource):
     names: List["Name"]
 
     def __init__(
-        self, *, official: bool, iso3166: str, iso639: str, names: List[Dict[str, Any]]
+        self,
+        *,
+        id: int,
+        name: str,
+        official: bool,
+        iso3166: str,
+        iso639: str,
+        names: List[Dict[str, Any]]
     ):
+        super().__init__(id=id, name=name)
         self.official = official
         self.iso3166 = iso3166
         self.iso639 = iso639

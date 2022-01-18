@@ -340,7 +340,7 @@ class AiopokeClient:
         data = await self.http.get(f"pokemon-species/{name_or_id}")
         return PokemonSpecies(**data)
 
-    @cache("pokemon-species-flavor-text")
+    @cache("region")
     async def get_region(self, name_or_id) -> Region:
         data = await self.http.get(f"region/{name_or_id}")
         return Region(**data)

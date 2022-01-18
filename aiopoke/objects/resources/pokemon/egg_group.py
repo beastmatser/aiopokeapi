@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,8 +12,14 @@ class EggGroup(NamedResource):
     names: List["Name"]
 
     def __init__(
-        self, *, pokemon_species: List[Dict[str, Any]], names: List[Dict[str, Any]]
+        self,
+        *,
+        id: int,
+        name: str,
+        pokemon_species: List[Dict[str, Any]],
+        names: List[Dict[str, Any]]
     ) -> None:
+        super().__init__(id=id, name=name)
         self.pokemon_species = [
             MinimalResource(**pokemon_species) for pokemon_species in pokemon_species
         ]

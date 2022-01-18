@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.utility import Description, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -17,11 +17,14 @@ class GrowthRate(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         descriptions: List[Dict[str, Any]],
         formula: str,
         levels: List[Dict[str, Any]],
         pokemon_species: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.descriptions = [Description(**description) for description in descriptions]
         self.formula = formula
         self.levels = [GrowthRateExperienceLevel(**level) for level in levels]

@@ -110,6 +110,6 @@ class MinimalResource(Url[T]):
     id: int
     endpoint: str
 
-    def __init__(self, *, name: str, url: str) -> None:
+    def __init__(self, name: str, url: str) -> None:
         super().__init__(url=url)
         self.name = name

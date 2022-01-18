@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from aiopoke.objects.resources.games.version import Version
 from aiopoke.objects.utility import NamedResource
@@ -20,6 +20,8 @@ class VersionGroup(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         generation: Dict[str, Any],
         move_learn_methods: List[Dict[str, Any]],
         order: int,
@@ -27,6 +29,7 @@ class VersionGroup(NamedResource):
         regions: List[Dict[str, Any]],
         versions: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.generation = MinimalResource(**generation)
         self.move_learn_methods = [
             MinimalResource(**move_learn_method)

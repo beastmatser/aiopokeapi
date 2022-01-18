@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List, Optional, Dict
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -125,5 +125,5 @@ class EvolutionDetail(Resource):
         self.trade_species = (
             MinimalResource(**trade_species) if trade_species is not None else None
         )
-        self.trigger = MinimalResource(trigger)
+        self.trigger = MinimalResource(**trigger)
         self.turn_upside_down = turn_upside_down

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from aiopoke.objects.utility import Description, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -19,6 +19,8 @@ class Pokedex(NamedResource):
     def __init__(
         self,
         *,
+        id: int,
+        name: str,
         descriptions: List[Dict[str, Any]],
         is_main_series: bool,
         pokemon_entries: List[Dict[str, Any]],
@@ -26,6 +28,7 @@ class Pokedex(NamedResource):
         version_groups: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
     ) -> None:
+        super().__init__(id=id, name=name)
         self.descriptions = [Description(**description) for description in descriptions]
         self.is_main_series = is_main_series
         self.pokemon_entries = [

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional, Dict, Any
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from aiopoke.objects.resources.contests.super_contest_effect import SuperContestEffect
 from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
@@ -61,7 +61,7 @@ class Move(NamedResource):
         name: str,
         accuracy: int,
         contest_combos: Dict[str, Any],
-        contest_effect: str,
+        contest_effect: Dict[str, Any],
         contest_type: Dict[str, Any],
         damage_class: Dict[str, Any],
         effect_chance: Optional[int],
