@@ -1,7 +1,6 @@
 from typing import List
 
-from aiopoke.objects.utility.common_models import Name
-from aiopoke.objects.utility.common_models import NamedResource
+from aiopoke.objects.utility.common_models import Name, NamedResource
 
 
 class Language(NamedResource):

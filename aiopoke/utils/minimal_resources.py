@@ -1,13 +1,15 @@
 from dataclasses import field
-from typing import Any
-from typing import Callable
-from typing import Coroutine
-from typing import Dict
-from typing import Generic
-from typing import Optional
-from typing import TYPE_CHECKING
-from typing import TypeVar
-from typing import Union
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Dict,
+    Generic,
+    Optional,
+    TypeVar,
+    Union,
+)
 
 from aiopoke.utils.resource import Resource
 

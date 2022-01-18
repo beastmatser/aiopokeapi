@@ -1,7 +1,6 @@
 from typing import List
 
-from aiopoke.objects.utility import Effect
-from aiopoke.objects.utility import FlavorText
+from aiopoke.objects.utility import Effect, FlavorText
 from aiopoke.utils.resource import Resource
 
 

@@ -1,20 +1,12 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-from aiopoke.objects.utility import GenerationGameIndex
-from aiopoke.objects.utility import Name
-from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import GenerationGameIndex, Name, NamedResource
+from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
 
-from aiopoke.utils.minimal_resources import MinimalResource
-
 if TYPE_CHECKING:
+    from aiopoke.objects.resources import Generation, Move, MoveDamageClass
     from aiopoke.objects.resources.pokemon import Pokemon
-    from aiopoke.objects.resources import (
-        Generation,
-        Move,
-        MoveDamageClass,
-    )
 
 
 class NaturalGiftType(NamedResource):
@@ -40,9 +32,7 @@ class NaturalGiftType(NamedResource):
             PastTypeRelation(past_damage_relation_data)
             for past_damage_relation_data in data["past_damage_relations"]
         ]
-        self.pokemon = [
-            TypePokemon(pokemon_data) for pokemon_data in data["pokemon"]
-        ]
+        self.pokemon = [TypePokemon(pokemon_data) for pokemon_data in data["pokemon"]]
 
 
 class TypeRelations(Resource):

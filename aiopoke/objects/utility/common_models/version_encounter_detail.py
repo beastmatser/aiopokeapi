@@ -1,8 +1,7 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.objects.utility.common_models.encounter import Encounter
+from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:

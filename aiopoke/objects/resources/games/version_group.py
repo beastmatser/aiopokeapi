@@ -1,11 +1,9 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from aiopoke.objects.resources.games.version import Version
 from aiopoke.objects.utility import NamedResource
-from aiopoke.utils.resource import Resource
-
 from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import MoveLearnMethod, Pokedex, Region
@@ -30,9 +28,7 @@ class VersionGroup(NamedResource):
         self.pokedexes = [
             MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]
         ]
-        self.regions = [
-            MinimalResource(region_data) for region_data in data["regions"]
-        ]
+        self.regions = [MinimalResource(region_data) for region_data in data["regions"]]
         self.versions = [
             MinimalResource(version_data) for version_data in data["versions"]
         ]

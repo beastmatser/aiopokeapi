@@ -1,18 +1,16 @@
-from typing import Optional
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
-from aiopoke.objects.utility import FlavorText
-from aiopoke.objects.utility import GenerationGameIndex
-from aiopoke.objects.utility import MachineVersionDetail
-from aiopoke.objects.utility import Name
-from aiopoke.objects.utility import NamedResource
-from aiopoke.objects.utility import Sprite
-from aiopoke.objects.utility import VerboseEffect
+from aiopoke.objects.utility import (
+    FlavorText,
+    GenerationGameIndex,
+    MachineVersionDetail,
+    Name,
+    NamedResource,
+    Sprite,
+    VerboseEffect,
+)
+from aiopoke.utils.minimal_resources import MinimalResource, Url
 from aiopoke.utils.resource import Resource
-
-from aiopoke.utils.minimal_resources import MinimalResource
-from aiopoke.utils.minimal_resources import Url
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import EvolutionChain, Pokemon, Version

@@ -1,6 +1,5 @@
 from os import getcwd
-from typing import Optional
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 import aiofiles
 

@@ -1,6 +1,7 @@
 from typing import Optional
 
 import aiofiles  # type: ignore
+
 from aiopoke.objects.utility.common_models.sprite import Sprite
 
 OptionalSprite = Optional["Sprite"]

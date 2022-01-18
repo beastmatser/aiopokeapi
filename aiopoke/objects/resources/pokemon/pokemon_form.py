@@ -1,12 +1,8 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-from aiopoke.objects.utility import Name
-from aiopoke.objects.utility import NamedResource
-from aiopoke.objects.utility import Sprites
-from aiopoke.utils.resource import Resource
-
+from aiopoke.objects.utility import Name, NamedResource, Sprites
 from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import NaturalGiftType, VersionGroup
@@ -37,9 +33,7 @@ class PokemonForm(NamedResource):
         self.names = [Name(name_data) for name_data in data["names"]]
         self.pokemon = MinimalResource(data["pokemon"])
         self.sprites = Sprites(data["sprites"])
-        self.types = [
-            SlotNaturalGiftType(type_data) for type_data in data["types"]
-        ]
+        self.types = [SlotNaturalGiftType(type_data) for type_data in data["types"]]
         self.version_group = MinimalResource(data["version_group"])
 
 

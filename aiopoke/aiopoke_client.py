@@ -1,58 +1,58 @@
 from typing import Union
 
 from aiopoke.http_client import HttpClient
-from aiopoke.objects.resources import Ability
-from aiopoke.objects.resources import Berry
-from aiopoke.objects.resources import BerryFirmness
-from aiopoke.objects.resources import BerryFlavor
-from aiopoke.objects.resources import Characteristic
-from aiopoke.objects.resources import ContestEffect
-from aiopoke.objects.resources import ContestType
-from aiopoke.objects.resources import EggGroup
-from aiopoke.objects.resources import EncounterCondition
-from aiopoke.objects.resources import EncounterConditionValue
-from aiopoke.objects.resources import EncounterMethod
-from aiopoke.objects.resources import EvolutionChain
-from aiopoke.objects.resources import EvolutionTrigger
-from aiopoke.objects.resources import Gender
-from aiopoke.objects.resources import Generation
-from aiopoke.objects.resources import GrowthRate
-from aiopoke.objects.resources import Item
-from aiopoke.objects.resources import ItemAttribute
-from aiopoke.objects.resources import ItemCategory
-from aiopoke.objects.resources import ItemFlingEffect
-from aiopoke.objects.resources import ItemPocket
-from aiopoke.objects.resources import Location
-from aiopoke.objects.resources import LocationArea
-from aiopoke.objects.resources import Machine
-from aiopoke.objects.resources import Move
-from aiopoke.objects.resources import MoveAilment
-from aiopoke.objects.resources import MoveBatteStyle
-from aiopoke.objects.resources import MoveCategory
-from aiopoke.objects.resources import MoveDamageClass
-from aiopoke.objects.resources import MoveLearnMethod
-from aiopoke.objects.resources import MoveTarget
-from aiopoke.objects.resources import NaturalGiftType
-from aiopoke.objects.resources import Nature
-from aiopoke.objects.resources import PalParkArea
-from aiopoke.objects.resources import PokeathlonStat
-from aiopoke.objects.resources import Pokedex
-from aiopoke.objects.resources import Pokemon
-from aiopoke.objects.resources import PokemonColor
-from aiopoke.objects.resources import PokemonForm
-from aiopoke.objects.resources import PokemonHabitat
-from aiopoke.objects.resources import PokemonShape
-from aiopoke.objects.resources import PokemonSpecies
-from aiopoke.objects.resources import Region
-from aiopoke.objects.resources import Stat
-from aiopoke.objects.resources import SuperContestEffect
-from aiopoke.objects.resources import Version
-from aiopoke.objects.resources import VersionGroup
+from aiopoke.objects.resources import (
+    Ability,
+    Berry,
+    BerryFirmness,
+    BerryFlavor,
+    Characteristic,
+    ContestEffect,
+    ContestType,
+    EggGroup,
+    EncounterCondition,
+    EncounterConditionValue,
+    EncounterMethod,
+    EvolutionChain,
+    EvolutionTrigger,
+    Gender,
+    Generation,
+    GrowthRate,
+    Item,
+    ItemAttribute,
+    ItemCategory,
+    ItemFlingEffect,
+    ItemPocket,
+    Location,
+    LocationArea,
+    Machine,
+    Move,
+    MoveAilment,
+    MoveBatteStyle,
+    MoveCategory,
+    MoveDamageClass,
+    MoveLearnMethod,
+    MoveTarget,
+    NaturalGiftType,
+    Nature,
+    PalParkArea,
+    PokeathlonStat,
+    Pokedex,
+    Pokemon,
+    PokemonColor,
+    PokemonForm,
+    PokemonHabitat,
+    PokemonShape,
+    PokemonSpecies,
+    Region,
+    Stat,
+    SuperContestEffect,
+    Version,
+    VersionGroup,
+)
 from aiopoke.objects.utility import Sprite
 from aiopoke.objects.utility.language import Language
-from aiopoke.utils import Cache
-from aiopoke.utils import cache
-from aiopoke.utils import Url
+from aiopoke.utils import Cache, Url, cache
 
 ENDPOINTS = {
     "ability",

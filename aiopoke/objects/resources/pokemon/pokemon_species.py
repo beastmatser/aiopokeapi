@@ -1,29 +1,23 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-from aiopoke.objects.utility import Description
-from aiopoke.objects.utility import FlavorText
-from aiopoke.objects.utility import Name
-from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import Description, FlavorText, Name, NamedResource
+from aiopoke.utils.minimal_resources import MinimalResource, Url
 from aiopoke.utils.resource import Resource
 
-from aiopoke.utils.minimal_resources import MinimalResource
-from aiopoke.utils.minimal_resources import Url
-
 if TYPE_CHECKING:
-    from aiopoke.objects.resources.pokemon import (
-        GrowthRate,
-        EggGroup,
-        Pokemon,
-        PokemonHabitat,
-        PokemonShape,
-        PokemonColor,
-    )
     from aiopoke.objects.resources import (
         EvolutionChain,
         Generation,
-        Pokedex,
         PalParkArea,
+        Pokedex,
+    )
+    from aiopoke.objects.resources.pokemon import (
+        EggGroup,
+        GrowthRate,
+        Pokemon,
+        PokemonColor,
+        PokemonHabitat,
+        PokemonShape,
     )
     from aiopoke.objects.utility import Language
 

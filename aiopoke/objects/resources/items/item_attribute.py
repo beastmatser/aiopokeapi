@@ -1,10 +1,6 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-from aiopoke.objects.utility import Description
-from aiopoke.objects.utility import Name
-from aiopoke.objects.utility import NamedResource
-
+from aiopoke.objects.utility import Description, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:

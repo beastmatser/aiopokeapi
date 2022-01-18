@@ -1,11 +1,13 @@
-from typing import Any
-from typing import Callable
-from typing import Coroutine
-from typing import Dict
-from typing import Optional
-from typing import TYPE_CHECKING
-from typing import TypeVar
-from typing import Union
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    Dict,
+    Optional,
+    TypeVar,
+    Union,
+)
 
 if TYPE_CHECKING:
     from aiopoke.aiopoke_client import AiopokeClient

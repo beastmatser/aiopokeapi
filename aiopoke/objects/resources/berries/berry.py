@@ -1,14 +1,12 @@
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from aiopoke.objects.utility import NamedResource
+from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
 
-from aiopoke.utils.minimal_resources import MinimalResource
-
 if TYPE_CHECKING:
+    from aiopoke.objects.resources.berries import BerryFirmness, BerryFlavor
     from aiopoke.objects.resources.pokemon.natural_gift_type import NaturalGiftType
-    from aiopoke.objects.resources.berries import BerryFlavor, BerryFirmness
 
 
 class Berry(NamedResource):
@@ -25,9 +23,7 @@ class Berry(NamedResource):
     def __init__(self, data) -> None:
         super().__init__(data)
         self.firmness = MinimalResource(data["firmness"])
-        self.flavors = [
-            BerryFlavorMap(flavor_data) for flavor_data in data["flavors"]
-        ]
+        self.flavors = [BerryFlavorMap(flavor_data) for flavor_data in data["flavors"]]
         self.growth_time = data["growth_time"]
         self.max_harvest = data["max_harvest"]
         self.natural_gift_power = data["natural_gift_power"]

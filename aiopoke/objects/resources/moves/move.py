@@ -1,16 +1,14 @@
-from typing import Optional
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
-from aiopoke.objects.utility import MachineVersionDetail
-from aiopoke.objects.utility import Name
-from aiopoke.objects.utility import NamedResource
-from aiopoke.objects.utility import VerboseEffect
+from aiopoke.objects.utility import (
+    MachineVersionDetail,
+    Name,
+    NamedResource,
+    VerboseEffect,
+)
+from aiopoke.utils.minimal_resources import MinimalResource, Url
 from aiopoke.utils.resource import Resource
-
-from aiopoke.utils.minimal_resources import MinimalResource
-from aiopoke.utils.minimal_resources import Url
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import (
@@ -22,12 +20,12 @@ if TYPE_CHECKING:
         Stat,
         VersionGroup,
     )
-    from aiopoke.objects.utility import Language
     from aiopoke.objects.resources.moves import (
         MoveAilment,
         MoveCategory,
         MoveDamageClass,
     )
+    from aiopoke.objects.utility import Language
 
 
 class Move(NamedResource):

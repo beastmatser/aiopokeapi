@@ -1,10 +1,7 @@
-from typing import Optional
-from typing import List
-from typing import TYPE_CHECKING
-
-from aiopoke.utils.resource import Resource
+from typing import TYPE_CHECKING, List, Optional
 
 from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import (
