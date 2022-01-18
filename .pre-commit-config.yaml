@@ -40,3 +40,8 @@ repos:
       - id: mypy
         files: ^aiopoke/
         args: [--install-types, --non-interactive]
+
+  - repo: https://github.com/MarcoGorelli/absolufy-imports
+    rev: v0.3.0
+    hooks:
+      - id: absolufy-imports
