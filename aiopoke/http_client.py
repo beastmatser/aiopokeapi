@@ -15,5 +15,8 @@ class HttpClient:
         async with self._session.get(
             f"https://pokeapi.co/api/v2/{endpoint}"
         ) as response:
+            if response.status == 404:
+                raise ValueError(f"The id or name for {endpoint} was not found.")
+
             data: Dict[str, Any] = await response.json()
             return data
