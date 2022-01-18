@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Description
@@ -32,17 +32,14 @@ class PokemonSpecies(NamedResource):
     base_happiness: int
     capture_rate: int
     color: MinimalResource["PokemonColor"]
-    egg_groups: Tuple[MinimalResource["EggGroup"], ...]
+    egg_groups: List[MinimalResource["EggGroup"]]
     evolution_chain: Url["EvolutionChain"]
     evolves_from_species: MinimalResource["PokemonSpecies"]
-    flavor_text_entry: "FlavorText"
-    flavor_text_entries: Tuple["FlavorText", ...]
-    form_description: str
-    form_descriptions: Tuple["Description", ...]
+    flavor_text_entries: List["FlavorText"]
+    form_descriptions: List["Description"]
     forms_switchable: bool
     gender_rate: int
-    genus: "Genus"
-    genera: Tuple["Genus", ...]
+    genera: List["Genus"]
     generation: MinimalResource["Generation"]
     growth_rate: MinimalResource["GrowthRate"]
     habitat: MinimalResource["PokemonHabitat"]
@@ -52,48 +49,33 @@ class PokemonSpecies(NamedResource):
     is_legendary: bool
     is_mythical: bool
     order: int
-    names: Tuple["Name", ...]
-    pal_park_encounters: Tuple["PalParkEncounterArea", ...]
-    pokedex_numbers: Tuple["PokemonSpeciesDexEntry", ...]
+    names: List["Name"]
+    pal_park_encounters: List["PalParkEncounterArea"]
+    pokedex_numbers: List["PokemonSpeciesDexEntry"]
     shape: MinimalResource["PokemonShape"]
-    varieties: Tuple["PokemonSpeciesVariety", ...]
+    varieties: List["PokemonSpeciesVariety"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.base_happiness = data["base_happiness"]
         self.capture_rate = data["capture_rate"]
         self.color = MinimalResource(data["color"])
-        self.egg_groups = tuple(
+        self.egg_groups = [
             MinimalResource(egg_group_data) for egg_group_data in data["egg_groups"]
-        )
+        ]
         self.evolution_chain = Url(data["evolution_chain"])
         self.evolves_from_species = MinimalResource(data["evolves_from_species"])
-        self.flavor_text_entry = tuple(
+        self.flavor_text_entries = [
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
-            if flavor_text_entry_data["language"]["name"] == "en"
-        )[0]
-        self.flavor_text_entries = tuple(
-            FlavorText(flavor_text_entry_data)
-            for flavor_text_entry_data in data["flavor_text_entries"]
-        )
-        self.form_description = tuple(
-            description_data["description"]
-            for description_data in data["form_descriptions"]
-            if description_data["language"]["name"] == "en"
-        )[0]
-        self.form_descriptions = tuple(
+        ]
+        self.form_descriptions = [
             Description(description_data)
             for description_data in data["form_descriptions"]
-        )
+        ]
         self.forms_switchable = data["forms_switchable"]
         self.gender_rate = data["gender_rate"]
-        self.genus = tuple(
-            Genus(genera_data)
-            for genera_data in data["genera"]
-            if genera_data["language"]["name"] == "en"
-        )[0]
-        self.genera = tuple(Genus(genera_data) for genera_data in data["genera"])
+        self.genera = [Genus(genera_data) for genera_data in data["genera"]]
         self.generation = MinimalResource(data["generation"])
         self.growth_rate = MinimalResource(data["growth_rate"])
         self.habitat = MinimalResource(data["habitat"])
@@ -102,20 +84,20 @@ class PokemonSpecies(NamedResource):
         self.is_baby = data["is_baby"]
         self.is_legendary = data["is_legendary"]
         self.is_mythical = data["is_mythical"]
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.names = [Name(name_data) for name_data in data["names"]]
         self.order = data["order"]
-        self.pal_park_encounters = tuple(
+        self.pal_park_encounters = [
             PalParkEncounterArea(pal_park_encounter_data)
             for pal_park_encounter_data in data["pal_park_encounters"]
-        )
-        self.pokedex_numbers = tuple(
+        ]
+        self.pokedex_numbers = [
             PokemonSpeciesDexEntry(pokedex_number_data)
             for pokedex_number_data in data["pokedex_numbers"]
-        )
+        ]
         self.shape = MinimalResource(data["shape"])
-        self.varieties = tuple(
+        self.varieties = [
             PokemonSpeciesVariety(variety_data) for variety_data in data["varieties"]
-        )
+        ]
 
 
 class Genus(Resource):

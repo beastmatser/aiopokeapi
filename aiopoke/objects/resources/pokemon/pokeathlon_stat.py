@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Name
@@ -13,29 +13,29 @@ if TYPE_CHECKING:
 
 class PokeathlonStat(NamedResource):
     affecting_natures: "NaturePokeathlonStatAffectSets"
-    names: Tuple["Name", ...]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.affecting_natures = NaturePokeathlonStatAffectSets(
             data["affecting_natures"]
         )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.names = [Name(name_data) for name_data in data["names"]]
 
 
 class NaturePokeathlonStatAffectSets(Resource):
-    increase: Tuple["NaturePokeathlonStatAffect", ...]
-    decrease: Tuple["NaturePokeathlonStatAffect", ...]
+    increase: List["NaturePokeathlonStatAffect"]
+    decrease: List["NaturePokeathlonStatAffect"]
 
     def __init__(self, data) -> None:
-        self.increase = tuple(
+        self.increase = [
             NaturePokeathlonStatAffect(increase_data)
             for increase_data in data["increase"]
-        )
-        self.decrease = tuple(
+        ]
+        self.decrease = [
             NaturePokeathlonStatAffect(decrease_data)
             for decrease_data in data["decrease"]
-        )
+        ]
 
 
 class NaturePokeathlonStatAffect(Resource):

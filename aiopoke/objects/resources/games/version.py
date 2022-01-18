@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Name
@@ -12,9 +12,9 @@ if TYPE_CHECKING:
 
 class Version(NamedResource):
     version_group: MinimalResource["VersionGroup"]
-    names: Tuple["Name", ...]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.names = [Name(name_data) for name_data in data["names"]]
         self.version_group = MinimalResource(data["version_group"])

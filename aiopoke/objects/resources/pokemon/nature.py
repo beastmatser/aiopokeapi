@@ -1,5 +1,5 @@
 from typing import Optional
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Name
@@ -18,9 +18,9 @@ class Nature(NamedResource):
     hates_flavor: Optional[MinimalResource["BerryFlavor"]]
     increased_stat: Optional[MinimalResource["PokeathlonStat"]]
     likes_flavor: Optional[MinimalResource["BerryFlavor"]]
-    move_battle_style_preferences: Tuple["MoveBattleStylePreference", ...]
-    names: Tuple["Name", ...]
-    pokeathlon_stat_changes: Tuple["NatureStatChange", ...]
+    move_battle_style_preferences: List["MoveBattleStylePreference"]
+    names: List["Name"]
+    pokeathlon_stat_changes: List["NatureStatChange"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -44,17 +44,17 @@ class Nature(NamedResource):
             if data["likes_flavor"] is not None
             else None
         )
-        self.move_battle_style_preferences = tuple(
+        self.move_battle_style_preferences = [
             MoveBattleStylePreference(move_battle_style_preference_data)
             for move_battle_style_preference_data in data[
                 "move_battle_style_preferences"
             ]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
-        self.pokeathlon_stat_changes = tuple(
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]
+        self.pokeathlon_stat_changes = [
             NatureStatChange(pokeathlon_stat_change_data)
             for pokeathlon_stat_change_data in data["pokeathlon_stat_changes"]
-        )
+        ]
 
 
 class NatureStatChange(Resource):

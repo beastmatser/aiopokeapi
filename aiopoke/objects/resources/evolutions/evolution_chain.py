@@ -1,5 +1,5 @@
 from typing import Optional
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.utils.resource import Resource
@@ -33,19 +33,19 @@ class EvolutionChain(Resource):
 
 
 class ChainLink(Resource):
-    evolution_details: Tuple["EvolutionDetail", ...]
-    evolves_to: Tuple["ChainLink", ...]
+    evolution_details: List["EvolutionDetail"]
+    evolves_to: List["ChainLink"]
     is_baby: bool
     species: MinimalResource["PokemonSpecies"]
 
     def __init__(self, data) -> None:
-        self.evolution_details = tuple(
+        self.evolution_details = [
             EvolutionDetail(evolution_detail_data)
             for evolution_detail_data in data["evolution_details"]
-        )
-        self.evolves_to = tuple(
+        ]
+        self.evolves_to = [
             ChainLink(evolves_to_data) for evolves_to_data in data["evolves_to"]
-        )
+        ]
         self.is_baby = data["is_baby"]
         self.species = MinimalResource(data["species"])
 

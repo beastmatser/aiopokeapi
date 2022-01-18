@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Name
@@ -12,12 +12,12 @@ if TYPE_CHECKING:
 
 class ContestType(NamedResource):
     berry_flavor: MinimalResource["BerryFlavor"]
-    names: Tuple["ContestName", ...]
+    names: List["ContestName"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.berry_flavor = MinimalResource(data["berry_flavor"])
-        self.names = tuple(ContestName(name_data) for name_data in data["names"])
+        self.names = [ContestName(name_data) for name_data in data["names"]]
 
 
 class ContestName(Name):

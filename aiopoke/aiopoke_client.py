@@ -127,7 +127,7 @@ class AiopokeClient:
 
     @cache("ability")
     async def get_ability(self, name_or_id) -> Ability:
-        data = await self.http.get(f"ability{name_or_id}")
+        data = await self.http.get(f"ability/{name_or_id}")
         return Ability(data)
 
     @cache("berry")

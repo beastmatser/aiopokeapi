@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Name
@@ -11,13 +11,13 @@ if TYPE_CHECKING:
 
 
 class EggGroup(NamedResource):
-    pokemon_species: Tuple[MinimalResource["PokemonSpecies"], ...]
-    names: Tuple["Name", ...]
+    pokemon_species: List[MinimalResource["PokemonSpecies"]]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.pokemon_species = tuple(
+        self.pokemon_species = [
             MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["pokemon_species"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]

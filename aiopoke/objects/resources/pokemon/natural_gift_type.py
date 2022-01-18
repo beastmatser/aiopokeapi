@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import GenerationGameIndex
@@ -19,65 +19,65 @@ if TYPE_CHECKING:
 
 class NaturalGiftType(NamedResource):
     damage_relations: "TypeRelations"
-    game_indices: Tuple["GenerationGameIndex", ...]
+    game_indices: List["GenerationGameIndex"]
     move_damage_class: MinimalResource["MoveDamageClass"]
-    moves: Tuple[MinimalResource["Move"], ...]
-    names: Tuple["Name", ...]
-    past_damage_relations: Tuple["PastTypeRelation", ...]
-    pokemon: Tuple["TypePokemon", ...]
+    moves: List[MinimalResource["Move"]]
+    names: List["Name"]
+    past_damage_relations: List["PastTypeRelation"]
+    pokemon: List["TypePokemon"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
         self.damage_relations = TypeRelations(data["damage_relations"])
-        self.game_indices = tuple(
+        self.game_indices = [
             GenerationGameIndex(game_indice_data)
             for game_indice_data in data["game_indices"]
-        )
+        ]
         self.move_damage_class = MinimalResource(data["move_damage_class"])
-        self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
-        self.names = tuple(Name(name_data) for name_data in data["names"])
-        self.past_damage_relations = tuple(
+        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
+        self.names = [Name(name_data) for name_data in data["names"]]
+        self.past_damage_relations = [
             PastTypeRelation(past_damage_relation_data)
             for past_damage_relation_data in data["past_damage_relations"]
-        )
-        self.pokemon = tuple(
+        ]
+        self.pokemon = [
             TypePokemon(pokemon_data) for pokemon_data in data["pokemon"]
-        )
+        ]
 
 
 class TypeRelations(Resource):
-    double_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
-    double_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
-    half_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
-    half_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
-    no_damage_from: Tuple[MinimalResource["NaturalGiftType"], ...]
-    no_damage_to: Tuple[MinimalResource["NaturalGiftType"], ...]
+    double_damage_from: List[MinimalResource["NaturalGiftType"]]
+    double_damage_to: List[MinimalResource["NaturalGiftType"]]
+    half_damage_from: List[MinimalResource["NaturalGiftType"]]
+    half_damage_to: List[MinimalResource["NaturalGiftType"]]
+    no_damage_from: List[MinimalResource["NaturalGiftType"]]
+    no_damage_to: List[MinimalResource["NaturalGiftType"]]
 
     def __init__(self, data) -> None:
-        self.double_damage_from = tuple(
+        self.double_damage_from = [
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["double_damage_from"]
-        )
-        self.double_damage_to = tuple(
+        ]
+        self.double_damage_to = [
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["double_damage_to"]
-        )
-        self.half_damage_from = tuple(
+        ]
+        self.half_damage_from = [
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["half_damage_from"]
-        )
-        self.half_damage_to = tuple(
+        ]
+        self.half_damage_to = [
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["half_damage_to"]
-        )
-        self.no_damage_from = tuple(
+        ]
+        self.no_damage_from = [
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["no_damage_from"]
-        )
-        self.no_damage_to = tuple(
+        ]
+        self.no_damage_to = [
             MinimalResource(natural_gift_type)
             for natural_gift_type in data["no_damage_to"]
-        )
+        ]
 
 
 class PastTypeRelation:

@@ -1,5 +1,5 @@
 from typing import Optional
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Description
@@ -14,37 +14,31 @@ if TYPE_CHECKING:
 
 
 class Pokedex(NamedResource):
-    description: str
-    descriptions: Tuple["Description", ...]
+    descriptions: List["Description"]
     is_main_series: bool
-    pokemon_entries: Tuple["PokemonEntry", ...]
+    pokemon_entries: List["PokemonEntry"]
     region: Optional[MinimalResource["Region"]]
-    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
-    names: Tuple["Name", ...]
+    version_groups: List[MinimalResource["VersionGroup"]]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = tuple(
-            description_data["description"]
-            for description_data in data["descriptions"]
-            if description_data["language"]["name"] == "en"
-        )[0]
-        self.descriptions = tuple(
+        self.descriptions = [
             Description(description_data) for description_data in data["descriptions"]
-        )
+        ]
         self.is_main_series = data["is_main_series"]
-        self.pokemon_entries = tuple(
+        self.pokemon_entries = [
             PokemonEntry(pokemon_entry_data)
             for pokemon_entry_data in data["pokemon_entries"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]
         self.region = (
             MinimalResource(data["region"]) if data["region"] is not None else None
         )
-        self.version_groups = tuple(
+        self.version_groups = [
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
-        )
+        ]
 
 
 class PokemonEntry(Resource):

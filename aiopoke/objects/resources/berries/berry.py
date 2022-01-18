@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import NamedResource
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 class Berry(NamedResource):
     firmness: MinimalResource["BerryFirmness"]
-    flavors: Tuple["BerryFlavorMap", ...]
+    flavors: List["BerryFlavorMap"]
     growth_time: int
     max_harvest: int
     natural_gift_power: int
@@ -25,9 +25,9 @@ class Berry(NamedResource):
     def __init__(self, data) -> None:
         super().__init__(data)
         self.firmness = MinimalResource(data["firmness"])
-        self.flavors = tuple(
+        self.flavors = [
             BerryFlavorMap(flavor_data) for flavor_data in data["flavors"]
-        )
+        ]
         self.growth_time = data["growth_time"]
         self.max_harvest = data["max_harvest"]
         self.natural_gift_power = data["natural_gift_power"]

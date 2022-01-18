@@ -1,5 +1,5 @@
 from typing import Optional
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
@@ -37,20 +37,18 @@ class Move(NamedResource):
     contest_type: MinimalResource["ContestType"]
     damage_class: MinimalResource["MoveDamageClass"]
     effect_chance: Optional[int]
-    effect_entry: "VerboseEffect"
-    effect_entries: Tuple["VerboseEffect", ...]
-    flavor_text_entry: "MoveFlavorText"
-    flavor_text_entries: Tuple["MoveFlavorText", ...]
+    effect_entries: List["VerboseEffect"]
+    flavor_text_entries: List["MoveFlavorText"]
     generation: MinimalResource["Generation"]
-    learned_by_pokemon: Tuple[MinimalResource["Pokemon"], ...]
-    machines: Tuple["MachineVersionDetail", ...]
+    learned_by_pokemon: List[MinimalResource["Pokemon"]]
+    machines: List["MachineVersionDetail"]
     meta: "MoveMetaData"
-    names: Tuple["Name", ...]
-    past_values: Tuple["PastMoveStatValues", ...]
+    names: List["Name"]
+    past_values: List["PastMoveStatValues"]
     power: int
     pp: int
     priority: int
-    stat_changes: Tuple["MoveStatChange", ...]
+    stat_changes: List["MoveStatChange"]
     type_: MinimalResource["NaturalGiftType"]
 
     def __init__(self, data) -> None:
@@ -61,48 +59,38 @@ class Move(NamedResource):
         self.contest_type = MinimalResource(data["contest_type"])
         self.damage_class = MinimalResource(data["damage_class"])
         self.effect_chance = data["effect_chance"]
-        self.effect_changes = tuple(
+        self.effect_changes = [
             AbilityEffectChange(effect_change_data)
             for effect_change_data in data["effect_changes"]
-        )
-        self.effect_entry = tuple(
+        ]
+        self.effect_entries = [
             VerboseEffect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
-            if effect_entry_data["language"]["name"] == "en"
-        )[0]
-        self.effect_entries = tuple(
-            VerboseEffect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
-        )
-        self.flavor_text_entry = tuple(
+        ]
+        self.flavor_text_entries = [
             MoveFlavorText(move_flavor_text_entry_data)
             for move_flavor_text_entry_data in data["flavor_text_entries"]
-            if move_flavor_text_entry_data["language"]["name"] == "en"
-        )[0]
-        self.flavor_text_entries = tuple(
-            MoveFlavorText(move_flavor_text_entry_data)
-            for move_flavor_text_entry_data in data["flavor_text_entries"]
-        )
+        ]
         self.generation = MinimalResource(data["generation"])
-        self.learned_by_pokemon = tuple(
+        self.learned_by_pokemon = [
             MinimalResource(pokemon_data) for pokemon_data in data["learned_by_pokemon"]
-        )
-        self.machines = tuple(
+        ]
+        self.machines = [
             MachineVersionDetail(machine_data) for machine_data in data["machines"]
-        )
+        ]
         self.meta = MoveMetaData(data["meta"])
-        self.names = tuple(Name(name_data) for name_data in data["names"])
-        self.past_values = tuple(
+        self.names = [Name(name_data) for name_data in data["names"]]
+        self.past_values = [
             PastMoveStatValues(past_value_data)
             for past_value_data in data["past_values"]
-        )
+        ]
         self.power = data["power"]
         self.pp = data["pp"]
         self.priority = data["priority"]
-        self.stat_changes = tuple(
+        self.stat_changes = [
             MoveStatChange(stat_change_data)
             for stat_change_data in data["stat_changes"]
-        )
+        ]
         self.type_ = MinimalResource(data["type"])
 
 
@@ -120,17 +108,17 @@ class ContestComboSets(Resource):
 
 
 class ContestComboDetail(Resource):
-    use_before: Optional[Tuple[MinimalResource["Move"], ...]]
-    use_after: Optional[Tuple[MinimalResource["Move"], ...]]
+    use_before: Optional[List[MinimalResource["Move"]]]
+    use_after: Optional[List[MinimalResource["Move"]]]
 
     def __init__(self, data) -> None:
         self.use_before = (
-            tuple(MinimalResource(move_data) for move_data in data["use_before"])
+            [MinimalResource(move_data) for move_data in data["use_before"]]
             if data["use_before"] is not None
             else None
         )
         self.use_after = (
-            tuple(MinimalResource(move_data) for move_data in data["use_after"])
+            [MinimalResource(move_data) for move_data in data["use_after"]]
             if data["use_after"] is not None
             else None
         )
@@ -190,8 +178,7 @@ class PastMoveStatValues(Resource):
     effect_chance: int
     power: int
     pp: int
-    effect_entry: "VerboseEffect"
-    effect_entries: Tuple["VerboseEffect", ...]
+    effect_entries: List["VerboseEffect"]
     type_: MinimalResource["NaturalGiftType"]
     version_group: MinimalResource["VersionGroup"]
 
@@ -200,14 +187,9 @@ class PastMoveStatValues(Resource):
         self.effect_chance = data["effect_chance"]
         self.power = data["power"]
         self.pp = data["pp"]
-        self.effect_entry = tuple(
+        self.effect_entries = [
             VerboseEffect(effect_entry_data)
             for effect_entry_data in data["effect_entries"]
-            if effect_entry_data["language"]["name"] == "en"
-        )[0]
-        self.effect_entries = tuple(
-            VerboseEffect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
-        )
+        ]
         self.type_ = MinimalResource(data["type"])
         self.version_group = MinimalResource(data["version_group"])

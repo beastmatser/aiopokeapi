@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Name
@@ -11,13 +11,13 @@ if TYPE_CHECKING:
 
 
 class ItemPocket(NamedResource):
-    categories: Tuple[MinimalResource["ItemCategory"], ...]
-    names: Tuple["Name", ...]
+    categories: List[MinimalResource["ItemCategory"]]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.categories = tuple(
+        self.categories = [
             MinimalResource(item_category_data)
             for item_category_data in data["categories"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]

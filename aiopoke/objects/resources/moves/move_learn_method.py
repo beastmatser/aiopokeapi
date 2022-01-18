@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Description
@@ -12,23 +12,17 @@ if TYPE_CHECKING:
 
 
 class MoveLearnMethod(NamedResource):
-    description: str
-    descriptions: Tuple["Description", ...]
-    names: Tuple["Name", ...]
-    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
+    descriptions: List["Description"]
+    names: List["Name"]
+    version_groups: List[MinimalResource["VersionGroup"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = tuple(
-            description_data["description"]
-            for description_data in data["descriptions"]
-            if description_data["language"]["name"] == "en"
-        )[0]
-        self.descriptions = tuple(
+        self.descriptions = [
             Description(description_data) for description_data in data["descriptions"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
-        self.version_groups = tuple(
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]
+        self.version_groups = [
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
-        )
+        ]

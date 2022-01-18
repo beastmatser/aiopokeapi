@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import FlavorText
@@ -12,21 +12,15 @@ if TYPE_CHECKING:
 
 class SuperContestEffect(Resource):
     appeal: int
-    flavor_text_entry: "FlavorText"
-    flavor_text_entries: Tuple["FlavorText", ...]
+    flavor_text_entries: List["FlavorText"]
     id_: int
-    moves: Tuple[MinimalResource["Move"], ...]
+    moves: List[MinimalResource["Move"]]
 
     def __init__(self, data) -> None:
         self.appeal = data["appeal"]
-        self.flavor_text_entry = tuple(
+        self.flavor_text_entries = [
             FlavorText(flavor_text_entry_data)
             for flavor_text_entry_data in data["flavor_text_entries"]
-            if flavor_text_entry_data["language"]["name"] == "en"
-        )[0]
-        self.flavor_text_entries = tuple(
-            FlavorText(flavor_text_entry_data)
-            for flavor_text_entry_data in data["flavor_text_entries"]
-        )
+        ]
         self.id_ = data["id"]
-        self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
+        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]

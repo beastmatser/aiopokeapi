@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Name
@@ -12,16 +12,16 @@ if TYPE_CHECKING:
 
 
 class PalParkArea(NamedResource):
-    pokemon_encounters: Tuple["PalParkEncounterSpecies", ...]
-    names: Tuple["Name", ...]
+    pokemon_encounters: List["PalParkEncounterSpecies"]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.pokemon_encounters = tuple(
+        self.pokemon_encounters = [
             PalParkEncounterSpecies(pokemon_encounter_data)
             for pokemon_encounter_data in data["pokemon_encounters"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]
 
 
 class PalParkEncounterSpecies(Resource):

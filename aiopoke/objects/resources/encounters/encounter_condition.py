@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Name
@@ -11,13 +11,13 @@ if TYPE_CHECKING:
 
 
 class EncounterCondition(NamedResource):
-    values: Tuple[MinimalResource["EncounterConditionValue"], ...]
-    names: Tuple["Name", ...]
+    values: List[MinimalResource["EncounterConditionValue"]]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.values = tuple(
+        self.values = [
             MinimalResource(encounter_condition_value)
             for encounter_condition_value in data["values"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]

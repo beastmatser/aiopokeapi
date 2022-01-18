@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import NamedResource
@@ -11,19 +11,19 @@ if TYPE_CHECKING:
 
 
 class Gender(NamedResource):
-    pokemon_species_details: Tuple["PokemonSpeciesGender", ...]
-    required_for_evolution: Tuple[MinimalResource["PokemonSpecies"], ...]
+    pokemon_species_details: List["PokemonSpeciesGender"]
+    required_for_evolution: List[MinimalResource["PokemonSpecies"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.pokemon_species_details = tuple(
+        self.pokemon_species_details = [
             PokemonSpeciesGender(pokemon_species_detail_data)
             for pokemon_species_detail_data in data["pokemon_species_details"]
-        )
-        self.required_for_evolution = tuple(
+        ]
+        self.required_for_evolution = [
             MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["required_for_evolution"]
-        )
+        ]
 
 
 class PokemonSpeciesGender(Resource):

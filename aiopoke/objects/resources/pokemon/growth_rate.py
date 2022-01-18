@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Description
@@ -12,30 +12,24 @@ if TYPE_CHECKING:
 
 
 class GrowthRate(NamedResource):
-    description: str
-    descriptions: Tuple["Description", ...]
+    descriptions: List["Description"]
     formula: str
-    levels: Tuple["GrowthRateExperienceLevel", ...]
-    pokemon_species: Tuple[MinimalResource["PokemonSpecies"], ...]
+    levels: List["GrowthRateExperienceLevel"]
+    pokemon_species: List[MinimalResource["PokemonSpecies"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = tuple(
-            description_data["description"]
-            for description_data in data["descriptions"]
-            if description_data["language"]["name"] == "en"
-        )[0]
-        self.descriptions = tuple(
+        self.descriptions = [
             Description(description_data) for description_data in data["descriptions"]
-        )
+        ]
         self.formula = data["formula"]
-        self.levels = tuple(
+        self.levels = [
             GrowthRateExperienceLevel(level_data) for level_data in data["levels"]
-        )
-        self.pokemon_species = tuple(
+        ]
+        self.pokemon_species = [
             MinimalResource(pokemon_species_data)
             for pokemon_species_data in data["pokemon_species"]
-        )
+        ]
 
 
 class GrowthRateExperienceLevel(Resource):

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Name
@@ -11,12 +11,12 @@ if TYPE_CHECKING:
 
 
 class BerryFirmness(NamedResource):
-    berries: Tuple[MinimalResource["Berry"], ...]
-    names: Tuple["Name", ...]
+    berries: List[MinimalResource["Berry"]]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.berries = tuple(
+        self.berries = [
             MinimalResource(berry_data) for berry_data in data["berries"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]

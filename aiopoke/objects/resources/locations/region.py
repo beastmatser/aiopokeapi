@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Name
@@ -12,23 +12,23 @@ if TYPE_CHECKING:
 
 
 class Region(NamedResource):
-    locations: Tuple[MinimalResource["Location"], ...]
+    locations: List[MinimalResource["Location"]]
     main_generation: MinimalResource["Generation"]
-    pokedexes: Tuple[MinimalResource["Pokedex"], ...]
-    names: Tuple["Name", ...]
-    version_groups: Tuple[MinimalResource["VersionGroup"], ...]
+    pokedexes: List[MinimalResource["Pokedex"]]
+    names: List["Name"]
+    version_groups: List[MinimalResource["VersionGroup"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.locations = tuple(
+        self.locations = [
             MinimalResource(location_data) for location_data in data["locations"]
-        )
+        ]
         self.main_generation = MinimalResource(data["main_generation"])
-        self.pokedexes = tuple(
+        self.pokedexes = [
             MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]
-        )
-        self.names = tuple(Name(name_data) for name_data in data["names"])
-        self.version_groups = tuple(
+        ]
+        self.names = [Name(name_data) for name_data in data["names"]]
+        self.version_groups = [
             MinimalResource(version_group_data)
             for version_group_data in data["version_groups"]
-        )
+        ]

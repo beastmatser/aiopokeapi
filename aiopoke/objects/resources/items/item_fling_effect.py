@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Effect
@@ -11,18 +11,12 @@ if TYPE_CHECKING:
 
 
 class ItemFlingEffect(NamedResource):
-    effect_entry: "Effect"
-    effect_entries: Tuple["Effect", ...]
-    items: Tuple[MinimalResource["Item"], ...]
+    effect_entries: List["Effect"]
+    items: List[MinimalResource["Item"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.items = tuple(MinimalResource(item_data) for item_data in data["items"])
-        self.effect_entry = tuple(
-            Effect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
-            if effect_entry_data["language"]["name"] == "en"
-        )[0]
-        self.effect_entries = tuple(
+        self.items = [MinimalResource(item_data) for item_data in data["items"]]
+        self.effect_entries = [
             Effect(effect_entry_data) for effect_entry_data in data["effect_entries"]
-        )
+        ]

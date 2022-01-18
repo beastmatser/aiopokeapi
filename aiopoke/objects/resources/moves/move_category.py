@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility.common_models import Description
@@ -11,18 +11,12 @@ if TYPE_CHECKING:
 
 
 class MoveCategory(NamedResource):
-    description: str
-    descriptions: Tuple["Description", ...]
-    moves: Tuple[MinimalResource["Move"], ...]
+    descriptions: List["Description"]
+    moves: List[MinimalResource["Move"]]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.description = [
-            name_data["description"]
-            for name_data in data["descriptions"]
-            if name_data["language"]["name"] == "en"
-        ][0]
-        self.descriptions = tuple(
+        self.descriptions = [
             Description(description_data) for description_data in data["descriptions"]
-        )
-        self.moves = tuple(MinimalResource(move_data) for move_data in data["moves"])
+        ]
+        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]

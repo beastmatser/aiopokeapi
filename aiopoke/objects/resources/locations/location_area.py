@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 from typing import TYPE_CHECKING
 
 from aiopoke.objects.utility import Name
@@ -14,49 +14,49 @@ if TYPE_CHECKING:
 
 
 class LocationArea(NamedResource):
-    encounter_method_rates: Tuple["EncounterMethodRate", ...]
-    pokemon_encounters: Tuple["PokemonEncounter", ...]
+    encounter_method_rates: List["EncounterMethodRate"]
+    pokemon_encounters: List["PokemonEncounter"]
     location: MinimalResource["Location"]
     game_index: int
-    names: Tuple["Name", ...]
+    names: List["Name"]
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        self.encounter_method_rates = tuple(
+        self.encounter_method_rates = [
             EncounterMethodRate(encounter_method_rate_data)
             for encounter_method_rate_data in data["encounter_method_rates"]
-        )
-        self.pokemon_encounters = tuple(
+        ]
+        self.pokemon_encounters = [
             PokemonEncounter(pokemon_encounter_data)
             for pokemon_encounter_data in data["pokemon_encounters"]
-        )
+        ]
         self.location = MinimalResource(data["location"])
         self.game_index = data["game_index"]
-        self.names = tuple(Name(name_data) for name_data in data["names"])
+        self.names = [Name(name_data) for name_data in data["names"]]
 
 
 class PokemonEncounter(Resource):
     pokemon: MinimalResource["Pokemon"]
-    version_details: Tuple["VersionEncounterDetail", ...]
+    version_details: List["VersionEncounterDetail"]
 
     def __init__(self, data) -> None:
         self.pokemon = MinimalResource(data["pokemon"])
-        self.version_details = tuple(
+        self.version_details = [
             VersionEncounterDetail(version_detail_data)
             for version_detail_data in data["version_details"]
-        )
+        ]
 
 
 class EncounterMethodRate(Resource):
     encounter_method: MinimalResource["EncounterMethod"]
-    version_details: Tuple["EncounterVersionDetail", ...]
+    version_details: List["EncounterVersionDetail"]
 
     def __init__(self, data) -> None:
         self.encounter_method = MinimalResource(data["encounter_method"])
-        self.version_details = tuple(
+        self.version_details = [
             EncounterVersionDetail(encounter_version_detail)
             for encounter_version_detail in data["version_details"]
-        )
+        ]
 
 
 class EncounterVersionDetail(Resource):
