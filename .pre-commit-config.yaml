@@ -45,4 +45,4 @@ repos:
     rev: v0.3.0
     hooks:
       - id: absolufy-imports
-        args: [--application-directories aiopoke]
+        args: [--application-directories=aiopoke]
