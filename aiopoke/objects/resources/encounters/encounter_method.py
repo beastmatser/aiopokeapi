@@ -1,8 +1,8 @@
 from typing import Tuple
 
-from ...utility.common_models import Description
-from ...utility.common_models import Name
-from ...utility.common_models import NamedResource
+from aiopoke.objects.utility.common_models import Description
+from aiopoke.objects.utility.common_models import Name
+from aiopoke.objects.utility.common_models import NamedResource
 
 
 class EncounterMethod(NamedResource):

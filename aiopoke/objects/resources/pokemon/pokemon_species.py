@@ -3,13 +3,13 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
-from ...utility import Description
-from ...utility import FlavorText
-from ...utility import Name
-from ...utility import NamedResource
+from aiopoke.objects.utility import Description
+from aiopoke.objects.utility import FlavorText
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
 
 if TYPE_CHECKING:
-    from . import (
+    from aiopoke.objects.resources.pokemon import (
         GrowthRate,
         EggGroup,
         Pokemon,
@@ -17,8 +17,8 @@ if TYPE_CHECKING:
         PokemonShape,
         PokemonColor,
     )
-    from ...resources import EvolutionChain, Generation, Pokedex, PalParkArea
-    from ...utility import Language
+    from aiopoke.objects.resources import EvolutionChain, Generation, Pokedex, PalParkArea
+    from aiopoke.objects.utility import Language
 
 
 class PokemonSpecies(NamedResource):

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
-    from ...resources import (
+    from aiopoke.objects.resources import (
         EvolutionTrigger,
         Item,
         Location,

@@ -4,14 +4,14 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
-from ...utility import MachineVersionDetail
-from ...utility import Name
-from ...utility import NamedResource
-from ...utility import VerboseEffect
-from ..pokemon.ability import AbilityEffectChange
+from aiopoke.objects.utility import MachineVersionDetail
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import VerboseEffect
+from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
 
 if TYPE_CHECKING:
-    from ...resources import (
+    from aiopoke.objects.resources import (
         ContestEffect,
         ContestType,
         Generation,
@@ -20,8 +20,8 @@ if TYPE_CHECKING:
         Stat,
         VersionGroup,
     )
-    from ...utility import Language
-    from . import MoveAilment, MoveCategory, MoveDamageClass
+    from aiopoke.objects.utility import Language
+    from aiopoke.objects.resources.moves import MoveAilment, MoveCategory, MoveDamageClass
 
 
 class Move(NamedResource):

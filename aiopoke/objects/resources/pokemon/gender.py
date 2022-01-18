@@ -2,10 +2,10 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility.common_models import NamedResource
+from aiopoke.objects.utility.common_models import NamedResource
 
 if TYPE_CHECKING:
-    from . import PokemonSpecies
+    from aiopoke.objects.resources.pokemon import PokemonSpecies
 
 
 class Gender(NamedResource):

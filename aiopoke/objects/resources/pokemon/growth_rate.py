@@ -2,11 +2,11 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Description
-from ...utility import NamedResource
+from aiopoke.objects.utility import Description
+from aiopoke.objects.utility import NamedResource
 
 if TYPE_CHECKING:
-    from . import PokemonSpecies
+    from aiopoke.objects.resources.pokemon import PokemonSpecies
 
 
 class GrowthRate(NamedResource):

@@ -8,7 +8,7 @@ from typing import TypeVar
 from typing import Union
 
 if TYPE_CHECKING:
-    from .aiopoke_client import AiopokeClient
+    from aiopoke.aiopoke_client import AiopokeClient
 
 U = TypeVar("U")
 

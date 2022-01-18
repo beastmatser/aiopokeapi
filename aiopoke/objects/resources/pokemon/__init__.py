@@ -1,18 +1,18 @@
-from .ability import Ability
-from .characteristic import Characteristic
-from .egg_group import EggGroup
-from .gender import Gender
-from .growth_rate import GrowthRate
-from .natural_gift_type import NaturalGiftType
-from .nature import Nature
-from .pokeathlon_stat import PokeathlonStat
-from .pokemon import Pokemon
-from .pokemon_color import PokemonColor
-from .pokemon_form import PokemonForm
-from .pokemon_habitat import PokemonHabitat
-from .pokemon_shape import PokemonShape
-from .pokemon_species import PokemonSpecies
-from .stat import Stat
+from aiopoke.objects.resources.pokemon.ability import Ability
+from aiopoke.objects.resources.pokemon.characteristic import Characteristic
+from aiopoke.objects.resources.pokemon.egg_group import EggGroup
+from aiopoke.objects.resources.pokemon.gender import Gender
+from aiopoke.objects.resources.pokemon.growth_rate import GrowthRate
+from aiopoke.objects.resources.pokemon.natural_gift_type import NaturalGiftType
+from aiopoke.objects.resources.pokemon.nature import Nature
+from aiopoke.objects.resources.pokemon.pokeathlon_stat import PokeathlonStat
+from aiopoke.objects.resources.pokemon.pokemon import Pokemon
+from aiopoke.objects.resources.pokemon.pokemon_color import PokemonColor
+from aiopoke.objects.resources.pokemon.pokemon_form import PokemonForm
+from aiopoke.objects.resources.pokemon.pokemon_habitat import PokemonHabitat
+from aiopoke.objects.resources.pokemon.pokemon_shape import PokemonShape
+from aiopoke.objects.resources.pokemon.pokemon_species import PokemonSpecies
+from aiopoke.objects.resources.pokemon.stat import Stat
 
 __all__ = (
     "Ability",

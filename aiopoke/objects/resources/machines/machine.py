@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
-    from ...resources import Item, Move, VersionGroup
+    from aiopoke.objects.resources import Item, Move, VersionGroup
 
 
 class Machine:

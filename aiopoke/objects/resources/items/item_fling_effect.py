@@ -2,11 +2,11 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Effect
-from ...utility import NamedResource
+from aiopoke.objects.utility import Effect
+from aiopoke.objects.utility import NamedResource
 
 if TYPE_CHECKING:
-    from . import Item
+    from aiopoke.objects.resources.items import Item
 
 
 class ItemFlingEffect(NamedResource):

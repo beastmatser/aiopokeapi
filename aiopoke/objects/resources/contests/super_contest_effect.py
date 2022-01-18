@@ -2,10 +2,10 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import FlavorText
+from aiopoke.objects.utility import FlavorText
 
 if TYPE_CHECKING:
-    from ...resources.moves import Move
+    from aiopoke.objects.resources.moves import Move
 
 
 class SuperContestEffect:

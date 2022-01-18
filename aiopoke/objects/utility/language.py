@@ -1,7 +1,7 @@
 from typing import Tuple
 
-from .common_models import Name
-from .common_models import NamedResource
+from aiopoke.objects.utility.common_models import Name
+from aiopoke.objects.utility.common_models import NamedResource
 
 
 class Language(NamedResource):

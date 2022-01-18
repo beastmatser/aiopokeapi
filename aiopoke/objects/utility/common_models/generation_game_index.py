@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
-    from ...resources import Generation
+    from aiopoke.objects.resources import Generation
 
 
 class GenerationGameIndex:

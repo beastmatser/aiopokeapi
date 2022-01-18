@@ -2,13 +2,13 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Name
-from ...utility import NamedResource
-from ...utility import VersionEncounterDetail
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import VersionEncounterDetail
 
 if TYPE_CHECKING:
-    from ...resources import EncounterMethod, Pokemon, Version
-    from . import Location
+    from aiopoke.objects.resources import EncounterMethod, Pokemon, Version
+    from aiopoke.objects.resources.locations import Location
 
 
 class LocationArea(NamedResource):

@@ -4,7 +4,7 @@ from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
 
 if TYPE_CHECKING:
-    from ...resources import Machine, VersionGroup
+    from aiopoke.objects.resources import Machine, VersionGroup
 
 
 class MachineVersionDetail:

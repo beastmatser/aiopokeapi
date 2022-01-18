@@ -4,12 +4,12 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
-from ...utility import Name
-from ...utility import NamedResource
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
 
 if TYPE_CHECKING:
-    from . import Characteristic, Nature
-    from ...resources import Move, MoveDamageClass
+    from aiopoke.objects.resources.pokemon import Characteristic, Nature
+    from aiopoke.objects.resources import Move, MoveDamageClass
 
 
 class Stat(NamedResource):

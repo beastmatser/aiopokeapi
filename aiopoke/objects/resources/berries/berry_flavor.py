@@ -2,11 +2,11 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Name
-from ...utility import NamedResource
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
 
 if TYPE_CHECKING:
-    from . import Berry
+    from aiopoke.objects.resources.berries import Berry
 
 
 class BerryFlavor(NamedResource):

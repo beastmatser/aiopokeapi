@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
-    from ...utility import Language
+    from aiopoke.objects.utility import Language
 
 
 class Name:

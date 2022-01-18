@@ -2,10 +2,10 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Description
+from aiopoke.objects.utility import Description
 
 if TYPE_CHECKING:
-    from . import Stat
+    from aiopoke.objects.resources.pokemon import Stat
 
 
 class Characteristic:

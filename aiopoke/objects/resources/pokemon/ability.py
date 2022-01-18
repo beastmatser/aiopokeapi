@@ -2,15 +2,15 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Effect
-from ...utility import NamedResource
-from ...utility import VerboseEffect
-from ...utility.common_models import Name
+from aiopoke.objects.utility import Effect
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import VerboseEffect
+from aiopoke.objects.utility.common_models import Name
 
 if TYPE_CHECKING:
-    from ...resources import Generation, VersionGroup
-    from ...utility import Language
-    from . import Pokemon
+    from aiopoke.objects.resources import Generation, VersionGroup
+    from aiopoke.objects.utility import Language
+    from aiopoke.objects.resources.pokemon import Pokemon
 
 
 class Ability(NamedResource):

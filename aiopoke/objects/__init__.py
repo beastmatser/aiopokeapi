@@ -1,4 +1,4 @@
-from .resources import (
+from aiopoke.objects.resources import (
     Berry,
     BerryFirmness,
     BerryFlavor,
@@ -47,7 +47,7 @@ from .resources import (
     Pokemon,
     Stat,
 )
-from .utility import (
+from aiopoke.objects.utility import (
     Language,
     Description,
     Effect,

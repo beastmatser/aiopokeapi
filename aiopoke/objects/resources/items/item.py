@@ -4,17 +4,17 @@ from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
 from aiopoke.minimal_resources import Url
-from ...utility import FlavorText
-from ...utility import GenerationGameIndex
-from ...utility import MachineVersionDetail
-from ...utility import Name
-from ...utility import NamedResource
-from ...utility import Sprite
-from ...utility import VerboseEffect
+from aiopoke.objects.utility import FlavorText
+from aiopoke.objects.utility import GenerationGameIndex
+from aiopoke.objects.utility import MachineVersionDetail
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import Sprite
+from aiopoke.objects.utility import VerboseEffect
 
 if TYPE_CHECKING:
-    from ...resources import EvolutionChain, Pokemon, Version
-    from . import ItemAttribute, ItemCategory, ItemFlingEffect
+    from aiopoke.objects.resources import EvolutionChain, Pokemon, Version
+    from aiopoke.objects.resources.items import ItemAttribute, ItemCategory, ItemFlingEffect
 
 
 class Item(NamedResource):

@@ -6,8 +6,8 @@ __version__ = "0.0.8a"
 
 from typing import NamedTuple
 
-from .aiopoke_client import AiopokeClient
-from .objects import (
+from aiopoke.aiopoke_client import AiopokeClient
+from aiopoke.objects import (
     Ability,
     Berry,
     BerryFirmness,

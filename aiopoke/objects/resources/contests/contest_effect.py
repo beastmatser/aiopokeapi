@@ -1,7 +1,7 @@
 from typing import Tuple
 
-from ...utility import Effect
-from ...utility import FlavorText
+from aiopoke.objects.utility import Effect
+from aiopoke.objects.utility import FlavorText
 
 
 class ContestEffect:

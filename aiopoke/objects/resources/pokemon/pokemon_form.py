@@ -2,13 +2,13 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import Name
-from ...utility import NamedResource
-from ...utility import Sprites
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import Sprites
 
 if TYPE_CHECKING:
-    from ...resources import NaturalGiftType, VersionGroup
-    from . import Pokemon
+    from aiopoke.objects.resources import NaturalGiftType, VersionGroup
+    from aiopoke.objects.resources.pokemon import Pokemon
 
 
 class PokemonForm(NamedResource):

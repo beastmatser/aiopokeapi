@@ -3,12 +3,12 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility.common_models import Name
-from ...utility.common_models import NamedResource
+from aiopoke.objects.utility.common_models import Name
+from aiopoke.objects.utility.common_models import NamedResource
 
 if TYPE_CHECKING:
-    from . import PokeathlonStat
-    from ...resources import MoveBatteStyle, BerryFlavor
+    from aiopoke.objects.resources.pokemon import PokeathlonStat
+    from aiopoke.objects.resources import MoveBatteStyle, BerryFlavor
 
 
 class Nature(NamedResource):

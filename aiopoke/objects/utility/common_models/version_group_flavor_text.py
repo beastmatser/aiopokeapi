@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 from aiopoke.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
-    from ...resources import VersionGroup
-    from ...utility import Language
+    from aiopoke.objects.resources import VersionGroup
+    from aiopoke.objects.utility import Language
 
 
 class VersionGroupFlavorText:

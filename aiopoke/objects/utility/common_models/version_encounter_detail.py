@@ -2,10 +2,10 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from .encounter import Encounter
+from aiopoke.objects.utility.common_models.encounter import Encounter
 
 if TYPE_CHECKING:
-    from ...resources import Version
+    from aiopoke.objects.resources import Version
 
 
 class VersionEncounterDetail:

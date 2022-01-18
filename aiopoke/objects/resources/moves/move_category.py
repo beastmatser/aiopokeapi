@@ -2,11 +2,11 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility.common_models import Description
-from ...utility.common_models import NamedResource
+from aiopoke.objects.utility.common_models import Description
+from aiopoke.objects.utility.common_models import NamedResource
 
 if TYPE_CHECKING:
-    from . import Move
+    from aiopoke.objects.resources.moves import Move
 
 
 class MoveCategory(NamedResource):

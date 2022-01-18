@@ -1,13 +1,13 @@
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from ...resources.games.version import Version
+from aiopoke.objects.resources.games.version import Version
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import NamedResource
+from aiopoke.objects.utility import NamedResource
 
 if TYPE_CHECKING:
-    from ...resources import MoveLearnMethod, Pokedex, Region
+    from aiopoke.objects.resources import MoveLearnMethod, Pokedex, Region
 
 
 class VersionGroup(NamedResource):

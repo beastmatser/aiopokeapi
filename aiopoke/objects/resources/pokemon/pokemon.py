@@ -2,14 +2,14 @@ from typing import Tuple
 from typing import TYPE_CHECKING
 
 from aiopoke.minimal_resources import MinimalResource
-from ...utility import NamedResource
-from ...utility import VersionEncounterDetail
-from ...utility import VersionGameIndex
-from ...utility.common_models.sprites import Sprites
-from ..games.version_group import VersionGroupDetail
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import VersionEncounterDetail
+from aiopoke.objects.utility import VersionGameIndex
+from aiopoke.objects.utility.common_models.sprites import Sprites
+from aiopoke.objects.resources.games.version_group import VersionGroupDetail
 
 if TYPE_CHECKING:
-    from ...resources import (
+    from aiopoke.objects.resources import (
         Generation,
         Item,
         LocationArea,
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
         Version,
         VersionGroup,
     )
-    from . import Ability, NaturalGiftType, PokemonForm, PokemonSpecies
+    from aiopoke.objects.resources.pokemon import Ability, NaturalGiftType, PokemonForm, PokemonSpecies
 
 
 class Pokemon(NamedResource):
