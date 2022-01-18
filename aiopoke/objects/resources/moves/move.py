@@ -237,7 +237,7 @@ class PastMoveStatValues(Resource):
     power: int
     pp: int
     effect_entries: List["VerboseEffect"]
-    type_: MinimalResource["NaturalGiftType"]
+    type: MinimalResource["NaturalGiftType"]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(
@@ -248,7 +248,7 @@ class PastMoveStatValues(Resource):
         power: int,
         pp: int,
         effect_entries: List[Dict[str, Any]],
-        type_: Dict[str, Any],
+        type: Dict[str, Any],
         version_group: Dict[str, Any],
     ) -> None:
         self.accuracy = accuracy
@@ -258,5 +258,5 @@ class PastMoveStatValues(Resource):
         self.effect_entries = [
             VerboseEffect(**effect_entry) for effect_entry in effect_entries
         ]
-        self.type_ = MinimalResource(**type_)
+        self.type = MinimalResource(**type)
         self.version_group = MinimalResource(**version_group)
