@@ -1,7 +1,7 @@
-import os
 from typing import Optional
 
 import aiofiles  # type: ignore
+from aiopoke.objects.utility.common_models.sprite import Sprite
 
 OptionalSprite = Optional["Sprite"]
 
@@ -379,45 +379,3 @@ class GenerationVIIISprites:
     def __init__(self, data) -> None:
         self.icons_front_default = Sprite.from_url(data["icons"]["front_default"])
         self.icons_front_female = Sprite.from_url(data["icons"]["front_female"])
-
-
-class Sprite:
-    url: str
-    bytes_: Optional[bytes]
-
-    def __init__(self, url) -> None:
-        self.url = url
-        self.file_extention = url.split(".")[-1]
-        self.bytes_ = None
-
-    @classmethod
-    def from_url(cls, url: Optional[str]) -> Optional["Sprite"]:
-        if url is None:
-            return None
-
-        return cls(url)
-
-    async def save(self, client, *, path: Optional[str] = None) -> None:
-        if path is None:
-            path = os.getcwd()
-
-        elif not isinstance(path, str):
-            raise TypeError("'path' must be a string")
-
-        if path.split("/")[-1].__contains__("."):
-            raise ValueError(
-                "You can not set the file extension, this is to avoid file corruption. Use os.system() instead"
-            )
-
-        if self.bytes_ is None:
-            bytes_ = await self.read(client)
-
-        async with aiofiles.open(path + "/." + self.file_extention, "wb") as f:
-            await f.write(bytes_)
-
-    async def read(self, client) -> bytes:
-        if self.bytes_ is None:
-            async with client.session.get(self.url) as response:
-                self.bytes_ = await response.read()
-
-        return self.bytes_

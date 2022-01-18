@@ -4,7 +4,7 @@ import pytest
 
 @pytest.mark.asyncio
 async def test_client(client: aiopoke.AiopokeClient):
-    berry = await client.fetch_berry(1)
+    berry = await client.get_berry(1)
     berry_flavor = await berry.flavors[0].flavor.fetch()
 
     assert hasattr(berry, "name")
