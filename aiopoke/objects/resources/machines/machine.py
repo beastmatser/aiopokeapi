@@ -1,7 +1,8 @@
 from typing import TYPE_CHECKING
 
-from aiopoke.minimal_resources import MinimalResource
-from aiopoke.resource import Resource
+from aiopoke.utils.resource import Resource
+
+from aiopoke.utils.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import Item, Move, VersionGroup

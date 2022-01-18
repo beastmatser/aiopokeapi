@@ -1,9 +1,10 @@
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from aiopoke.minimal_resources import MinimalResource
 from aiopoke.objects.utility.common_models import Name
 from aiopoke.objects.utility.common_models import NamedResource
+
+from aiopoke.utils.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.encounters import EncounterConditionValue

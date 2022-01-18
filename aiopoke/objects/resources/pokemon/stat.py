@@ -2,11 +2,12 @@ from typing import Optional
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from aiopoke.minimal_resources import MinimalResource
-from aiopoke.minimal_resources import Url
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
-from aiopoke.resource import Resource
+from aiopoke.utils.resource import Resource
+
+from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.minimal_resources import Url
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources.pokemon import Characteristic, Nature

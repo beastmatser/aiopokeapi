@@ -1,4 +1,4 @@
-from aiopoke.resource import Resource
+from aiopoke.utils.resource import Resource
 
 
 class NamedResource(Resource):

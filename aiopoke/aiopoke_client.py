@@ -5,9 +5,6 @@ from typing import Type
 from typing import Union
 
 import aiohttp
-from aiopoke.cache import Cache
-from aiopoke.cache import cache
-from aiopoke.minimal_resources import Url
 from aiopoke.objects.resources import Ability
 from aiopoke.objects.resources import Berry
 from aiopoke.objects.resources import BerryFirmness
@@ -56,6 +53,9 @@ from aiopoke.objects.resources import SuperContestEffect
 from aiopoke.objects.resources import Version
 from aiopoke.objects.resources import VersionGroup
 from aiopoke.objects.utility.language import Language
+from aiopoke.utils import Cache
+from aiopoke.utils import cache
+from aiopoke.utils import Url
 
 ENDPOINTS = {
     "ability",

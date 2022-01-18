@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from typing import TypeVar
 from typing import Union
 
-from aiopoke.resource import Resource
+from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.aiopoke_client import AiopokeClient

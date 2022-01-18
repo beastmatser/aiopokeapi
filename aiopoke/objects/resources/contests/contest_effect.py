@@ -2,7 +2,7 @@ from typing import Tuple
 
 from aiopoke.objects.utility import Effect
 from aiopoke.objects.utility import FlavorText
-from aiopoke.resource import Resource
+from aiopoke.utils.resource import Resource
 
 
 class ContestEffect(Resource):
