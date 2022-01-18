@@ -34,7 +34,6 @@ class Pokemon(NamedResource):
     game_indices: List["VersionGameIndex"]
     held_items: List["PokemonHeldItem"]
     height: int
-    items: List["PokemonHeldItem"]
     is_default: bool
     location_area_encounters: List["PokemonLocationArea"]
     moves: List["PokemonMove"]
