@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -11,10 +11,10 @@ class PokemonHabitat(NamedResource):
     names: List["Name"]
     pokemon_species: List[MinimalResource["PokemonSpecies"]]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(
+        self, *, names: List[Dict[str, Any]], pokemon_species: List[Dict[str, Any]]
+    ) -> None:
+        self.names = [Name(**name) for name in names]
         self.pokemon_species = [
-            MinimalResource(pokemon_species_data)
-            for pokemon_species_data in data["pokemon_species"]
+            MinimalResource(**pokemon_species) for pokemon_species in pokemon_species
         ]

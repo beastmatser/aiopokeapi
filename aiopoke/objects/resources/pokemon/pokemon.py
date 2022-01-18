@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.resources.games.version_group import VersionGroupDetail
 from aiopoke.objects.utility import (
@@ -32,6 +32,7 @@ class Pokemon(NamedResource):
     base_experience: int
     forms: List[MinimalResource["PokemonForm"]]
     game_indices: List["VersionGameIndex"]
+    held_items: List["PokemonHeldItem"]
     height: int
     items: List["PokemonHeldItem"]
     is_default: bool
@@ -45,36 +46,50 @@ class Pokemon(NamedResource):
     types: List["PokemonType"]
     weight: int
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.abilities = [
-            PokemonAbility(ability_data) for ability_data in data["abilities"]
-        ]
-        self.base_experience = data["base_experience"]
-        self.forms = [MinimalResource(form_data) for form_data in data["forms"]]
+    def __init__(
+        self,
+        *,
+        id: int,
+        name: str,
+        abilities: List[Dict[str, Any]],
+        base_experience: int,
+        forms: List[Dict[str, Any]],
+        game_indices: List[Dict[str, Any]],
+        height: int,
+        held_items: List[Dict[str, Any]],
+        is_default: bool,
+        location_area_encounters: List[Dict[str, Any]],
+        moves: List[Dict[str, Any]],
+        order: int,
+        past_types: List[Dict[str, Any]],
+        species: Dict[str, Any],
+        sprites: Dict[str, Any],
+        stats: List[Dict[str, Any]],
+        types: List[Dict[str, Any]],
+        weight: int,
+    ) -> None:
+        super().__init__(id=id, name=name)
+        self.abilities = [PokemonAbility(**ability) for ability in abilities]
+        self.base_experience = base_experience
+        self.forms = [MinimalResource(**form) for form in forms]
         self.game_indices = [
-            VersionGameIndex(game_indice_data)
-            for game_indice_data in data["game_indices"]
+            VersionGameIndex(**game_index) for game_index in game_indices
         ]
-        self.height = data["height"]
-        self.held_items = [
-            PokemonHeldItem(item_data) for item_data in data["held_items"]
-        ]
-        self.is_default = data["is_default"]
+        self.height = height
+        self.held_items = [PokemonHeldItem(**held_item) for held_item in held_items]
+        self.is_default = is_default
         self.location_area_encounters = [
-            PokemonLocationArea(location_area_encounter_data)
-            for location_area_encounter_data in data["location_area_encounters"]
+            PokemonLocationArea(**location_area_encounter)
+            for location_area_encounter in location_area_encounters
         ]
-        self.moves = [PokemonMove(move_data) for move_data in data["moves"]]
-        self.order = data["order"]
-        self.past_types = [
-            PastType(past_type_data) for past_type_data in data["past_types"]
-        ]
-        self.species = MinimalResource(data["species"])
-        self.sprites = Sprites(data["sprites"])
-        self.stats = [PokemonStat(stat_data) for stat_data in data["stats"]]
-        self.types = [PokemonType(type_data) for type_data in data["types"]]
-        self.weight = data["weight"]
+        self.moves = [PokemonMove(**move) for move in moves]
+        self.order = order
+        self.past_types = [PastType(**past_type) for past_type in past_types]
+        self.species = MinimalResource(**species)
+        self.sprites = Sprites(sprites)
+        self.stats = [PokemonStat(**stat) for stat in stats]
+        self.types = [PokemonType(**type_) for type_ in types]
+        self.weight = weight
 
 
 class PokemonAbility(Resource):
@@ -82,30 +97,46 @@ class PokemonAbility(Resource):
     slot: int
     ability: MinimalResource["Ability"]
 
-    def __init__(self, data) -> None:
-        self.is_hidden = data["is_hidden"]
-        self.slot = data["slot"]
-        self.ability = MinimalResource(data["ability"])
+    def __init__(
+        self,
+        *,
+        is_hidden: bool,
+        slot: int,
+        ability: Dict[str, Any],
+    ) -> None:
+        self.is_hidden = is_hidden
+        self.slot = slot
+        self.ability = MinimalResource(**ability)
 
 
 class PokemonType(Resource):
     slot: int
-    type_: MinimalResource["NaturalGiftType"]
+    type: MinimalResource["NaturalGiftType"]
 
-    def __init__(self, data) -> None:
-        self.slot = data["slot"]
-        self.type_ = MinimalResource(data["type"])
+    def __init__(
+        self,
+        *,
+        slot: int,
+        type: Dict[str, Any],
+    ) -> None:
+        self.slot = slot
+        self.type = MinimalResource(**type)
 
 
 class PokemonHeldItem(Resource):
     item: MinimalResource["Item"]
     version_details: List["PokemonHeldItemVersion"]
 
-    def __init__(self, data) -> None:
-        self.item = MinimalResource(data["item"])
+    def __init__(
+        self,
+        *,
+        item: Dict[str, Any],
+        version_details: List[Dict[str, Any]],
+    ) -> None:
+        self.item = MinimalResource(**item)
         self.version_details = [
-            PokemonHeldItemVersion(version_detail_data)
-            for version_detail_data in data["version_details"]
+            PokemonHeldItemVersion(**version_detail)
+            for version_detail in version_details
         ]
 
 
@@ -113,20 +144,30 @@ class PokemonHeldItemVersion(Resource):
     rarity: int
     version: MinimalResource["Version"]
 
-    def __init__(self, data) -> None:
-        self.rarity = data["rarity"]
-        self.version = MinimalResource(data["version"])
+    def __init__(
+        self,
+        *,
+        rarity: int,
+        version: Dict[str, Any],
+    ) -> None:
+        self.rarity = rarity
+        self.version = MinimalResource(**version)
 
 
 class PokemonMove(Resource):
     move: MinimalResource["Version"]
     version_group_details: List["VersionGroupDetail"]
 
-    def __init__(self, data) -> None:
-        self.move = MinimalResource(data["move"])
+    def __init__(
+        self,
+        *,
+        move: Dict[str, Any],
+        version_group_details: List[Dict[str, Any]],
+    ) -> None:
+        self.move = MinimalResource(**move)
         self.version_group_details = [
-            VersionGroupDetail(version_group_detail_data)
-            for version_group_detail_data in data["version_group_details"]
+            VersionGroupDetail(**version_group_detail)
+            for version_group_detail in version_group_details
         ]
 
 
@@ -135,10 +176,16 @@ class PokemonMoveVersion(Resource):
     version_group: MinimalResource["VersionGroup"]
     level_learned_at: int
 
-    def __init__(self, data) -> None:
-        self.move_learn_method = MinimalResource(data["move_learn_method"])
-        self.version_group = MinimalResource(data["version_group"])
-        self.level_learned_at = data["level_learned_at"]
+    def __init__(
+        self,
+        *,
+        move_learn_method: Dict[str, Any],
+        version_group: Dict[str, Any],
+        level_learned_at: int,
+    ) -> None:
+        self.move_learn_method = MinimalResource(**move_learn_method)
+        self.version_group = MinimalResource(**version_group)
+        self.level_learned_at = level_learned_at
 
 
 class PokemonStat(Resource):
@@ -146,28 +193,44 @@ class PokemonStat(Resource):
     effort: int
     stat: MinimalResource["PokemonStat"]
 
-    def __init__(self, data) -> None:
-        self.base_stat = data["base_stat"]
-        self.effort = data["effort"]
-        self.stat = MinimalResource(data["stat"])
+    def __init__(
+        self,
+        *,
+        base_stat: int,
+        effort: int,
+        stat: Dict[str, Any],
+    ) -> None:
+        self.base_stat = base_stat
+        self.effort = effort
+        self.stat = MinimalResource(**stat)
 
 
 class PastType(Resource):
     generation: MinimalResource["Generation"]
     types: List["PokemonType"]
 
-    def __init__(self, data) -> None:
-        self.generation = MinimalResource(data["generation"])
-        self.types = [PokemonType(type_data) for type_data in data["types"]]
+    def __init__(
+        self,
+        *,
+        generation: Dict[str, Any],
+        types: List[Dict[str, Any]],
+    ) -> None:
+        self.generation = MinimalResource(**generation)
+        self.types = [PokemonType(**type_) for type_ in types]
 
 
 class PokemonLocationArea(Resource):
     location_area: MinimalResource["LocationArea"]
     version_details: List["VersionEncounterDetail"]
 
-    def __init__(self, data) -> None:
-        self.location_area = MinimalResource(data["location_area"])
+    def __init__(
+        self,
+        *,
+        location_area: Dict[str, Any],
+        version_details: List[Dict[str, Any]],
+    ) -> None:
+        self.location_area = MinimalResource(**location_area)
         self.version_details = [
-            VersionEncounterDetail(version_detail_data)
-            for version_detail_data in data["version_details"]
+            VersionEncounterDetail(**version_detail)
+            for version_detail in version_details
         ]

@@ -7,9 +7,9 @@ class NamedResource(Resource):
     name: str
     id: int
 
-    def __init__(self, data) -> None:
-        self.name = data["name"]
-        self.id = data["id"]
+    def __init__(self, *, name: str, id: int):
+        self.name = name
+        self.id = id
 
     def __eq__(self, other: object) -> bool:
         return (

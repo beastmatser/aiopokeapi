@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -23,20 +23,25 @@ class Generation(NamedResource):
     version_groups: List[MinimalResource["VersionGroup"]]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.abilities = [
-            MinimalResource(ability_data) for ability_data in data["abilities"]
-        ]
-        self.main_region = MinimalResource(data["main_region"])
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
+    def __init__(
+        self,
+        *,
+        abilities: List[Dict[str, Any]],
+        main_region: Dict[str, Any],
+        moves: List[Dict[str, Any]],
+        pokemon_species: List[Dict[str, Any]],
+        types: List[Dict[str, Any]],
+        version_groups: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+    ) -> None:
+        self.abilities = [MinimalResource(**ability) for ability in abilities]
+        self.main_region = MinimalResource(**main_region)
+        self.moves = [MinimalResource(**move) for move in moves]
         self.pokemon_species = [
-            MinimalResource(pokemon_species_data)
-            for pokemon_species_data in data["pokemon_species"]
+            MinimalResource(**pokemon_species) for pokemon_species in pokemon_species
         ]
-        self.types = [MinimalResource(type_data) for type_data in data["types"]]
+        self.types = [MinimalResource(**type_) for type_ in types]
         self.version_groups = [
-            MinimalResource(version_group_data)
-            for version_group_data in data["version_groups"]
+            MinimalResource(**version_group) for version_group in version_groups
         ]
+        self.names = [Name(**name) for name in names]

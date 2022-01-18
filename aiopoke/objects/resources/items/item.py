@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, List, Optional, Dict, Any
 
 from aiopoke.objects.utility import (
     FlavorText,
@@ -34,64 +34,71 @@ class Item(NamedResource):
     held_by_pokemon: List["ItemHolderPokemon"]
     machines: List["MachineVersionDetail"]
     names: List["Name"]
-    sprite: Optional["Sprite"]
+    sprite: Optional["ItemSprites"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.attributes = [
-            MinimalResource(attribute_data) for attribute_data in data["attributes"]
-        ]
+    def __init__(
+        self,
+        *,
+        attributes: List[Dict[str, Any]],
+        baby_trigger_for: Optional[str],
+        category: Dict[str, Any],
+        cost: int,
+        effect_entries: List[Dict[str, Any]],
+        flavor_text_entries: List[Dict[str, Any]],
+        fling_effect: Optional[str],
+        fling_power: Optional[int],
+        game_indices: List[Dict[str, Any]],
+        held_by_pokemon: List[Dict[str, Any]],
+        machines: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+        sprites: Optional[Dict[str, Any]],
+    ) -> None:
+        self.attributes = [MinimalResource(**attribute) for attribute in attributes]
         self.baby_trigger_for = (
-            Url(data["baby_trigger_for"]["url"])
-            if data["baby_trigger_for"] is not None
-            else None
+            Url(**baby_trigger_for) if baby_trigger_for is not None else None
         )
-        self.category = MinimalResource(data["category"])
-        self.cost = data["cost"]
+        self.category = MinimalResource(**category)
+        self.cost = cost
         self.effect_entries = [
-            VerboseEffect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
+            VerboseEffect(**effect_entry) for effect_entry in effect_entries
         ]
         self.flavor_text_entries = [
-            FlavorText(flavor_text_entry_data)
-            for flavor_text_entry_data in data["flavor_text_entries"]
+            FlavorText(**flavor_text_entry) for flavor_text_entry in flavor_text_entries
         ]
-        self.fling_effect = (
-            MinimalResource(data["fling_effect"])
-            if data["fling_effect"] is not None
-            else None
-        )
-        self.fling_power = data["fling_power"]
+        self.fling_effect = Url(**fling_effect) if fling_effect is not None else None
+        self.fling_power = fling_power
         self.game_indices = [
-            GenerationGameIndex(game_indice_data)
-            for game_indice_data in data["game_indices"]
+            GenerationGameIndex(**game_index) for game_index in game_indices
         ]
         self.held_by_pokemon = [
-            ItemHolderPokemon(pokemon_data) for pokemon_data in data["held_by_pokemon"]
+            ItemHolderPokemon(**held_by_pokemon) for held_by_pokemon in held_by_pokemon
         ]
-        self.machines = [
-            MachineVersionDetail(machine_data) for machine_data in data["machines"]
-        ]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.sprite = Sprite(data["sprites"]["default"])
+        self.machines = [MachineVersionDetail(**machine) for machine in machines]
+        self.names = [Name(**name) for name in names]
+        self.sprite = ItemSprites(**sprites) if sprites is not None else None
 
 
 class ItemSprites(Resource):
     default: Optional["Sprite"]
 
-    def __init__(self, data) -> None:
-        self.default = Sprite.from_url(data["default"])
+    def __init__(self, *, default: Optional[str]) -> None:
+        self.default = Sprite(default) if default is not None else None
 
 
 class ItemHolderPokemon(Resource):
     pokemon: MinimalResource["Pokemon"]
     version_details: List["ItemHolderPokemonVersionDetail"]
 
-    def __init__(self, data) -> None:
-        self.pokemon = MinimalResource(data["pokemon"])
+    def __init__(
+        self,
+        *,
+        pokemon: Dict[str, Any],
+        version_details: List[Dict[str, Any]],
+    ) -> None:
+        self.pokemon = MinimalResource(**pokemon)
         self.version_details = [
-            ItemHolderPokemonVersionDetail(version_detail_data)
-            for version_detail_data in data["version_details"]
+            ItemHolderPokemonVersionDetail(**version_detail)
+            for version_detail in version_details
         ]
 
 
@@ -99,6 +106,6 @@ class ItemHolderPokemonVersionDetail(Resource):
     rarity: int
     version: MinimalResource["Version"]
 
-    def __init__(self, data) -> None:
-        self.rarity = data["rarity"]
-        self.version = MinimalResource(data["version"])
+    def __init__(self, *, rarity: int, version: Dict[str, Any]) -> None:
+        self.rarity = rarity
+        self.version = MinimalResource(**version)

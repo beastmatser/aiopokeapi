@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -12,7 +12,7 @@ class VerboseEffect(Resource):
     short_effect: str
     language: MinimalResource["Language"]
 
-    def __init__(self, data) -> None:
-        self.effect = data["effect"]
-        self.short_effect = data["short_effect"]
-        self.language = MinimalResource(data["language"])
+    def __init__(self, *, effect: str, short_effect: str, language: Dict[str, Any]):
+        self.effect = effect
+        self.short_effect = short_effect
+        self.language = MinimalResource(**language)

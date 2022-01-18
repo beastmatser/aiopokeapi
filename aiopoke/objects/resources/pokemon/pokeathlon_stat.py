@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,26 +12,28 @@ class PokeathlonStat(NamedResource):
     affecting_natures: "NaturePokeathlonStatAffectSets"
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.affecting_natures = NaturePokeathlonStatAffectSets(
-            data["affecting_natures"]
-        )
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(
+        self,
+        *,
+        affecting_natures: Dict[str, Any],
+        names: List[Dict[str, Any]],
+    ) -> None:
+        self.affecting_natures = NaturePokeathlonStatAffectSets(**affecting_natures)
+        self.names = [Name(**name) for name in names]
 
 
 class NaturePokeathlonStatAffectSets(Resource):
     increase: List["NaturePokeathlonStatAffect"]
     decrease: List["NaturePokeathlonStatAffect"]
 
-    def __init__(self, data) -> None:
+    def __init__(
+        self, *, increase: List[Dict[str, Any]], decrease: List[Dict[str, Any]]
+    ) -> None:
         self.increase = [
-            NaturePokeathlonStatAffect(increase_data)
-            for increase_data in data["increase"]
+            NaturePokeathlonStatAffect(**increase_data) for increase_data in increase
         ]
         self.decrease = [
-            NaturePokeathlonStatAffect(decrease_data)
-            for decrease_data in data["decrease"]
+            NaturePokeathlonStatAffect(**decrease_data) for decrease_data in decrease
         ]
 
 
@@ -39,6 +41,11 @@ class NaturePokeathlonStatAffect(Resource):
     max_change: int
     nature: MinimalResource["Nature"]
 
-    def __init__(self, data) -> None:
-        self.max_change = data["max_change"]
-        self.nature = MinimalResource(data["nature"])
+    def __init__(
+        self,
+        *,
+        max_change: int,
+        nature: Dict[str, Any],
+    ) -> None:
+        self.max_change = max_change
+        self.nature = MinimalResource(**nature)

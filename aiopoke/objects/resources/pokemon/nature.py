@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, List, Optional, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -18,38 +18,37 @@ class Nature(NamedResource):
     names: List["Name"]
     pokeathlon_stat_changes: List["NatureStatChange"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
+    def __init__(
+        self,
+        *,
+        decreased_stat: Optional[Dict[str, Any]],
+        hates_flavor: Optional[Dict[str, Any]],
+        increased_stat: Optional[Dict[str, Any]],
+        likes_flavor: Optional[Dict[str, Any]],
+        move_battle_style_preferences: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+        pokeathlon_stat_changes: List[Dict[str, Any]],
+    ) -> None:
         self.decreased_stat = (
-            MinimalResource(data["decreased_stat"])
-            if data["decreased_stat"] is not None
-            else None
+            MinimalResource(**decreased_stat) if decreased_stat is not None else None
         )
         self.hates_flavor = (
-            MinimalResource(data["hates_flavor"])
-            if data["hates_flavor"] is not None
-            else None
+            MinimalResource(**hates_flavor) if hates_flavor is not None else None
         )
         self.increased_stat = (
-            MinimalResource(data["increased_stat"])
-            if data["increased_stat"] is not None
-            else None
+            MinimalResource(**increased_stat) if increased_stat is not None else None
         )
         self.likes_flavor = (
-            MinimalResource(data["likes_flavor"])
-            if data["likes_flavor"] is not None
-            else None
+            MinimalResource(**likes_flavor) if likes_flavor is not None else None
         )
         self.move_battle_style_preferences = [
-            MoveBattleStylePreference(move_battle_style_preference_data)
-            for move_battle_style_preference_data in data[
-                "move_battle_style_preferences"
-            ]
+            MoveBattleStylePreference(**move_battle_style_preference)
+            for move_battle_style_preference in move_battle_style_preferences
         ]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.names = [Name(**name) for name in names]
         self.pokeathlon_stat_changes = [
-            NatureStatChange(pokeathlon_stat_change_data)
-            for pokeathlon_stat_change_data in data["pokeathlon_stat_changes"]
+            NatureStatChange(**pokeathlon_stat_change)
+            for pokeathlon_stat_change in pokeathlon_stat_changes
         ]
 
 
@@ -57,9 +56,14 @@ class NatureStatChange(Resource):
     max_change: int
     pokeathlon_stat: MinimalResource["PokeathlonStat"]
 
-    def __init__(self, data) -> None:
-        self.max_change = data["max_change"]
-        self.pokeathlon_stat = MinimalResource(data["pokeathlon_stat"])
+    def __init__(
+        self,
+        *,
+        max_change: int,
+        pokeathlon_stat: Dict[str, Any],
+    ) -> None:
+        self.max_change = max_change
+        self.pokeathlon_stat = MinimalResource(**pokeathlon_stat)
 
 
 class MoveBattleStylePreference(Resource):
@@ -67,7 +71,13 @@ class MoveBattleStylePreference(Resource):
     high_hp_preference: int
     move_battle_style: MinimalResource["MoveBatteStyle"]
 
-    def __init__(self, data) -> None:
-        self.low_hp_preference = data["low_hp_preference"]
-        self.high_hp_preference = data["high_hp_preference"]
-        self.move_battle_style = MinimalResource(data["move_battle_style"])
+    def __init__(
+        self,
+        *,
+        low_hp_preference: int,
+        high_hp_preference: int,
+        move_battle_style: Dict[str, Any],
+    ) -> None:
+        self.low_hp_preference = low_hp_preference
+        self.high_hp_preference = high_hp_preference
+        self.move_battle_style = MinimalResource(**move_battle_style)

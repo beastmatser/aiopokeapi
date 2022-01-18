@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -13,7 +13,9 @@ class VersionGroupFlavorText(Resource):
     language: MinimalResource["Language"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
-        self.text = data["text"]
-        self.language = MinimalResource(data["language"])
-        self.version_group = MinimalResource(data["version_group"])
+    def __init__(
+        self, *, text: str, language: Dict[str, Any], version_group: Dict[str, Any]
+    ):
+        self.text = text
+        self.language = MinimalResource(**language)
+        self.version_group = MinimalResource(**version_group)

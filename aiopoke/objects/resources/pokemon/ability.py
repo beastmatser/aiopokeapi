@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import Effect, NamedResource, VerboseEffect
 from aiopoke.objects.utility.common_models import Name
@@ -20,26 +20,31 @@ class Ability(NamedResource):
     names: List["Name"]
     pokemon: List["AbilityPokemon"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
+    def __init__(
+        self,
+        *,
+        effect_changes: List[Dict[str, Any]],
+        effect_entries: List[Dict[str, Any]],
+        flavor_text_entries: List[Dict[str, Any]],
+        generation: Dict[str, Any],
+        is_main_series: bool,
+        names: List[Dict[str, Any]],
+        pokemon: List[Dict[str, Any]],
+    ) -> None:
         self.effect_changes = [
-            AbilityEffectChange(effect_change_data)
-            for effect_change_data in data["effect_changes"]
+            AbilityEffectChange(**effect_change) for effect_change in effect_changes
         ]
         self.effect_entries = [
-            VerboseEffect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
+            VerboseEffect(**effect_entry) for effect_entry in effect_entries
         ]
         self.flavor_text_entries = [
-            AbilityFlavorText(flavor_text_entry_data)
-            for flavor_text_entry_data in data["flavor_text_entries"]
+            AbilityFlavorText(**flavor_text_entry)
+            for flavor_text_entry in flavor_text_entries
         ]
-        self.generation = MinimalResource(data["generation"])
-        self.is_main_series = data["is_main_series"]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.pokemon = [
-            AbilityPokemon(pokemon_data) for pokemon_data in data["pokemon"]
-        ]
+        self.generation = Generation(**generation)
+        self.is_main_series = is_main_series
+        self.names = [Name(**name) for name in names]
+        self.pokemon = [AbilityPokemon(**pokemon) for pokemon in pokemon]
 
 
 class AbilityPokemon(Resource):
@@ -47,29 +52,37 @@ class AbilityPokemon(Resource):
     slot: int
     pokemon: MinimalResource["Pokemon"]
 
-    def __init__(self, data) -> None:
-        self.is_hidden = data["is_hidden"]
-        self.slot = data["slot"]
-        self.pokemon = MinimalResource(data["pokemon"])
+    def __init__(self, *, is_hidden: bool, slot: int, pokemon: Dict[str, Any]) -> None:
+        self.is_hidden = is_hidden
+        self.slot = slot
+        self.pokemon = MinimalResource(**pokemon)
 
 
 class AbilityEffectChange(Resource):
     effect_entries: List["Effect"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
+    def __init__(
+        self, *, effect_entries: List[Dict[str, Any]], version_group: Dict[str, Any]
+    ) -> None:
         self.effect_entries = [
-            Effect(effect_entry_data) for effect_entry_data in data["effect_entries"]
+            Effect(**effect_entry) for effect_entry in effect_entries
         ]
-        self.version_group = MinimalResource(data["version_group"])
+        self.version_group = MinimalResource(**version_group)
 
 
-class AbilityFlavorText:
+class AbilityFlavorText(Resource):
     flavor_text: str
     language: MinimalResource["Language"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
-        self.flavor_text = data["flavor_text"]
-        self.language = MinimalResource(data["language"])
-        self.version_group = MinimalResource(data["version_group"])
+    def __init__(
+        self,
+        *,
+        flavor_text: str,
+        language: Dict[str, Any],
+        version_group: Dict[str, Any],
+    ) -> None:
+        self.flavor_text = flavor_text
+        self.language = MinimalResource(**language)
+        self.version_group = MinimalResource(**version_group)

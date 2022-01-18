@@ -1,5 +1,6 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, List, Optional, Dict, Any
 
+from aiopoke.objects.resources.contests.super_contest_effect import SuperContestEffect
 from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
 from aiopoke.objects.utility import (
     MachineVersionDetail,
@@ -24,6 +25,7 @@ if TYPE_CHECKING:
         MoveAilment,
         MoveCategory,
         MoveDamageClass,
+        MoveTarget,
     )
     from aiopoke.objects.utility import Language
 
@@ -35,6 +37,7 @@ class Move(NamedResource):
     contest_type: MinimalResource["ContestType"]
     damage_class: MinimalResource["MoveDamageClass"]
     effect_chance: Optional[int]
+    effect_changes: List["AbilityEffectChange"]
     effect_entries: List["VerboseEffect"]
     flavor_text_entries: List["MoveFlavorText"]
     generation: MinimalResource["Generation"]
@@ -47,77 +50,108 @@ class Move(NamedResource):
     pp: int
     priority: int
     stat_changes: List["MoveStatChange"]
-    type_: MinimalResource["NaturalGiftType"]
+    super_contest_effect: Url["SuperContestEffect"]
+    target: MinimalResource["MoveTarget"]
+    type: MinimalResource["NaturalGiftType"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.accuracy = data["accuracy"]
-        self.contest_combos = ContestComboSets(data["contest_combos"])
-        self.contest_effect = Url(data["contest_effect"])
-        self.contest_type = MinimalResource(data["contest_type"])
-        self.damage_class = MinimalResource(data["damage_class"])
-        self.effect_chance = data["effect_chance"]
-        self.effect_changes = [
-            AbilityEffectChange(effect_change_data)
-            for effect_change_data in data["effect_changes"]
-        ]
+    def __init__(
+        self,
+        *,
+        id: int,
+        name: str,
+        accuracy: int,
+        contest_combos: Dict[str, Any],
+        contest_effect: str,
+        contest_type: Dict[str, Any],
+        damage_class: Dict[str, Any],
+        effect_chance: Optional[int],
+        effect_entries: List[Dict[str, Any]],
+        effect_changes: List[Dict[str, Any]],
+        flavor_text_entries: List[Dict[str, Any]],
+        generation: Dict[str, Any],
+        learned_by_pokemon: List[Dict[str, Any]],
+        machines: List[Dict[str, Any]],
+        meta: Dict[str, Any],
+        names: List[Dict[str, Any]],
+        past_values: List[Dict[str, Any]],
+        power: int,
+        pp: int,
+        priority: int,
+        stat_changes: List[Dict[str, Any]],
+        super_contest_effect: Dict[str, Any],
+        target: Dict[str, Any],
+        type: Dict[str, Any],
+    ) -> None:
+        super().__init__(id=id, name=name)
+        self.accuracy = accuracy
+        self.contest_combos = ContestComboSets(**contest_combos)
+        self.contest_effect = Url(**contest_effect)
+        self.contest_type = MinimalResource(**contest_type)
+        self.damage_class = MinimalResource(**damage_class)
+        self.effect_chance = effect_chance
         self.effect_entries = [
-            VerboseEffect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
+            VerboseEffect(**effect_entry) for effect_entry in effect_entries
+        ]
+        self.effect_changes = [
+            AbilityEffectChange(**effect_change) for effect_change in effect_changes
         ]
         self.flavor_text_entries = [
-            MoveFlavorText(move_flavor_text_entry_data)
-            for move_flavor_text_entry_data in data["flavor_text_entries"]
+            MoveFlavorText(**flavor_text_entry)
+            for flavor_text_entry in flavor_text_entries
         ]
-        self.generation = MinimalResource(data["generation"])
+        self.generation = MinimalResource(**generation)
         self.learned_by_pokemon = [
-            MinimalResource(pokemon_data) for pokemon_data in data["learned_by_pokemon"]
+            MinimalResource(**pokemon) for pokemon in learned_by_pokemon
         ]
-        self.machines = [
-            MachineVersionDetail(machine_data) for machine_data in data["machines"]
-        ]
-        self.meta = MoveMetaData(data["meta"])
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.machines = [MachineVersionDetail(**machine) for machine in machines]
+        self.meta = MoveMetaData(**meta)
+        self.names = [Name(**name) for name in names]
         self.past_values = [
-            PastMoveStatValues(past_value_data)
-            for past_value_data in data["past_values"]
+            PastMoveStatValues(**past_value) for past_value in past_values
         ]
-        self.power = data["power"]
-        self.pp = data["pp"]
-        self.priority = data["priority"]
+        self.power = power
+        self.pp = pp
+        self.priority = priority
         self.stat_changes = [
-            MoveStatChange(stat_change_data)
-            for stat_change_data in data["stat_changes"]
+            MoveStatChange(**stat_change) for stat_change in stat_changes
         ]
-        self.type_ = MinimalResource(data["type"])
+        self.super_contest_effect = Url(**super_contest_effect)
+        self.target = MinimalResource(**target)
+        self.type = MinimalResource(**type)
 
 
 class ContestComboSets(Resource):
     normal: Optional["ContestComboDetail"]
     super: Optional["ContestComboDetail"]
 
-    def __init__(self, data) -> None:
-        self.normal = (
-            ContestComboDetail(data["normal"]) if data["normal"] is not None else None
-        )
-        self.super = (
-            ContestComboDetail(data["super"]) if data["super"] is not None else None
-        )
+    def __init__(
+        self,
+        *,
+        normal: Optional[Dict[str, Any]],
+        super: Optional[Dict[str, Any]],
+    ) -> None:
+        self.normal = ContestComboDetail(**normal) if normal is not None else None
+        self.super = ContestComboDetail(**super) if super is not None else None
 
 
 class ContestComboDetail(Resource):
     use_before: Optional[List[MinimalResource["Move"]]]
     use_after: Optional[List[MinimalResource["Move"]]]
 
-    def __init__(self, data) -> None:
+    def __init__(
+        self,
+        *,
+        use_before: Optional[List[Dict[str, Any]]],
+        use_after: Optional[List[Dict[str, Any]]],
+    ) -> None:
         self.use_before = (
-            [MinimalResource(move_data) for move_data in data["use_before"]]
-            if data["use_before"] is not None
+            [MinimalResource(**move) for move in use_before]
+            if use_before is not None
             else None
         )
         self.use_after = (
-            [MinimalResource(move_data) for move_data in data["use_after"]]
-            if data["use_after"] is not None
+            [MinimalResource(**move) for move in use_after]
+            if use_after is not None
             else None
         )
 
@@ -127,10 +161,16 @@ class MoveFlavorText(Resource):
     language: MinimalResource["Language"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
-        self.flavor_text = data["flavor_text"]
-        self.language = MinimalResource(data["language"])
-        self.version_group = MinimalResource(data["version_group"])
+    def __init__(
+        self,
+        *,
+        flavor_text: str,
+        language: Dict[str, Any],
+        version_group: Dict[str, Any],
+    ) -> None:
+        self.flavor_text = flavor_text
+        self.language = MinimalResource(**language)
+        self.version_group = MinimalResource(**version_group)
 
 
 class MoveMetaData(Resource):
@@ -147,28 +187,48 @@ class MoveMetaData(Resource):
     flinch_chance: int
     stat_chance: int
 
-    def __init__(self, data) -> None:
-        self.ailment = MinimalResource(data["ailment"])
-        self.category = MinimalResource(data["category"])
-        self.min_hits = data["min_hits"]
-        self.max_hits = data["max_hits"]
-        self.min_turns = data["min_turns"]
-        self.max_turns = data["max_turns"]
-        self.drain = data["drain"]
-        self.healing = data["healing"]
-        self.crit_rate = data["crit_rate"]
-        self.ailment_chance = data["ailment_chance"]
-        self.flinch_chance = data["flinch_chance"]
-        self.stat_chance = data["stat_chance"]
+    def __init__(
+        self,
+        *,
+        ailment: Dict[str, Any],
+        category: Dict[str, Any],
+        min_hits: int,
+        max_hits: int,
+        min_turns: int,
+        max_turns: int,
+        drain: int,
+        healing: int,
+        crit_rate: int,
+        ailment_chance: int,
+        flinch_chance: int,
+        stat_chance: int,
+    ) -> None:
+        self.ailment = MinimalResource(**ailment)
+        self.category = MinimalResource(**category)
+        self.min_hits = min_hits
+        self.max_hits = max_hits
+        self.min_turns = min_turns
+        self.max_turns = max_turns
+        self.drain = drain
+        self.healing = healing
+        self.crit_rate = crit_rate
+        self.ailment_chance = ailment_chance
+        self.flinch_chance = flinch_chance
+        self.stat_chance = stat_chance
 
 
 class MoveStatChange(Resource):
     change: int
     stat: MinimalResource["Stat"]
 
-    def __init__(self, data) -> None:
-        self.change = data["change"]
-        self.stat = MinimalResource(data["stat"])
+    def __init__(
+        self,
+        *,
+        change: int,
+        stat: Dict[str, Any],
+    ) -> None:
+        self.change = change
+        self.stat = MinimalResource(**stat)
 
 
 class PastMoveStatValues(Resource):
@@ -180,14 +240,23 @@ class PastMoveStatValues(Resource):
     type_: MinimalResource["NaturalGiftType"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
-        self.accuracy = data["accuracy"]
-        self.effect_chance = data["effect_chance"]
-        self.power = data["power"]
-        self.pp = data["pp"]
+    def __init__(
+        self,
+        *,
+        accuracy: int,
+        effect_chance: int,
+        power: int,
+        pp: int,
+        effect_entries: List[Dict[str, Any]],
+        type_: Dict[str, Any],
+        version_group: Dict[str, Any],
+    ) -> None:
+        self.accuracy = accuracy
+        self.effect_chance = effect_chance
+        self.power = power
+        self.pp = pp
         self.effect_entries = [
-            VerboseEffect(effect_entry_data)
-            for effect_entry_data in data["effect_entries"]
+            VerboseEffect(**effect_entry) for effect_entry in effect_entries
         ]
-        self.type_ = MinimalResource(data["type"])
-        self.version_group = MinimalResource(data["version_group"])
+        self.type_ = MinimalResource(**type_)
+        self.version_group = MinimalResource(**version_group)

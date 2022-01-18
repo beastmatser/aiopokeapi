@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models.encounter import Encounter
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -13,10 +13,15 @@ class VersionEncounterDetail(Resource):
     max_chance: int
     version: MinimalResource["Version"]
 
-    def __init__(self, data) -> None:
+    def __init__(
+        self,
+        *,
+        encounter_details: List[Dict[str, Any]],
+        max_chance: int,
+        version: Dict[str, Any]
+    ):
         self.encounter_details = [
-            Encounter(encounter_details_data)
-            for encounter_details_data in data["encounter_details"]
+            Encounter(**encounter_detail) for encounter_detail in encounter_details
         ]
-        self.max_chance = data["max_chance"]
-        self.version = MinimalResource(data["version"])
+        self.max_chance = max_chance
+        self.version = MinimalResource(**version)

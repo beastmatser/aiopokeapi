@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,13 +12,14 @@ class PalParkArea(NamedResource):
     pokemon_encounters: List["PalParkEncounterSpecies"]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
+    def __init__(
+        self, pokemon_encounters: List[Dict[str, Any]], names: List[Dict[str, Any]]
+    ) -> None:
         self.pokemon_encounters = [
-            PalParkEncounterSpecies(pokemon_encounter_data)
-            for pokemon_encounter_data in data["pokemon_encounters"]
+            PalParkEncounterSpecies(**pokemon_encounters)
+            for pokemon_encounters in pokemon_encounters
         ]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.names = [Name(**name) for name in names]
 
 
 class PalParkEncounterSpecies(Resource):
@@ -26,7 +27,9 @@ class PalParkEncounterSpecies(Resource):
     rate: int
     pokemon_species: MinimalResource["PokemonSpecies"]
 
-    def __init__(self, data) -> None:
-        self.base_score = data["base_score"]
-        self.rate = data["rate"]
-        self.pokemon_species = MinimalResource(data["pokemon_species"])
+    def __init__(
+        self, base_score: int, rate: int, pokemon_species: Dict[str, Any]
+    ) -> None:
+        self.base_score = base_score
+        self.rate = rate
+        self.pokemon_species = MinimalResource(**pokemon_species)

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Description, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -11,9 +11,8 @@ class MoveCategory(NamedResource):
     descriptions: List["Description"]
     moves: List[MinimalResource["Move"]]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.descriptions = [
-            Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
+    def __init__(
+        self, *, descriptions: List[Dict[str, Any]], moves: List[Dict[str, Any]]
+    ) -> None:
+        self.descriptions = [Description(**description) for description in descriptions]
+        self.moves = [MinimalResource(**move) for move in moves]

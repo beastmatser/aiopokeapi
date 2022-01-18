@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -13,8 +13,15 @@ class Machine(Resource):
     move: MinimalResource["Move"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
-        self.id = data["id"]
-        self.item = MinimalResource(data["item"])
-        self.move = MinimalResource(data["move"])
-        self.version_group = MinimalResource(data["version_group"])
+    def __init__(
+        self,
+        *,
+        id: int,
+        item: Dict[str, Any],
+        move: Dict[str, Any],
+        version_group: Dict[str, Any]
+    ) -> None:
+        self.id = id
+        self.item = MinimalResource(**item)
+        self.move = MinimalResource(**move)
+        self.version_group = MinimalResource(**version_group)

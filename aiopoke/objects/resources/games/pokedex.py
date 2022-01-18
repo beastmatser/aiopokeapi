@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, List, Optional, Dict, Any
 
 from aiopoke.objects.utility import Description, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -16,30 +16,32 @@ class Pokedex(NamedResource):
     version_groups: List[MinimalResource["VersionGroup"]]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.descriptions = [
-            Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.is_main_series = data["is_main_series"]
+    def __init__(
+        self,
+        *,
+        descriptions: List[Dict[str, Any]],
+        is_main_series: bool,
+        pokemon_entries: List[Dict[str, Any]],
+        region: Optional[Dict[str, Any]],
+        version_groups: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+    ) -> None:
+        self.descriptions = [Description(**description) for description in descriptions]
+        self.is_main_series = is_main_series
         self.pokemon_entries = [
-            PokemonEntry(pokemon_entry_data)
-            for pokemon_entry_data in data["pokemon_entries"]
+            PokemonEntry(**pokemon_entry) for pokemon_entry in pokemon_entries
         ]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.region = (
-            MinimalResource(data["region"]) if data["region"] is not None else None
-        )
+        self.region = MinimalResource(**region) if region is not None else None
         self.version_groups = [
-            MinimalResource(version_group_data)
-            for version_group_data in data["version_groups"]
+            MinimalResource(**version_group) for version_group in version_groups
         ]
+        self.names = [Name(**name) for name in names]
 
 
 class PokemonEntry(Resource):
     entry_number: int
     pokemon_species: MinimalResource["PokemonSpecies"]
 
-    def __init__(self, data) -> None:
-        self.entry_number = data["entry_number"]
-        self.pokemon_species = MinimalResource(data["pokemon_species"])
+    def __init__(self, *, entry_number: int, pokemon_species: Dict[str, Any]) -> None:
+        self.entry_number = entry_number
+        self.pokemon_species = MinimalResource(**pokemon_species)

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -14,12 +14,19 @@ class Encounter(Resource):
     chance: int
     method: MinimalResource["EncounterMethod"]
 
-    def __init__(self, data) -> None:
-        self.min_level = data["min_level"]
-        self.max_level = data["max_level"]
+    def __init__(
+        self,
+        *,
+        min_level: int,
+        max_level: int,
+        condition_values: List[Dict[str, Any]],
+        chance: int,
+        method: Dict[str, Any],
+    ):
+        self.min_level = min_level
+        self.max_level = max_level
         self.condition_values = [
-            MinimalResource(condition_value_data)
-            for condition_value_data in data["condition_values"]
+            MinimalResource(**condition_value) for condition_value in condition_values
         ]
-        self.chance = data["chance"]
-        self.method = MinimalResource(data["method"])
+        self.chance = chance
+        self.method = MinimalResource(**method)

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import Description, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,10 +12,13 @@ class ItemAttribute(NamedResource):
     items: List[MinimalResource["Item"]]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.descriptions = [
-            Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.items = [MinimalResource(item_data) for item_data in data["items"]]
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(
+        self,
+        *,
+        descriptions: List[Dict[str, Any]],
+        items: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+    ) -> None:
+        self.descriptions = [Description(**description) for description in descriptions]
+        self.items = [MinimalResource(**item) for item in items]
+        self.names = [Name(**name) for name in names]

@@ -26,8 +26,8 @@ class Url(Resource, Generic[T]):
 
     _client: Optional["AiopokeClient"] = field(default=None, repr=False)
 
-    def __init__(self, data) -> None:
-        self.url = data["url"]
+    def __init__(self, url: str) -> None:
+        self.url = url
 
         self.id = int(self.url.split("/")[-2])
         self.endpoint = self.url.split("/")[-3]
@@ -110,6 +110,6 @@ class MinimalResource(Url[T]):
     id: int
     endpoint: str
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.name = data["name"]
+    def __init__(self, *, name: str, url: str) -> None:
+        super().__init__(url=url)
+        self.name = name

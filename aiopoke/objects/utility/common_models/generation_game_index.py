@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -11,6 +11,6 @@ class GenerationGameIndex(Resource):
     game_index: int
     generation: MinimalResource["Generation"]
 
-    def __init__(self, data) -> None:
-        self.game_index = data["game_index"]
-        self.generation = MinimalResource(data["generation"])
+    def __init__(self, *, game_index: int, generation: Dict[str, Any]) -> None:
+        self.game_index = game_index
+        self.generation = Generation(**generation)

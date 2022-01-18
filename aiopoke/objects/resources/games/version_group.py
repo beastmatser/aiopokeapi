@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.resources.games.version import Version
 from aiopoke.objects.utility import NamedResource
@@ -17,21 +17,25 @@ class VersionGroup(NamedResource):
     regions: List[MinimalResource["Region"]]
     versions: List[MinimalResource["Version"]]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.generation = MinimalResource(data["generation"])
+    def __init__(
+        self,
+        *,
+        generation: Dict[str, Any],
+        move_learn_methods: List[Dict[str, Any]],
+        order: int,
+        pokedexes: List[Dict[str, Any]],
+        regions: List[Dict[str, Any]],
+        versions: List[Dict[str, Any]],
+    ) -> None:
+        self.generation = MinimalResource(**generation)
         self.move_learn_methods = [
-            MinimalResource(move_learn_method_data)
-            for move_learn_method_data in data["move_learn_methods"]
+            MinimalResource(**move_learn_method)
+            for move_learn_method in move_learn_methods
         ]
-        self.order = data["order"]
-        self.pokedexes = [
-            MinimalResource(pokedex_data) for pokedex_data in data["pokedexes"]
-        ]
-        self.regions = [MinimalResource(region_data) for region_data in data["regions"]]
-        self.versions = [
-            MinimalResource(version_data) for version_data in data["versions"]
-        ]
+        self.order = order
+        self.pokedexes = [MinimalResource(**pokedex) for pokedex in pokedexes]
+        self.regions = [MinimalResource(**region) for region in regions]
+        self.versions = [MinimalResource(**version) for version in versions]
 
 
 class VersionGroupDetail(Resource):
@@ -39,7 +43,13 @@ class VersionGroupDetail(Resource):
     move_learn_method: MinimalResource["MoveLearnMethod"]
     version_group: MinimalResource["VersionGroup"]
 
-    def __init__(self, data) -> None:
-        self.level_learned_at = data["level_learned_at"]
-        self.move_learn_method = MinimalResource(data["move_learn_method"])
-        self.version_group = MinimalResource(data["version_group"])
+    def __init__(
+        self,
+        *,
+        level_learned_at: int,
+        move_learn_method: Dict[str, Any],
+        version_group: Dict[str, Any],
+    ) -> None:
+        self.level_learned_at = level_learned_at
+        self.move_learn_method = MinimalResource(**move_learn_method)
+        self.version_group = MinimalResource(**version_group)

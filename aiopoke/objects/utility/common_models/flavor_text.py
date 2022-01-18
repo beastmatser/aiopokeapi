@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -13,11 +13,13 @@ class FlavorText(Resource):
     language: MinimalResource["Language"]
     version: Optional[MinimalResource["Version"]]
 
-    def __init__(self, data) -> None:
-        self.flavor_text = data["flavor_text"]
-        self.language = MinimalResource(data["language"])
-        self.version = (
-            MinimalResource(data["version"])
-            if data.get("version") is not None
-            else None
-        )
+    def __init__(
+        self,
+        *,
+        flavor_text: str,
+        language: Dict[str, Any],
+        version: Optional[Dict[str, Any]] = None,
+    ):
+        self.flavor_text = flavor_text
+        self.language = MinimalResource(**language)
+        self.version = MinimalResource(**version) if version is not None else None

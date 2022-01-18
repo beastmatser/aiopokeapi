@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import Description, FlavorText, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource, Url
@@ -49,67 +49,88 @@ class PokemonSpecies(NamedResource):
     shape: MinimalResource["PokemonShape"]
     varieties: List["PokemonSpeciesVariety"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.base_happiness = data["base_happiness"]
-        self.capture_rate = data["capture_rate"]
-        self.color = MinimalResource(data["color"])
-        self.egg_groups = [
-            MinimalResource(egg_group_data) for egg_group_data in data["egg_groups"]
-        ]
-        self.evolution_chain = Url(data["evolution_chain"])
-        self.evolves_from_species = MinimalResource(data["evolves_from_species"])
+    def __init__(
+        self,
+        *,
+        base_happiness: int,
+        capture_rate: int,
+        color: Dict[str, Any],
+        egg_groups: List[Dict[str, Any]],
+        evolution_chain: str,
+        evolves_from_species: Dict[str, Any],
+        flavor_text_entries: List[Dict[str, Any]],
+        form_descriptions: List[Dict[str, Any]],
+        forms_switchable: bool,
+        gender_rate: int,
+        genera: Dict[str, Any],
+        generation: Dict[str, Any],
+        growth_rate: Dict[str, Any],
+        habitat: Dict[str, Any],
+        has_gender_differences: bool,
+        hatch_counter: int,
+        is_baby: bool,
+        is_legendary: bool,
+        is_mythical: bool,
+        order: int,
+        names: Dict[str, Any],
+        pal_park_encounters: List[Dict[str, Any]],
+        pokedex_numbers: List[Dict[str, Any]],
+        shape: Dict[str, Any],
+        varieties: List[Dict[str, Any]],
+    ) -> None:
+        self.base_happiness = base_happiness
+        self.capture_rate = capture_rate
+        self.color = MinimalResource(**color)
+        self.egg_groups = [MinimalResource(**egg_group) for egg_group in egg_groups]
+        self.evolution_chain = Url(**evolution_chain)
+        self.evolves_from_species = MinimalResource(**evolves_from_species)
         self.flavor_text_entries = [
-            FlavorText(flavor_text_entry_data)
-            for flavor_text_entry_data in data["flavor_text_entries"]
+            FlavorText(**flavor_text_entry) for flavor_text_entry in flavor_text_entries
         ]
         self.form_descriptions = [
-            Description(description_data)
-            for description_data in data["form_descriptions"]
+            Description(**form_description) for form_description in form_descriptions
         ]
-        self.forms_switchable = data["forms_switchable"]
-        self.gender_rate = data["gender_rate"]
-        self.genera = [Genus(genera_data) for genera_data in data["genera"]]
-        self.generation = MinimalResource(data["generation"])
-        self.growth_rate = MinimalResource(data["growth_rate"])
-        self.habitat = MinimalResource(data["habitat"])
-        self.has_gender_differences = data["has_gender_differences"]
-        self.hatch_counter = data["hatch_counter"]
-        self.is_baby = data["is_baby"]
-        self.is_legendary = data["is_legendary"]
-        self.is_mythical = data["is_mythical"]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.order = data["order"]
+        self.forms_switchable = forms_switchable
+        self.gender_rate = gender_rate
+        self.genera = [Genus(**genus_data) for genus_data in genera]
+        self.generation = MinimalResource(**generation)
+        self.growth_rate = MinimalResource(**growth_rate)
+        self.habitat = MinimalResource(**habitat)
+        self.has_gender_differences = has_gender_differences
+        self.hatch_counter = hatch_counter
+        self.is_baby = is_baby
+        self.is_legendary = is_legendary
+        self.is_mythical = is_mythical
+        self.order = order
+        self.names = [Name(**name) for name in names]
         self.pal_park_encounters = [
-            PalParkEncounterArea(pal_park_encounter_data)
-            for pal_park_encounter_data in data["pal_park_encounters"]
+            PalParkEncounterArea(**pal_park_encounter)
+            for pal_park_encounter in pal_park_encounters
         ]
         self.pokedex_numbers = [
-            PokemonSpeciesDexEntry(pokedex_number_data)
-            for pokedex_number_data in data["pokedex_numbers"]
+            PokemonSpeciesDexEntry(**pokedex_number)
+            for pokedex_number in pokedex_numbers
         ]
-        self.shape = MinimalResource(data["shape"])
-        self.varieties = [
-            PokemonSpeciesVariety(variety_data) for variety_data in data["varieties"]
-        ]
+        self.shape = MinimalResource(**shape)
+        self.varieties = [PokemonSpeciesVariety(**variety) for variety in varieties]
 
 
 class Genus(Resource):
     genus: str
     language: MinimalResource["Language"]
 
-    def __init__(self, data) -> None:
-        self.genus = data["genus"]
-        self.language = MinimalResource(data["language"])
+    def __init__(self, genus: str, language: Dict[str, Any]) -> None:
+        self.genus = genus
+        self.language = MinimalResource(**language)
 
 
 class PokemonSpeciesDexEntry(Resource):
     entry_number: int
     pokedex: MinimalResource["Pokedex"]
 
-    def __init__(self, data) -> None:
-        self.entry_number = data["entry_number"]
-        self.pokedex = MinimalResource(data["pokedex"])
+    def __init__(self, *, entry_number: int, pokedex: Dict[str, Any]) -> None:
+        self.entry_number = entry_number
+        self.pokedex = MinimalResource(**pokedex)
 
 
 class PalParkEncounterArea(Resource):
@@ -117,16 +138,16 @@ class PalParkEncounterArea(Resource):
     rate: int
     area: MinimalResource["PalParkArea"]
 
-    def __init__(self, data) -> None:
-        self.base_score = data["base_score"]
-        self.rate = data["rate"]
-        self.area = MinimalResource(data["area"])
+    def __init__(self, *, base_score: int, rate: int, area: Dict[str, Any]) -> None:
+        self.base_score = base_score
+        self.rate = rate
+        self.area = MinimalResource(**area)
 
 
 class PokemonSpeciesVariety(Resource):
     is_default: bool
     pokemon: MinimalResource["Pokemon"]
 
-    def __init__(self, data) -> None:
-        self.is_default = data["is_default"]
-        self.pokemon = MinimalResource(data["pokemon"])
+    def __init__(self, *, is_default: bool, pokemon: Dict[str, Any]) -> None:
+        self.is_default = is_default
+        self.pokemon = MinimalResource(**pokemon)

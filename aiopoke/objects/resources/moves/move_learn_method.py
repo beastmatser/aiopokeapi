@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Description, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,13 +12,15 @@ class MoveLearnMethod(NamedResource):
     names: List["Name"]
     version_groups: List[MinimalResource["VersionGroup"]]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.descriptions = [
-            Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(
+        self,
+        *,
+        descriptions: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+        version_groups: List[Dict[str, Any]],
+    ) -> None:
+        self.descriptions = [Description(**description) for description in descriptions]
+        self.names = [Name(**name) for name in names]
         self.version_groups = [
-            MinimalResource(version_group_data)
-            for version_group_data in data["version_groups"]
+            MinimalResource(**version_group) for version_group in version_groups
         ]

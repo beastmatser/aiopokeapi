@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -11,7 +11,8 @@ class Version(NamedResource):
     version_group: MinimalResource["VersionGroup"]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.version_group = MinimalResource(data["version_group"])
+    def __init__(
+        self, version_group: Dict[str, Any], names: List[Dict[str, Any]]
+    ) -> None:
+        self.version_group = MinimalResource(**version_group)
+        self.names = [Name(**name) for name in names]

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 
@@ -6,6 +6,5 @@ from aiopoke.objects.utility.common_models import Name, NamedResource
 class MoveBatteStyle(NamedResource):
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(self, *, names: List[Dict[str, Any]]) -> None:
+        self.names = [Name(**name) for name in names]

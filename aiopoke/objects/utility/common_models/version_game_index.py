@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -11,6 +11,6 @@ class VersionGameIndex(Resource):
     game_index: int
     version: MinimalResource["Version"]
 
-    def __init__(self, data) -> None:
-        self.game_index = data["game_index"]
-        self.version = MinimalResource(data["version"])
+    def __init__(self, *, game_index: int, version: Dict[str, Any]):
+        self.game_index = game_index
+        self.version = MinimalResource(**version)

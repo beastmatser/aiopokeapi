@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,8 +12,13 @@ class ItemCategory(NamedResource):
     names: List["Name"]
     pocket: MinimalResource["ItemPocket"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.items = [MinimalResource(item_data) for item_data in data["items"]]
-        self.names = [Name(name_data) for name_data in data["names"]]
-        self.pocket = MinimalResource(data["pocket"])
+    def __init__(
+        self,
+        *,
+        items: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+        pocket: Dict[str, Any],
+    ) -> None:
+        self.items = [MinimalResource(**item) for item in items]
+        self.names = [Name(**name) for name in names]
+        self.pocket = MinimalResource(**pocket)

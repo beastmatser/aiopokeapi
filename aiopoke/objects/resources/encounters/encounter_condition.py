@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -11,10 +11,14 @@ class EncounterCondition(NamedResource):
     values: List[MinimalResource["EncounterConditionValue"]]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.values = [
-            MinimalResource(encounter_condition_value)
-            for encounter_condition_value in data["values"]
-        ]
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(
+        self,
+        *,
+        id: int,
+        name: str,
+        values: List[Dict[str, Any]],
+        names: List[Dict[str, Any]]
+    ) -> None:
+        super().__init__(id=id, name=name)
+        self.values = [MinimalResource(**value) for value in values]
+        self.names = [Name(**name) for name in names]

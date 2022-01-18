@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict, Any
 
 from aiopoke.objects.utility.common_models import Description, Name, NamedResource
 
@@ -8,10 +8,16 @@ class EncounterMethod(NamedResource):
     order: int
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.descriptions = [
-            Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.order = data["order"]
-        self.names = [Name(name_data) for name_data in data["names"]]
+    def __init__(
+        self,
+        *,
+        id: int,
+        name: str,
+        order: int,
+        descriptions: List[Dict[str, Any]],
+        names: List[Dict[str, Any]]
+    ) -> None:
+        super().__init__(id=id, name=name)
+        self.order = order
+        self.descriptions = [Description(**description) for description in descriptions]
+        self.names = [Name(**name) for name in names]

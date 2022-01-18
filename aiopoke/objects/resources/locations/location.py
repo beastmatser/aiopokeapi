@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import GenerationGameIndex, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -13,12 +13,17 @@ class Location(NamedResource):
     region: MinimalResource["Region"]
     names: List["Name"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.areas = [MinimalResource(area_data) for area_data in data["areas"]]
+    def __init__(
+        self,
+        *,
+        areas: List[Dict[str, Any]],
+        game_indices: List[Dict[str, Any]],
+        region: Dict[str, Any],
+        names: List[Dict[str, Any]],
+    ) -> None:
+        self.areas = [MinimalResource(**area) for area in areas]
         self.game_indices = [
-            GenerationGameIndex(game_indice_data)
-            for game_indice_data in data["game_indices"]
+            GenerationGameIndex(**game_index) for game_index in game_indices
         ]
-        self.region = MinimalResource(data["region"])
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.region = MinimalResource(**region)
+        self.names = [Name(**name) for name in names]

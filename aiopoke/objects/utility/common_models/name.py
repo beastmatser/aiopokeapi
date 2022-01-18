@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Any
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
@@ -11,6 +11,11 @@ class Name(Resource):
     name: str
     language: MinimalResource["Language"]
 
-    def __init__(self, data) -> None:
-        self.name = data["name"]
-        self.language = MinimalResource(data["language"])
+    def __init__(
+        self,
+        *,
+        name: str,
+        language: Dict[str, Any],
+    ):
+        self.name = name
+        self.language = MinimalResource(**language)

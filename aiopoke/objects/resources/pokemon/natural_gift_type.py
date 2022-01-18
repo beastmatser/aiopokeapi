@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import GenerationGameIndex, Name, NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -18,21 +18,29 @@ class NaturalGiftType(NamedResource):
     past_damage_relations: List["PastTypeRelation"]
     pokemon: List["TypePokemon"]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        self.damage_relations = TypeRelations(data["damage_relations"])
+    def __init__(
+        self,
+        *,
+        damage_relations: Dict[str, Any],
+        game_indices: List[Dict[str, Any]],
+        move_damage_class: Dict[str, Any],
+        moves: List[Dict[str, Any]],
+        names: List[Dict[str, Any]],
+        past_damage_relations: List[Dict[str, Any]],
+        pokemon: List[Dict[str, Any]],
+    ) -> None:
+        self.damage_relations = TypeRelations(**damage_relations)
         self.game_indices = [
-            GenerationGameIndex(game_indice_data)
-            for game_indice_data in data["game_indices"]
+            GenerationGameIndex(**game_index) for game_index in game_indices
         ]
-        self.move_damage_class = MinimalResource(data["move_damage_class"])
-        self.moves = [MinimalResource(move_data) for move_data in data["moves"]]
-        self.names = [Name(name_data) for name_data in data["names"]]
+        self.move_damage_class = MinimalResource(**move_damage_class)
+        self.moves = [MinimalResource(**move) for move in moves]
+        self.names = [Name(**name) for name in names]
         self.past_damage_relations = [
-            PastTypeRelation(past_damage_relation_data)
-            for past_damage_relation_data in data["past_damage_relations"]
+            PastTypeRelation(**past_damage_relation)
+            for past_damage_relation in past_damage_relations
         ]
-        self.pokemon = [TypePokemon(pokemon_data) for pokemon_data in data["pokemon"]]
+        self.pokemon = [TypePokemon(**pokemon) for pokemon in pokemon]
 
 
 class TypeRelations(Resource):
@@ -43,46 +51,52 @@ class TypeRelations(Resource):
     no_damage_from: List[MinimalResource["NaturalGiftType"]]
     no_damage_to: List[MinimalResource["NaturalGiftType"]]
 
-    def __init__(self, data) -> None:
+    def __init__(
+        self,
+        *,
+        double_damage_from: List[Dict[str, Any]],
+        double_damage_to: List[Dict[str, Any]],
+        half_damage_from: List[Dict[str, Any]],
+        half_damage_to: List[Dict[str, Any]],
+        no_damage_from: List[Dict[str, Any]],
+        no_damage_to: List[Dict[str, Any]],
+    ) -> None:
         self.double_damage_from = [
-            MinimalResource(natural_gift_type)
-            for natural_gift_type in data["double_damage_from"]
+            MinimalResource(**type_data) for type_data in double_damage_from
         ]
         self.double_damage_to = [
-            MinimalResource(natural_gift_type)
-            for natural_gift_type in data["double_damage_to"]
+            MinimalResource(**type_data) for type_data in double_damage_to
         ]
         self.half_damage_from = [
-            MinimalResource(natural_gift_type)
-            for natural_gift_type in data["half_damage_from"]
+            MinimalResource(**type_data) for type_data in half_damage_from
         ]
         self.half_damage_to = [
-            MinimalResource(natural_gift_type)
-            for natural_gift_type in data["half_damage_to"]
+            MinimalResource(**type_data) for type_data in half_damage_to
         ]
         self.no_damage_from = [
-            MinimalResource(natural_gift_type)
-            for natural_gift_type in data["no_damage_from"]
+            MinimalResource(**type_data) for type_data in no_damage_from
         ]
-        self.no_damage_to = [
-            MinimalResource(natural_gift_type)
-            for natural_gift_type in data["no_damage_to"]
-        ]
+        self.no_damage_to = [MinimalResource(**type_data) for type_data in no_damage_to]
 
 
 class PastTypeRelation:
     damage_relations: "TypeRelations"
     generation: MinimalResource["Generation"]
 
-    def __init__(self, data) -> None:
-        self.damage_relations = TypeRelations(data["damage_relations"])
-        self.generation = MinimalResource(data["generation"])
+    def __init__(
+        self,
+        *,
+        damage_relations: Dict[str, Any],
+        generation: Dict[str, Any],
+    ) -> None:
+        self.damage_relations = TypeRelations(**damage_relations)
+        self.generation = MinimalResource(**generation)
 
 
 class TypePokemon(Resource):
     slot: int
     pokemon: MinimalResource["Pokemon"]
 
-    def __init__(self, data) -> None:
-        self.slot = data["slot"]
-        self.pokemon = MinimalResource(data["pokemon"])
+    def __init__(self, *, slot: int, pokemon: Dict[str, Any]) -> None:
+        self.slot = slot
+        self.pokemon = MinimalResource(**pokemon)

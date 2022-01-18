@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility.common_models import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,15 +12,19 @@ class Gender(NamedResource):
     pokemon_species_details: List["PokemonSpeciesGender"]
     required_for_evolution: List[MinimalResource["PokemonSpecies"]]
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
+    def __init__(
+        self,
+        *,
+        pokemon_species_details: List[Dict[str, Any]],
+        required_for_evolution: List[Dict[str, Any]],
+    ) -> None:
         self.pokemon_species_details = [
-            PokemonSpeciesGender(pokemon_species_detail_data)
-            for pokemon_species_detail_data in data["pokemon_species_details"]
+            PokemonSpeciesGender(**pokemon_species_details)
+            for pokemon_species_details in pokemon_species_details
         ]
         self.required_for_evolution = [
-            MinimalResource(pokemon_species_data)
-            for pokemon_species_data in data["required_for_evolution"]
+            MinimalResource(**required_for_evolution)
+            for required_for_evolution in required_for_evolution
         ]
 
 
@@ -28,6 +32,6 @@ class PokemonSpeciesGender(Resource):
     pokemon_species: MinimalResource["PokemonSpecies"]
     rate: int
 
-    def __init__(self, data) -> None:
-        self.pokemon_species = MinimalResource(data["pokemon_species"])
-        self.rate = data["rate"]
+    def __init__(self, *, pokemon_species: Dict[str, Any], rate: int) -> None:
+        self.pokemon_species = MinimalResource(**pokemon_species)
+        self.rate = rate

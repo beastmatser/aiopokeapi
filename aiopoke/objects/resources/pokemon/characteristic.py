@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict, Any
 
 from aiopoke.objects.utility import Description
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -12,14 +12,20 @@ class Characteristic(Resource):
     descriptions: List["Description"]
     gene_modulo: int
     highest_stat: MinimalResource["Stat"]
-    id_: int
+    id: int
     possible_values: List[int]
 
-    def __init__(self, data) -> None:
-        self.descriptions = [
-            Description(description_data) for description_data in data["descriptions"]
-        ]
-        self.gene_modulo = data["gene_modulo"]
-        self.highest_stat = MinimalResource(data["highest_stat"])
-        self.id_ = data["id"]
-        self.possible_values = data["possible_values"]
+    def __init__(
+        self,
+        *,
+        descriptions: List[Dict[str, Any]],
+        gene_modulo: int,
+        highest_stat: Dict[str, Any],
+        id: int,
+        possible_values: List[int]
+    ) -> None:
+        self.descriptions = [Description(**description) for description in descriptions]
+        self.gene_modulo = gene_modulo
+        self.highest_stat = MinimalResource(**highest_stat)
+        self.id = id
+        self.possible_values = possible_values
