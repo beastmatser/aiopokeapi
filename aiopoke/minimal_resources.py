@@ -1,3 +1,4 @@
+from dataclasses import field
 from typing import Any
 from typing import Callable
 from typing import Coroutine
@@ -20,6 +21,8 @@ class Url(Resource, Generic[T]):
     url: str
     id: int
     endpoint: str
+
+    _client: Optional["AiopokeClient"] = field(default=None, repr=False)
 
     def __init__(self, data) -> None:
         self.url = data["url"]
