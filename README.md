@@ -20,15 +20,30 @@ pip install aiopokeapi
 
 ## Getting started
 
+Aiopoke's goal is to be simple and easy to use:
+
 ```py
 import asyncio
 import aiopoke
 
 
 async def main():
-    async with aiopoke.AiopokeClient() as client:
-        pokemon = await client.fetch_pokemon("pikachu")  # pokemon will be typehinted
-        print(pokemon)
+    client = aiopoke.AiopokeClient()
+
+    ability = await client.get_ability(1)
+    print(ability)
+
+    await client.close()
 
 asyncio.run(main())
+```
+
+Or even better, using a context manager:
+
+```py
+# in main()
+async with aiopoke.AiopokeClient() as client:
+    ability = await client.get_ability(1)
+    print(ability)
+
 ```
