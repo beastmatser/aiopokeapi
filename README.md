@@ -1,17 +1,31 @@
-# Aiopokeapi
+<p align="center">
+   <img src="assets/aiopokeapi-readme-banner.png">
+   <h1 align="center"> AioPokéApi</h1>
+   <p align="center"> An Asynchronous API wrapper for the <a href url="https://pokeapi.co">PokéApi</a> written in <b>Python</b>.
+</p>
+<p align="center">
+   <img id="tests" src="https://img.shields.io/github/workflow/status/beastmatser/aiopokeapi/tests?label=Tests&logo=github&style=flat-square">
+   <img id="pypi-version" src="https://img.shields.io/pypi/v/aiopokeapi?label=Pypi%20version&logo=pypi&logoColor=ffffff&style=flat-square">
+   <img id="python-version" src="https://img.shields.io/pypi/pyversions/aiopokeapi?label=Python%20version&logo=python&logoColor=ffffff&style=flat-square">
+   <img id="license" src="https://img.shields.io/github/license/beastmatser/aiopokeapi?label=License&style=flat-square">
+   <img id="style" src="https://img.shields.io/badge/Code%20style-black-black?style=flat-square">
+</p>
+<p align="center">
+   <a href="https://github.com/beastmatser/aiopokeapi/issues/new/choose"> Report issue</a>
+   ·
+   <a href="https://github.com/beastmatser/aiopokeapi/issues/new/choose"> Request feature</a>
+   ·
+   <a href="https://github.com/beastmatser/aiopokeapi/fork"> Fork project</a>
+</p>
 
-![Tests](https://github.com/beastmatser/aiopokeapi/actions/workflows/tests.yml/badge.svg)
-![Pypi](https://img.shields.io/pypi/v/aiopokeapi.svg)
-![Python](https://img.shields.io/pypi/pyversions/aiopokeapi.svg)
-![License](https://img.shields.io/pypi/l/aiopokeapi.svg)
-![Style](https://img.shields.io/badge/style-black-000000.svg)
+# Description
 
- An asynchronous API wrapper for the [pokeapi](https://pokeapi.co/) written in Python.
+ An asynchronous API wrapper for the [pokeapi](https://pokeapi.co/) written in Python.
 
 ## Key Features
 
 - Use of modern Python keywords: `async` and `await`.
-- Fully typehinted, no need to look at documentations!
+- Fully type hinted, no need to look at the documentation!
 - Objects get cached, this increases speed and avoids unnecessary API requests.
 
 ## Installation
@@ -19,23 +33,27 @@
 ```sh
 pip install aiopokeapi
 ```
+or
+```sh
+python3 -m pip install aiopokeapi
+```
 
 ## Getting started
 
 Aiopoke's goal is to be simple and easy to use:
 
+
 ```py
 import asyncio
 import aiopoke
 
-
 async def main():
-    client = aiopoke.AiopokeClient()
+   client = aiopoke.AiopokeClient()
 
-    ability = await client.get_ability(1)
-    print(ability)
+   ability = await client.get_ability(1)
+   print(ability)
 
-    await client.close()
+   await client.close()
 
 asyncio.run(main())
 ```
@@ -45,7 +63,6 @@ Or even better, using a context manager:
 ```py
 # in main()
 async with aiopoke.AiopokeClient() as client:
-    ability = await client.get_ability(1)
-    print(ability)
-
+   ability = await client.get_ability(1)
+   print(ability)
 ```
