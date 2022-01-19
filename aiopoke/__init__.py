@@ -2,7 +2,7 @@ __title__ = "aiopoke"
 __author__ = "beastmatser"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present beastmatser"
-__version__ = "0.1.0"
+__version__ = "0.0.8a"
 
 from typing import NamedTuple
 
@@ -83,7 +83,7 @@ class VersionInfo(NamedTuple):
         return f"{self.major}.{self.minor}.{self.micro}-{self.releaselevel}"
 
 
-version_info: VersionInfo = VersionInfo(0, 1, 0, "final")
+version_info: VersionInfo = VersionInfo(0, 0, 8, "alpha")
 
 
 __all__ = (
