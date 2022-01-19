@@ -21,7 +21,7 @@
 ## :old_key: Key Features
 
 - Use of modern Python keywords: `async` and `await`.
-- Fully type hinted, no need to look at the documentation!
+- Every object is fully type hinted.
 - Objects get cached, this increases speed and avoids unnecessary API requests.
 
 ## :comet: Installation
@@ -29,6 +29,7 @@
 ```sh
 pip install aiopokeapi
 ```
+
 <details>
 
 <summary>
@@ -71,7 +72,6 @@ following:
 ## :rocket: Getting started
 
 Aiopoke's goal is to be simple and easy to use:
-
 
 ```py
 import asyncio
