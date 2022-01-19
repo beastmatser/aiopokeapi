@@ -1,10 +1,12 @@
 # Aiopokeapi
 
- An asynchronous API wrapper for the [pokeapi](https://pokeapi.co/) written in Python.
-
 ![Tests](https://github.com/beastmatser/aiopokeapi/actions/workflows/tests.yml/badge.svg)
 ![Pypi](https://img.shields.io/pypi/v/aiopokeapi.svg)
 ![Python](https://img.shields.io/pypi/pyversions/aiopokeapi.svg)
+![License](https://img.shields.io/pypi/l/aiopokeapi.svg)
+![Style](https://img.shields.io/badge/style-black-000000.svg)
+
+ An asynchronous API wrapper for the [pokeapi](https://pokeapi.co/) written in Python.
 
 ## Key Features
 
