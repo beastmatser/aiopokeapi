@@ -1,7 +1,7 @@
 <p align="center">
    <img src="assets/aiopokeapi-readme-banner.png">
    <h1 align="center"> AioPokéApi</h1>
-   <p align="center"> An Asynchronous API wrapper for the <a href url="https://pokeapi.co">PokéApi</a> written in <b>Python</b>.
+   <p align="center"> An Asynchronous API wrapper for the <a href="https://pokeapi.co">PokéApi</a> written in <b>Python</b>.
 </p>
 <p align="center">
    <img id="tests" src="https://img.shields.io/github/workflow/status/beastmatser/aiopokeapi/tests?label=Tests&logo=github&style=flat-square">
