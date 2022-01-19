@@ -18,27 +18,57 @@
    <a href="https://github.com/beastmatser/aiopokeapi/fork"> Fork project</a>
 </p>
 
-# Description
-
- An asynchronous API wrapper for the [pokeapi](https://pokeapi.co/) written in Python.
-
-## Key Features
+## :old_key: Key Features
 
 - Use of modern Python keywords: `async` and `await`.
 - Fully type hinted, no need to look at the documentation!
 - Objects get cached, this increases speed and avoids unnecessary API requests.
 
-## Installation
+## :comet: Installation
 
 ```sh
 pip install aiopokeapi
 ```
-or
-```sh
-python3 -m pip install aiopokeapi
-```
+<details>
 
-## Getting started
+<summary>
+    :gear: <i> Didn't work?</i>
+</summary>
+
+Depending on your Python installation, you might need to use one of the
+following:
+
+- Python is not in PATH
+
+    ```sh
+    path/to/python.exe -m pip install aiopokeapi
+    ```
+
+- Python is in PATH but pip is not
+
+    ```sh
+    python -m pip install aiopokeapi
+    ```
+
+- Unix systems can use pip3/python3 commands
+
+    ```sh
+    pip3 install aiopokeapi
+    ```
+
+    ```sh
+    python3 -m pip install aiopokeapi
+    ```
+
+- Using multiple Python versions
+
+    ```sh
+    py -m pip install aiopokeapi
+    ```
+
+</details>
+
+## :rocket: Getting started
 
 Aiopoke's goal is to be simple and easy to use:
 
