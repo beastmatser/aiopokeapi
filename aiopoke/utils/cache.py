@@ -22,7 +22,6 @@ def cache(
         cached_item: Optional[U] = client._cache.get(f"{endpoint}/{name_or_id}")
 
         if cached_item is not None:
-            print(cached_item)
             return cached_item
 
         obj: U = await coro(client, name_or_id)
