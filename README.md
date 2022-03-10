@@ -24,6 +24,10 @@
 - Every object is fully type hinted.
 - Objects get cached, this increases speed and avoids unnecessary API requests.
 
+## :earth_africa: Documentation
+
+AioPokéApi has a very minimal website, which you can find [here](https://beastmatser.github.io/aiopoke/). It also has some [documentation](https://beastmatser.github.io/aiopoke/docs/).
+
 ## :comet: Installation
 
 ```sh
@@ -41,31 +45,31 @@ following:
 
 - Python is not in PATH
 
-    ```sh
-    path/to/python.exe -m pip install aiopokeapi
-    ```
+  ```sh
+  path/to/python.exe -m pip install aiopokeapi
+  ```
 
 - Python is in PATH but pip is not
 
-    ```sh
-    python -m pip install aiopokeapi
-    ```
+  ```sh
+  python -m pip install aiopokeapi
+  ```
 
 - Unix systems can use pip3/python3 commands
 
-    ```sh
-    pip3 install aiopokeapi
-    ```
+  ```sh
+  pip3 install aiopokeapi
+  ```
 
-    ```sh
-    python3 -m pip install aiopokeapi
-    ```
+  ```sh
+  python3 -m pip install aiopokeapi
+  ```
 
 - Using multiple Python versions
 
-    ```sh
-    py -m pip install aiopokeapi
-    ```
+  ```sh
+  py -m pip install aiopokeapi
+  ```
 
 </details>
 
