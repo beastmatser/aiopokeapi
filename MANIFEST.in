@@ -4,4 +4,7 @@ include *.yaml
 include tox.ini
 recursive-include aiopoke *.py
 recursive-include aiopoke *.typed
+recursive-include assets *.md
+recursive-include assets *.png
+recursive-include assets *.svg
 recursive-include tests *.py
