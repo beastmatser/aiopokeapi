@@ -84,7 +84,7 @@ async def main():
    client = aiopoke.AiopokeClient()
 
    ability = await client.get_ability(1)
-   print(ability)
+   generation = await ability.generation.fetch()
 
    await client.close()
 
@@ -97,5 +97,5 @@ Or even better, using a context manager:
 # in main()
 async with aiopoke.AiopokeClient() as client:
    ability = await client.get_ability(1)
-   print(ability)
+   generation = await ability.generation.fetch()
 ```
