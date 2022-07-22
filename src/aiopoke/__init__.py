@@ -2,7 +2,7 @@ __title__ = "aiopoke"
 __author__ = "beastmatser"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present beastmatser"
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 from typing import NamedTuple
 
