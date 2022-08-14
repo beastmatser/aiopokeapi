@@ -1,6 +1,6 @@
 from typing import Any, Dict, List
 
-from aiopoke.objects.utility.common_models import Description, Name, NamedResource
+from aiopoke.objects.utility.common_models import Name, NamedResource
 
 
 class EncounterMethod(NamedResource):
