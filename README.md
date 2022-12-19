@@ -4,7 +4,7 @@
    <p align="center"> An Asynchronous API wrapper for the <a href="https://pokeapi.co">PokéApi</a> written in <b>Python</b>.
 </p>
 <p align="center">
-   <img id="tests" src="https://img.shields.io/github/workflow/status/beastmatser/aiopokeapi/tests?label=Tests&logo=github&style=flat-square">
+   <img id="tests" src="https://img.shields.io/github/actions/workflow/status/beastmatser/aiopokeapi/tests.yml?branch=main&label=Tests&logo=github&style=flat-square">
    <img id="pypi-version" src="https://img.shields.io/pypi/v/aiopokeapi?label=Pypi%20version&logo=pypi&logoColor=ffffff&style=flat-square">
    <img id="python-version" src="https://img.shields.io/pypi/pyversions/aiopokeapi?label=Python%20version&logo=python&logoColor=ffffff&style=flat-square">
    <img id="license" src="https://img.shields.io/github/license/beastmatser/aiopokeapi?label=License&style=flat-square">
