@@ -1,7 +1,15 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
 
-from aiopoke.objects.utility import Description, FlavorText, Name, NamedResource
-from aiopoke.utils.minimal_resources import MinimalResource, Url
+from aiopoke.objects.utility import Description
+from aiopoke.objects.utility import FlavorText
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.minimal_resources import Url
 from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
@@ -36,7 +44,7 @@ class PokemonSpecies(NamedResource):
     genera: List["Genus"]
     generation: MinimalResource["Generation"]
     growth_rate: MinimalResource["GrowthRate"]
-    habitat: MinimalResource["PokemonHabitat"]
+    habitat: Optional[MinimalResource["PokemonHabitat"]]
     has_gender_differences: bool
     hatch_counter: int
     is_baby: bool
@@ -102,7 +110,7 @@ class PokemonSpecies(NamedResource):
         self.genera = [Genus(**genus_data) for genus_data in genera]
         self.generation = MinimalResource(**generation)
         self.growth_rate = MinimalResource(**growth_rate)
-        self.habitat = MinimalResource(**habitat)
+        self.habitat = MinimalResource(**habitat) if habitat is not None else None
         self.has_gender_differences = has_gender_differences
         self.hatch_counter = hatch_counter
         self.is_baby = is_baby
