@@ -1,5 +1,7 @@
 from typing import Optional
 
+import aiofiles  # type: ignore
+
 from aiopoke.objects.utility.common_models.sprite import Sprite
 
 OptionalSprite = Optional["Sprite"]
@@ -22,6 +24,7 @@ class Sprites:
     generation_6: Optional["GenerationVISprites"]
     generation_7: Optional["GenerationVIISprites"]
     generation_8: Optional["GenerationVIIISprites"]
+    other: Optional["OtherSprites"]
 
     def __init__(self, data) -> None:
         self.back_default = Sprite.from_url(data["back_default"])
@@ -57,6 +60,17 @@ class Sprites:
             )
             self.generation_viii = self.generation_8 = GenerationVIIISprites(
                 data["versions"]["generation-viii"]
+            )
+
+        if data.get("other") is not None:
+            self.official_artwork = OfficialArtwork(
+                data["other"]["official-artwork"]
+            )
+            self.dream_world = DreamWorld(
+                data["other"]["dream_world"]
+            )
+            self.home = Home(
+                data["other"]["home"]
             )
 
 
@@ -378,3 +392,32 @@ class GenerationVIIISprites:
     def __init__(self, data) -> None:
         self.icons_front_default = Sprite.from_url(data["icons"]["front_default"])
         self.icons_front_female = Sprite.from_url(data["icons"]["front_female"])
+
+
+class DreamWorld:
+    front_default: OptionalSprite
+    front_female: OptionalSprite
+
+    def __init__(self, data) -> None:
+        self.front_default = Sprite.from_url(data["front_default"])
+        self.front_shiny = Sprite.from_url(data["front_female"])
+
+class Home:
+    front_default: OptionalSprite
+    front_female: OptionalSprite
+    front_shiny: OptionalSprite
+    front_shiny_female: OptionalSprite
+
+    def __init__(self, data) -> None:
+        self.front_default = Sprite.from_url(data["front_default"])
+        self.front_female = Sprite.from_url(data["front_female"])
+        self.front_shiny = Sprite.from_url(data["front_shiny"])
+        self.front_shiny_female = Sprite.from_url(data["front_shiny_female"])
+
+class OfficialArtwork:
+    front_default: OptionalSprite
+    front_shiny: OptionalSprite
+
+    def __init__(self, data) -> None:
+        self.front_default = Sprite.from_url(data["front_default"])
+        self.front_shiny = Sprite.from_url(data["front_shiny"])
