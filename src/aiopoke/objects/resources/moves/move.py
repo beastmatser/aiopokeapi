@@ -84,9 +84,21 @@ class Move(NamedResource):
     ) -> None:
         super().__init__(id=id, name=name)
         self.accuracy = accuracy
-        self.contest_combos = ContestComboSets(**contest_combos)
-        self.contest_effect = Url(**contest_effect)
-        self.contest_type = MinimalResource(**contest_type)
+        self.contest_combos = (
+            ContestComboSets(**contest_combos)
+            if contest_combos is not None
+            else None
+        )
+        self.contest_effect = (
+            Url(**contest_effect)
+            if contest_effect is not None
+            else None
+        )
+        self.contest_type = (
+            MinimalResource(**contest_type)
+            if contest_type is not None
+            else None
+        )
         self.damage_class = MinimalResource(**damage_class)
         self.effect_chance = effect_chance
         self.effect_entries = [
@@ -107,7 +119,7 @@ class Move(NamedResource):
         self.meta = MoveMetaData(**meta)
         self.names = [Name(**name) for name in names]
         self.past_values = [
-            PastMoveStatValues(**past_value) for past_value in past_values
+            PastMoveStatValues(**past_value) for past_value in past_values if past_value
         ]
         self.power = power
         self.pp = pp
@@ -115,7 +127,11 @@ class Move(NamedResource):
         self.stat_changes = [
             MoveStatChange(**stat_change) for stat_change in stat_changes
         ]
-        self.super_contest_effect = Url(**super_contest_effect)
+        self.super_contest_effect = (
+            Url(**super_contest_effect)
+            if super_contest_effect is not None
+            else None
+        )
         self.target = MinimalResource(**target)
         self.type = MinimalResource(**type)
 
@@ -258,5 +274,9 @@ class PastMoveStatValues(Resource):
         self.effect_entries = [
             VerboseEffect(**effect_entry) for effect_entry in effect_entries
         ]
-        self.type = MinimalResource(**type)
+        self.type = (
+        MinimalResource(**type)
+        if type is not None
+        else None
+        )
         self.version_group = MinimalResource(**version_group)
