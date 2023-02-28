@@ -24,7 +24,9 @@ class Sprites:
     generation_6: Optional["GenerationVISprites"]
     generation_7: Optional["GenerationVIISprites"]
     generation_8: Optional["GenerationVIIISprites"]
-    other: Optional["OtherSprites"]
+    dream_world: Optional["DreamWorld"]
+    home: Optional["Home"]
+    official_artwork: Optional["OfficialArtwork"]
 
     def __init__(self, data) -> None:
         self.back_default = Sprite.from_url(data["back_default"])
@@ -393,14 +395,13 @@ class GenerationVIIISprites:
         self.icons_front_default = Sprite.from_url(data["icons"]["front_default"])
         self.icons_front_female = Sprite.from_url(data["icons"]["front_female"])
 
-
 class DreamWorld:
     front_default: OptionalSprite
     front_female: OptionalSprite
 
     def __init__(self, data) -> None:
         self.front_default = Sprite.from_url(data["front_default"])
-        self.front_shiny = Sprite.from_url(data["front_female"])
+        self.front_female = Sprite.from_url(data["front_female"])
 
 class Home:
     front_default: OptionalSprite
