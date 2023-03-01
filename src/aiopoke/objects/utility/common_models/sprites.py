@@ -24,9 +24,7 @@ class Sprites:
     generation_6: Optional["GenerationVISprites"]
     generation_7: Optional["GenerationVIISprites"]
     generation_8: Optional["GenerationVIIISprites"]
-    dream_world: Optional["DreamWorld"]
-    home: Optional["Home"]
-    official_artwork: Optional["OfficialArtwork"]
+    other: Optional["Other"]
 
     def __init__(self, data) -> None:
         self.back_default = Sprite.from_url(data["back_default"])
@@ -64,17 +62,9 @@ class Sprites:
                 data["versions"]["generation-viii"]
             )
 
-        if data.get("other") is not None:
-            self.official_artwork = OfficialArtwork(
-                data["other"]["official-artwork"]
-            )
-            self.dream_world = DreamWorld(
-                data["other"]["dream_world"]
-            )
-            self.home = Home(
-                data["other"]["home"]
-            )
-
+        self.other = (
+            Other(data["other"]) if data.get("other") is not None else None
+        )
 
 class GenerationISprites:
     red_blue_back_default: OptionalSprite
@@ -386,7 +376,6 @@ class GenerationVIISprites:
             data["ultra-sun-ultra-moon"]["front_shiny_female"]
         )
 
-
 class GenerationVIIISprites:
     icons_front_default: OptionalSprite
     icons_front_female: OptionalSprite
@@ -395,30 +384,20 @@ class GenerationVIIISprites:
         self.icons_front_default = Sprite.from_url(data["icons"]["front_default"])
         self.icons_front_female = Sprite.from_url(data["icons"]["front_female"])
 
-class DreamWorld:
-    front_default: OptionalSprite
-    front_female: OptionalSprite
+class Other:
+    dream_world_front_default: OptionalSprite
+    dream_world_front_female: OptionalSprite
+    home_front_default: OptionalSprite
+    home_front_female: OptionalSprite
+    home_front_shiny: OptionalSprite
+    home_front_shiny_female: OptionalSprite
 
     def __init__(self, data) -> None:
-        self.front_default = Sprite.from_url(data["front_default"])
-        self.front_female = Sprite.from_url(data["front_female"])
-
-class Home:
-    front_default: OptionalSprite
-    front_female: OptionalSprite
-    front_shiny: OptionalSprite
-    front_shiny_female: OptionalSprite
-
-    def __init__(self, data) -> None:
-        self.front_default = Sprite.from_url(data["front_default"])
-        self.front_female = Sprite.from_url(data["front_female"])
-        self.front_shiny = Sprite.from_url(data["front_shiny"])
-        self.front_shiny_female = Sprite.from_url(data["front_shiny_female"])
-
-class OfficialArtwork:
-    front_default: OptionalSprite
-    front_shiny: OptionalSprite
-
-    def __init__(self, data) -> None:
-        self.front_default = Sprite.from_url(data["front_default"])
-        self.front_shiny = Sprite.from_url(data["front_shiny"])
+        self.dream_world_front_default = Sprite.from_url(data["dream_world"]["front_default"])
+        self.dream_world_front_female = Sprite.from_url(data["dream_world"]["front_female"])
+        self.home_front_default = Sprite.from_url(data["home"]["front_default"])
+        self.home_front_female = Sprite.from_url(data["home"]["front_female"])
+        self.home_front_shiny = Sprite.from_url(data["home"]["front_shiny"])
+        self.home_front_shiny_female = Sprite.from_url(data["home"]["front_shiny_female"])
+        self.official_artwork_front_default = Sprite.from_url(data["official-artwork"]["front_default"])
+        self.official_artwork_front_shiny = Sprite.from_url(data["official-artwork"]["front_shiny"])
