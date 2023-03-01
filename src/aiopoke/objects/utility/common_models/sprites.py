@@ -62,9 +62,8 @@ class Sprites:
                 data["versions"]["generation-viii"]
             )
 
-        self.other = (
-            Other(data["other"]) if data.get("other") is not None else None
-        )
+        self.other = Other(data["other"]) if data.get("other") is not None else None
+
 
 class GenerationISprites:
     red_blue_back_default: OptionalSprite
