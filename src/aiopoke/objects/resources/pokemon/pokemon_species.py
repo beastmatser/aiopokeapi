@@ -54,7 +54,7 @@ class PokemonSpecies(NamedResource):
     names: List["Name"]
     pal_park_encounters: List["PalParkEncounterArea"]
     pokedex_numbers: List["PokemonSpeciesDexEntry"]
-    shape: MinimalResource["PokemonShape"]
+    shape: Optional[MinimalResource["PokemonShape"]]
     varieties: List["PokemonSpeciesVariety"]
 
     def __init__(
@@ -126,7 +126,7 @@ class PokemonSpecies(NamedResource):
             PokemonSpeciesDexEntry(**pokedex_number)
             for pokedex_number in pokedex_numbers
         ]
-        self.shape = MinimalResource(**shape)
+        self.shape = MinimalResource(**shape) if shape is not None else None
         self.varieties = [PokemonSpeciesVariety(**variety) for variety in varieties]
 
 
