@@ -1,7 +1,5 @@
 from typing import Optional
 
-import aiofiles  # type: ignore
-
 from aiopoke.objects.utility.common_models.sprite import Sprite
 
 OptionalSprite = Optional["Sprite"]
@@ -375,6 +373,7 @@ class GenerationVIISprites:
             data["ultra-sun-ultra-moon"]["front_shiny_female"]
         )
 
+
 class GenerationVIIISprites:
     icons_front_default: OptionalSprite
     icons_front_female: OptionalSprite
@@ -382,6 +381,7 @@ class GenerationVIIISprites:
     def __init__(self, data) -> None:
         self.icons_front_default = Sprite.from_url(data["icons"]["front_default"])
         self.icons_front_female = Sprite.from_url(data["icons"]["front_female"])
+
 
 class Other:
     dream_world_front_default: OptionalSprite
