@@ -22,6 +22,7 @@ class Sprites:
     generation_6: Optional["GenerationVISprites"]
     generation_7: Optional["GenerationVIISprites"]
     generation_8: Optional["GenerationVIIISprites"]
+    other: Optional["Other"]
 
     def __init__(self, data) -> None:
         self.back_default = Sprite.from_url(data["back_default"])
@@ -58,6 +59,8 @@ class Sprites:
             self.generation_viii = self.generation_8 = GenerationVIIISprites(
                 data["versions"]["generation-viii"]
             )
+
+        self.other = Other(data["other"]) if data.get("other") is not None else None
 
 
 class GenerationISprites:
@@ -378,3 +381,22 @@ class GenerationVIIISprites:
     def __init__(self, data) -> None:
         self.icons_front_default = Sprite.from_url(data["icons"]["front_default"])
         self.icons_front_female = Sprite.from_url(data["icons"]["front_female"])
+
+
+class Other:
+    dream_world_front_default: OptionalSprite
+    dream_world_front_female: OptionalSprite
+    home_front_default: OptionalSprite
+    home_front_female: OptionalSprite
+    home_front_shiny: OptionalSprite
+    home_front_shiny_female: OptionalSprite
+
+    def __init__(self, data) -> None:
+        self.dream_world_front_default = Sprite.from_url(data["dream_world"]["front_default"])
+        self.dream_world_front_female = Sprite.from_url(data["dream_world"]["front_female"])
+        self.home_front_default = Sprite.from_url(data["home"]["front_default"])
+        self.home_front_female = Sprite.from_url(data["home"]["front_female"])
+        self.home_front_shiny = Sprite.from_url(data["home"]["front_shiny"])
+        self.home_front_shiny_female = Sprite.from_url(data["home"]["front_shiny_female"])
+        self.official_artwork_front_default = Sprite.from_url(data["official-artwork"]["front_default"])
+        self.official_artwork_front_shiny = Sprite.from_url(data["official-artwork"]["front_shiny"])
