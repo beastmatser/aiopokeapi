@@ -1,19 +1,25 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
 
-from aiopoke.objects.utility.common_models import Name, NamedResource
+from aiopoke.objects.utility.common_models import Name
+from aiopoke.objects.utility.common_models import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
     from aiopoke.objects.resources import BerryFlavor, MoveBatteStyle
     from aiopoke.objects.resources.pokemon import PokeathlonStat
+    from aiopoke.objects.resources.pokemon.stat import Stat
 
 
 class Nature(NamedResource):
-    decreased_stat: Optional[MinimalResource["PokeathlonStat"]]
-    hates_flavor: Optional[MinimalResource["BerryFlavor"]]
-    increased_stat: Optional[MinimalResource["PokeathlonStat"]]
+    decreased_stat: Optional[MinimalResource["Stat"]]
+    increased_stat: Optional[MinimalResource["Stat"]]
     likes_flavor: Optional[MinimalResource["BerryFlavor"]]
+    hates_flavor: Optional[MinimalResource["BerryFlavor"]]
     move_battle_style_preferences: List["MoveBattleStylePreference"]
     names: List["Name"]
     pokeathlon_stat_changes: List["NatureStatChange"]
