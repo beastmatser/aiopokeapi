@@ -1,5 +1,6 @@
-import aiopoke
 import pytest
+
+import aiopoke
 
 
 @pytest.mark.asyncio

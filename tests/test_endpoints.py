@@ -1,7 +1,8 @@
 import asyncio
 
-import aiopoke
 import pytest
+
+import aiopoke
 from aiopoke.utils.resource import Resource
 
 
