@@ -1,15 +1,13 @@
 from dataclasses import field
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Coroutine,
-    Dict,
-    Generic,
-    Optional,
-    TypeVar,
-    Union,
-)
+from typing import Any
+from typing import Callable
+from typing import Coroutine
+from typing import Dict
+from typing import Generic
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
 
 from aiopoke.utils.resource import Resource
 
@@ -25,6 +23,9 @@ class Url(Resource, Generic[T]):
     endpoint: str
 
     _client: Optional["AiopokeClient"] = field(default=None, repr=False)
+    _build_map: Dict[
+        str, Callable[[Union[str, int]], Coroutine[Any, Any, Any]]
+    ] = field(repr=False)
 
     def __init__(self, url: str) -> None:
         self.url = url
@@ -41,15 +42,7 @@ class Url(Resource, Generic[T]):
     @classmethod
     def link(cls, client):
         cls._client = client
-
-    async def fetch(self, *, client: Optional["AiopokeClient"] = None) -> T:
-        client = self.client or client
-        if client is None:
-            raise ValueError(
-                "A client must be provided, if you create your own instances of this class"
-            )
-
-        build_map: Dict[str, Callable[[Union[str, int]], Coroutine[Any, Any, Any]]] = {
+        cls._build_map = {
             "ability": client.get_ability,
             "berry": client.get_berry,
             "berry-firmness": client.get_berry_firmness,
@@ -100,7 +93,14 @@ class Url(Resource, Generic[T]):
             "version-group": client.get_version_group,
         }
 
-        obj: T = await build_map[self.endpoint](self.id)
+    async def fetch(self, *, client: Optional["AiopokeClient"] = None) -> T:
+        client = self.client or client
+        if client is None:
+            raise ValueError(
+                "A client must be provided, if you create your own instances of this class"
+            )
+
+        obj: T = await self._build_map[self.endpoint](self.id)
         return obj
 
 
