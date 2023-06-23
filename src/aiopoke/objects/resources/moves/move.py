@@ -1,14 +1,17 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from aiopoke.objects.resources.contests.super_contest_effect import SuperContestEffect
 from aiopoke.objects.resources.pokemon.ability import AbilityEffectChange
-from aiopoke.objects.utility import (
-    MachineVersionDetail,
-    Name,
-    NamedResource,
-    VerboseEffect,
-)
-from aiopoke.utils.minimal_resources import MinimalResource, Url
+from aiopoke.objects.utility import MachineVersionDetail
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import VerboseEffect
+from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.minimal_resources import Url
 from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
@@ -32,7 +35,7 @@ if TYPE_CHECKING:
 
 class Move(NamedResource):
     accuracy: int
-    contest_combos: "ContestComboSets"
+    contest_combos: Optional["ContestComboSets"]
     contest_effect: Url["ContestEffect"]
     contest_type: MinimalResource["ContestType"]
     damage_class: MinimalResource["MoveDamageClass"]
@@ -84,7 +87,9 @@ class Move(NamedResource):
     ) -> None:
         super().__init__(id=id, name=name)
         self.accuracy = accuracy
-        self.contest_combos = ContestComboSets(**contest_combos)
+        self.contest_combos = (
+            ContestComboSets(**contest_combos) if contest_combos is not None else None
+        )
         self.contest_effect = Url(**contest_effect)
         self.contest_type = MinimalResource(**contest_type)
         self.damage_class = MinimalResource(**damage_class)
