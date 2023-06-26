@@ -87,7 +87,7 @@ class ItemSprites(Resource):
     default: Optional["Sprite"]
 
     def __init__(self, *, default: Optional[str]) -> None:
-        self.default = Sprite.from_url(default)
+        self.default = Sprite(default)
 
 
 class ItemHolderPokemon(Resource):

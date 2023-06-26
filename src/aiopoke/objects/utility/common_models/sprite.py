@@ -8,13 +8,24 @@ if TYPE_CHECKING:
     from aiopoke.aiopoke_client import AiopokeClient
 
 
+def is_null(func):
+    def wrapper(self, url):
+        if url is None:
+            return None
+
+        return func(self, url)
+
+    return wrapper
+
+
 class Sprite:
     url: str
     bytes_: Optional[bytes]
 
     _client: Optional["AiopokeClient"] = None
 
-    def __init__(self, *, url) -> None:
+    @is_null
+    def __init__(self, url: str) -> None:
         self.url = url
         self.file_extention = url[url.rfind(".") + 1 :]  # noqa: E203
         self.bytes_ = None
@@ -30,14 +41,7 @@ class Sprite:
         return None
 
     @classmethod
-    def from_url(cls, url: Optional[str]) -> Optional["Sprite"]:
-        if url is None:
-            return None
-
-        return cls(url=url)
-
-    @classmethod
-    def link(cls, client):
+    def link(cls, client: "AiopokeClient"):
         cls._client = client
 
     async def save(
@@ -63,8 +67,9 @@ class Sprite:
         if self.bytes_ is None:
             bytes_ = await self.read(client=client)
 
-        async with aiofiles.open(path + "/." + self.file_extention, "wb") as f:
-            await f.write(bytes_)
+        file_name = path + "/" + "_".join(self.url.split("/")[-2:])[:-4] + ".png"
+        async with aiofiles.open(file_name, "wb") as image:
+            await image.write(bytes_)
 
     async def read(self, *, client: Optional["AiopokeClient"] = None) -> bytes:
         client = self.client or client
