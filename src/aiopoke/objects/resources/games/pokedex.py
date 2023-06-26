@@ -1,6 +1,12 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
 
-from aiopoke.objects.utility import Description, Name, NamedResource
+from aiopoke.objects.utility import Description
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
 
@@ -24,7 +30,7 @@ class Pokedex(NamedResource):
         descriptions: List[Dict[str, Any]],
         is_main_series: bool,
         pokemon_entries: List[Dict[str, Any]],
-        region: Optional[Dict[str, Any]],
+        region: Dict[str, Any],
         version_groups: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
     ) -> None:
@@ -34,7 +40,7 @@ class Pokedex(NamedResource):
         self.pokemon_entries = [
             PokemonEntry(**pokemon_entry) for pokemon_entry in pokemon_entries
         ]
-        self.region = MinimalResource(**region) if region is not None else None
+        self.region = MinimalResource(**region)
         self.version_groups = [
             MinimalResource(**version_group) for version_group in version_groups
         ]

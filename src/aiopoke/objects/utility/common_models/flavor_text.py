@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, Optional
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource

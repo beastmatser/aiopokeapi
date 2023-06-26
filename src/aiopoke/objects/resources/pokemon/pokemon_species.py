@@ -67,7 +67,7 @@ class PokemonSpecies(NamedResource):
         color: Dict[str, Any],
         egg_groups: List[Dict[str, Any]],
         evolution_chain: Dict[str, Any],
-        evolves_from_species: Optional[Dict[str, Any]],
+        evolves_from_species: Dict[str, Any],
         flavor_text_entries: List[Dict[str, Any]],
         form_descriptions: List[Dict[str, Any]],
         forms_switchable: bool,
@@ -94,11 +94,7 @@ class PokemonSpecies(NamedResource):
         self.color = MinimalResource(**color)
         self.egg_groups = [MinimalResource(**egg_group) for egg_group in egg_groups]
         self.evolution_chain = Url(**evolution_chain)
-        self.evolves_from_species = (
-            MinimalResource(**evolves_from_species)
-            if evolves_from_species is not None
-            else None
-        )
+        self.evolves_from_species = MinimalResource(**evolves_from_species)
         self.flavor_text_entries = [
             FlavorText(**flavor_text_entry) for flavor_text_entry in flavor_text_entries
         ]
@@ -110,7 +106,7 @@ class PokemonSpecies(NamedResource):
         self.genera = [Genus(**genus_data) for genus_data in genera]
         self.generation = MinimalResource(**generation)
         self.growth_rate = MinimalResource(**growth_rate)
-        self.habitat = MinimalResource(**habitat) if habitat is not None else None
+        self.habitat = MinimalResource(**habitat)
         self.has_gender_differences = has_gender_differences
         self.hatch_counter = hatch_counter
         self.is_baby = is_baby
@@ -126,7 +122,7 @@ class PokemonSpecies(NamedResource):
             PokemonSpeciesDexEntry(**pokedex_number)
             for pokedex_number in pokedex_numbers
         ]
-        self.shape = MinimalResource(**shape) if shape is not None else None
+        self.shape = MinimalResource(**shape)
         self.varieties = [PokemonSpeciesVariety(**variety) for variety in varieties]
 
 

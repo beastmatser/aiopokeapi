@@ -1,5 +1,6 @@
 from os import getcwd
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import aiofiles
 
@@ -13,7 +14,7 @@ class Sprite:
 
     _client: Optional["AiopokeClient"] = None
 
-    def __init__(self, url) -> None:
+    def __init__(self, *, url) -> None:
         self.url = url
         self.file_extention = url[url.rfind(".") + 1 :]  # noqa: E203
         self.bytes_ = None
@@ -25,6 +26,7 @@ class Sprite:
     def client(self) -> Optional["AiopokeClient"]:
         if hasattr(self, "_client"):
             return self._client
+
         return None
 
     @classmethod
@@ -32,7 +34,7 @@ class Sprite:
         if url is None:
             return None
 
-        return cls(url)
+        return cls(url=url)
 
     @classmethod
     def link(cls, client):

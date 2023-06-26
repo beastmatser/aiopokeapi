@@ -33,7 +33,7 @@ class NaturalGiftType(NamedResource):
         damage_relations: Dict[str, Any],
         game_indices: List[Dict[str, Any]],
         generation: Dict[str, Any],
-        move_damage_class: Optional[Dict[str, Any]],
+        move_damage_class: Dict[str, Any],
         moves: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
         past_damage_relations: List[Dict[str, Any]],
@@ -45,11 +45,7 @@ class NaturalGiftType(NamedResource):
             GenerationGameIndex(**game_index) for game_index in game_indices
         ]
         self.generation = MinimalResource(**generation)
-        self.move_damage_class = (
-            MinimalResource(**move_damage_class)
-            if move_damage_class is not None
-            else None
-        )
+        self.move_damage_class = MinimalResource(**move_damage_class)
         self.moves = [MinimalResource(**move) for move in moves]
         self.names = [Name(**name) for name in names]
         self.past_damage_relations = [

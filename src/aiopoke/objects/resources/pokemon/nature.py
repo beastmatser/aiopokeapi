@@ -29,27 +29,19 @@ class Nature(NamedResource):
         *,
         id: int,
         name: str,
-        decreased_stat: Optional[Dict[str, Any]],
-        hates_flavor: Optional[Dict[str, Any]],
-        increased_stat: Optional[Dict[str, Any]],
-        likes_flavor: Optional[Dict[str, Any]],
+        decreased_stat: Dict[str, Any],
+        hates_flavor: Dict[str, Any],
+        increased_stat: Dict[str, Any],
+        likes_flavor: Dict[str, Any],
         move_battle_style_preferences: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
         pokeathlon_stat_changes: List[Dict[str, Any]],
     ) -> None:
         super().__init__(id=id, name=name)
-        self.decreased_stat = (
-            MinimalResource(**decreased_stat) if decreased_stat is not None else None
-        )
-        self.hates_flavor = (
-            MinimalResource(**hates_flavor) if hates_flavor is not None else None
-        )
-        self.increased_stat = (
-            MinimalResource(**increased_stat) if increased_stat is not None else None
-        )
-        self.likes_flavor = (
-            MinimalResource(**likes_flavor) if likes_flavor is not None else None
-        )
+        self.decreased_stat = MinimalResource(**decreased_stat)
+        self.hates_flavor = MinimalResource(**hates_flavor)
+        self.increased_stat = MinimalResource(**increased_stat)
+        self.likes_flavor = MinimalResource(**likes_flavor)
         self.move_battle_style_preferences = [
             MoveBattleStylePreference(**move_battle_style_preference)
             for move_battle_style_preference in move_battle_style_preferences

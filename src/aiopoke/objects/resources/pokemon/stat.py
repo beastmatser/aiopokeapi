@@ -1,7 +1,13 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
 
-from aiopoke.objects.utility import Name, NamedResource
-from aiopoke.utils.minimal_resources import MinimalResource, Url
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
+from aiopoke.utils.minimal_resources import MinimalResource
+from aiopoke.utils.minimal_resources import Url
 from aiopoke.utils.resource import Resource
 
 if TYPE_CHECKING:
@@ -28,7 +34,7 @@ class Stat(NamedResource):
         characteristics: List[Dict[str, Any]],
         game_index: int,
         is_battle_only: bool,
-        move_damage_class: Optional[Dict[str, Any]],
+        move_damage_class: Dict[str, Any],
         names: List[Dict[str, Any]],
     ):
         super().__init__(id=id, name=name)
@@ -39,11 +45,7 @@ class Stat(NamedResource):
         ]
         self.game_index = game_index
         self.is_battle_only = is_battle_only
-        self.move_damage_class = (
-            MinimalResource(**move_damage_class)
-            if move_damage_class is not None
-            else None
-        )
+        self.move_damage_class = MinimalResource(**move_damage_class)
         self.names = [Name(**name) for name in names]
 
 
