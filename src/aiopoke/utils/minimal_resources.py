@@ -20,14 +20,14 @@ T = TypeVar("T")
 class Url(Resource, Generic[T]):
     url: str
     id: int
-    endpoint: str
+    endpoint: str = field(repr=False)
 
     _client: Optional["AiopokeClient"] = field(default=None, repr=False)
     _build_map: Dict[
         str, Callable[[Union[str, int]], Coroutine[Any, Any, Any]]
     ] = field(repr=False)
 
-    def __init__(self, url: str) -> None:
+    def __init__(self, *, url: str) -> None:
         self.url = url
 
         self.id = int(self.url.split("/")[-2])
@@ -37,6 +37,7 @@ class Url(Resource, Generic[T]):
     def client(self) -> Optional["AiopokeClient"]:
         if hasattr(self, "_client"):
             return self._client
+
         return None
 
     @classmethod
@@ -106,10 +107,10 @@ class Url(Resource, Generic[T]):
 
 class MinimalResource(Url[T]):
     name: str
-    url: str
+    url: str = field(repr=False)
     id: int
-    endpoint: str
+    endpoint: str = field(repr=False)
 
-    def __init__(self, name: str, url: str) -> None:
+    def __init__(self, *, name: str, url: str) -> None:
         super().__init__(url=url)
         self.name = name
