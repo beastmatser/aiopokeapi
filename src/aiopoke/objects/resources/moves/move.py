@@ -36,8 +36,8 @@ if TYPE_CHECKING:
 class Move(NamedResource):
     accuracy: int
     contest_combos: Optional["ContestComboSets"]
-    contest_effect: Url["ContestEffect"]
-    contest_type: MinimalResource["ContestType"]
+    contest_effect: Optional[Url["ContestEffect"]]
+    contest_type: Optional[MinimalResource["ContestType"]]
     damage_class: MinimalResource["MoveDamageClass"]
     effect_chance: Optional[int]
     effect_changes: List["AbilityEffectChange"]
@@ -46,14 +46,14 @@ class Move(NamedResource):
     generation: MinimalResource["Generation"]
     learned_by_pokemon: List[MinimalResource["Pokemon"]]
     machines: List["MachineVersionDetail"]
-    meta: "MoveMetaData"
+    meta: Optional["MoveMetaData"]
     names: List["Name"]
     past_values: List["PastMoveStatValues"]
     power: int
     pp: int
     priority: int
     stat_changes: List["MoveStatChange"]
-    super_contest_effect: Url["SuperContestEffect"]
+    super_contest_effect: Optional[Url["SuperContestEffect"]]
     target: MinimalResource["MoveTarget"]
     type: MinimalResource["NaturalGiftType"]
 
@@ -124,8 +124,8 @@ class Move(NamedResource):
 
 
 class ContestComboSets(Resource):
-    normal: Optional["ContestComboDetail"]
-    super: Optional["ContestComboDetail"]
+    normal: "ContestComboDetail"
+    super: "ContestComboDetail"
 
     def __init__(
         self,
@@ -232,7 +232,7 @@ class PastMoveStatValues(Resource):
     power: int
     pp: int
     effect_entries: List["VerboseEffect"]
-    type: MinimalResource["NaturalGiftType"]
+    type: Optional[MinimalResource["NaturalGiftType"]]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(

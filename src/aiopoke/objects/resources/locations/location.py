@@ -1,6 +1,12 @@
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
 
-from aiopoke.objects.utility import GenerationGameIndex, Name, NamedResource
+from aiopoke.objects.utility import GenerationGameIndex
+from aiopoke.objects.utility import Name
+from aiopoke.objects.utility import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:
@@ -10,7 +16,7 @@ if TYPE_CHECKING:
 class Location(NamedResource):
     areas: List[MinimalResource["LocationArea"]]
     game_indices: List["GenerationGameIndex"]
-    region: MinimalResource["Region"]
+    region: Optional[MinimalResource["Region"]]
     names: List["Name"]
 
     def __init__(
