@@ -1,6 +1,11 @@
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import TYPE_CHECKING
 
-from aiopoke.objects.utility.common_models import Description, Name, NamedResource
+from aiopoke.objects.utility.common_models import Description
+from aiopoke.objects.utility.common_models import Name
+from aiopoke.objects.utility.common_models import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
 
 if TYPE_CHECKING:

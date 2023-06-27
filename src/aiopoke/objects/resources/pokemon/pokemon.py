@@ -1,11 +1,12 @@
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import TYPE_CHECKING
 
 from aiopoke.objects.resources.games.version_group import VersionGroupDetail
-from aiopoke.objects.utility import (
-    NamedResource,
-    VersionEncounterDetail,
-    VersionGameIndex,
-)
+from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility import VersionEncounterDetail
+from aiopoke.objects.utility import VersionGameIndex
 from aiopoke.objects.utility.common_models.sprites import Sprites
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
