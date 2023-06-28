@@ -64,6 +64,7 @@ class MetaClient(type):
             if key.startswith("get") and value.__qualname__.startswith("AiopokeClient"):
                 endpoint = value.__name__.split("get_")[1].replace("_", "-")
                 clsdict[key] = cache(endpoint, value)
+
         return super().__new__(cls, name, bases, clsdict)
 
 

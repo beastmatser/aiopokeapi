@@ -25,4 +25,4 @@ class FlavorText(Resource):
     ):
         self.flavor_text = flavor_text
         self.language = MinimalResource(**language)
-        self.version = MinimalResource(**version) if version is not None else None
+        self.version = MinimalResource(**version) if version else None
