@@ -31,7 +31,7 @@ class Item(NamedResource):
     cost: int
     effect_entries: List["VerboseEffect"]
     flavor_text_entries: List["VersionGroupFlavorText"]
-    fling_effect: Optional[Url["ItemFlingEffect"]]
+    fling_effect: Optional[MinimalResource["ItemFlingEffect"]]
     fling_power: Optional[int]
     game_indices: List["GenerationGameIndex"]
     held_by_pokemon: List["ItemHolderPokemon"]
@@ -45,22 +45,24 @@ class Item(NamedResource):
         id: int,
         name: str,
         attributes: List[Dict[str, Any]],
-        baby_trigger_for: Dict[str, Any],
+        baby_trigger_for: Optional[Dict[str, Any]],
         category: Dict[str, Any],
         cost: int,
         effect_entries: List[Dict[str, Any]],
         flavor_text_entries: List[Dict[str, Any]],
-        fling_effect: Dict[str, Any],
+        fling_effect: Optional[Dict[str, Any]],
         fling_power: Optional[int],
         game_indices: List[Dict[str, Any]],
         held_by_pokemon: List[Dict[str, Any]],
         machines: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
-        sprites: Dict[str, Any],
+        sprites: Optional[Dict[str, Any]],
     ) -> None:
         super().__init__(id=id, name=name)
         self.attributes = [MinimalResource(**attribute) for attribute in attributes]
-        self.baby_trigger_for = Url(**baby_trigger_for)
+        self.baby_trigger_for = (
+            Url(**baby_trigger_for) if baby_trigger_for is not None else None
+        )
         self.category = MinimalResource(**category)
         self.cost = cost
         self.effect_entries = [
@@ -70,7 +72,7 @@ class Item(NamedResource):
             VersionGroupFlavorText(**flavor_text_entry)
             for flavor_text_entry in flavor_text_entries
         ]
-        self.fling_effect = Url(**fling_effect)
+        self.fling_effect = Url(**fling_effect) if fling_effect is not None else None  # type: ignore
         self.fling_power = fling_power
         self.game_indices = [
             GenerationGameIndex(**game_index) for game_index in game_indices
@@ -80,7 +82,7 @@ class Item(NamedResource):
         ]
         self.machines = [MachineVersionDetail(**machine) for machine in machines]
         self.names = [Name(**name) for name in names]
-        self.sprite = ItemSprites(**sprites)
+        self.sprite = ItemSprites(**sprites) if sprites is not None else None
 
 
 class ItemSprites(Resource):

@@ -30,7 +30,7 @@ class Pokedex(NamedResource):
         descriptions: List[Dict[str, Any]],
         is_main_series: bool,
         pokemon_entries: List[Dict[str, Any]],
-        region: Dict[str, Any],
+        region: Optional[Dict[str, Any]],
         version_groups: List[Dict[str, Any]],
         names: List[Dict[str, Any]],
     ) -> None:
@@ -40,7 +40,7 @@ class Pokedex(NamedResource):
         self.pokemon_entries = [
             PokemonEntry(**pokemon_entry) for pokemon_entry in pokemon_entries
         ]
-        self.region = MinimalResource(**region)
+        self.region = MinimalResource(**region) if region is not None else None
         self.version_groups = [
             MinimalResource(**version_group) for version_group in version_groups
         ]

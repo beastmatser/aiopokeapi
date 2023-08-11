@@ -63,7 +63,7 @@ class Move(NamedResource):
         id: int,
         name: str,
         accuracy: int,
-        contest_combos: Dict[str, Any],
+        contest_combos: Optional[Dict[str, Any]],
         contest_effect: Dict[str, Any],
         contest_type: Dict[str, Any],
         damage_class: Dict[str, Any],
@@ -87,7 +87,9 @@ class Move(NamedResource):
     ) -> None:
         super().__init__(id=id, name=name)
         self.accuracy = accuracy
-        self.contest_combos = ContestComboSets(**contest_combos)
+        self.contest_combos = (
+            ContestComboSets(**contest_combos) if contest_combos is not None else None
+        )
         self.contest_effect = Url(**contest_effect)
         self.contest_type = MinimalResource(**contest_type)
         self.damage_class = MinimalResource(**damage_class)
@@ -124,17 +126,17 @@ class Move(NamedResource):
 
 
 class ContestComboSets(Resource):
-    normal: "ContestComboDetail"
-    super: "ContestComboDetail"
+    normal: Optional["ContestComboDetail"]
+    super: Optional["ContestComboDetail"]
 
     def __init__(
         self,
         *,
-        normal: Dict[str, Any],
-        super: Dict[str, Any],
+        normal: Optional[Dict[str, Any]],
+        super: Optional[Dict[str, Any]],
     ) -> None:
-        self.normal = ContestComboDetail(**normal)
-        self.super = ContestComboDetail(**super)
+        self.normal = ContestComboDetail(**normal) if normal is not None else None
+        self.super = ContestComboDetail(**super) if super is not None else None
 
 
 class ContestComboDetail(Resource):
@@ -144,11 +146,19 @@ class ContestComboDetail(Resource):
     def __init__(
         self,
         *,
-        use_before: List[Dict[str, Any]],
-        use_after: List[Dict[str, Any]],
+        use_before: Optional[List[Dict[str, Any]]],
+        use_after: Optional[List[Dict[str, Any]]],
     ) -> None:
-        self.use_before = [MinimalResource(**move) for move in use_before]
-        self.use_after = [MinimalResource(**move) for move in use_after]
+        self.use_before = (
+            [MinimalResource(**move) for move in use_before]
+            if use_before is not None
+            else None
+        )
+        self.use_after = (
+            [MinimalResource(**move) for move in use_after]
+            if use_after is not None
+            else None
+        )
 
 
 class MoveFlavorText(Resource):
