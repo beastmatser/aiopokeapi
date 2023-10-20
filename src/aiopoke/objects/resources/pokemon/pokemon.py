@@ -39,6 +39,7 @@ class Pokemon(NamedResource):
     location_area_encounters: List["PokemonLocationArea"]
     moves: List["PokemonMove"]
     order: int
+    past_abilities: List["PastAbility"]
     past_types: List["PastType"]
     species: MinimalResource["PokemonSpecies"]
     sprites: "Sprites"
@@ -61,6 +62,7 @@ class Pokemon(NamedResource):
         location_area_encounters: List[Dict[str, Any]],
         moves: List[Dict[str, Any]],
         order: int,
+        past_abilities: Dict[str, Any],
         past_types: List[Dict[str, Any]],
         species: Dict[str, Any],
         sprites: Dict[str, Any],
@@ -84,6 +86,7 @@ class Pokemon(NamedResource):
         ]
         self.moves = [PokemonMove(**move) for move in moves]
         self.order = order
+        self.past_abilities = [PastAbility(**past_type) for past_type in past_types]
         self.past_types = [PastType(**past_type) for past_type in past_types]
         self.species = MinimalResource(**species)
         self.sprites = Sprites(sprites)
@@ -203,6 +206,15 @@ class PokemonStat(Resource):
         self.base_stat = base_stat
         self.effort = effort
         self.stat = MinimalResource(**stat)
+
+
+class PastAbility(Resource):
+    abilities: List["PokemonAbility"]
+    generation: MinimalResource["Generation"]
+
+    def __init__(self, *, abilities: List[Dict[str, Any]], generation: Dict[str, Any]) -> None:
+        self.ability = [PokemonAbility(**ability) for ability in abilities]
+        self.generation = MinimalResource(**generation)
 
 
 class PastType(Resource):
