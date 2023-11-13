@@ -112,7 +112,7 @@ class Move(NamedResource):
         self.meta = MoveMetaData(**meta)
         self.names = [Name(**name) for name in names]
         self.past_values = [
-            PastMoveStatValues(**past_value) for past_value in past_values
+            PastMoveStatValues(**past_value) for past_value in past_values if past_value is not None
         ]
         self.power = power
         self.pp = pp
