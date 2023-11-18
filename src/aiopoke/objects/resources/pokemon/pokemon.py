@@ -62,7 +62,7 @@ class Pokemon(NamedResource):
         location_area_encounters: List[Dict[str, Any]],
         moves: List[Dict[str, Any]],
         order: int,
-        past_abilities: Dict[str, Any],
+        past_abilities: List[Dict[str, Any]],
         past_types: List[Dict[str, Any]],
         species: Dict[str, Any],
         sprites: Dict[str, Any],
