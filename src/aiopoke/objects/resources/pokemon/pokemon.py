@@ -86,7 +86,7 @@ class Pokemon(NamedResource):
         ]
         self.moves = [PokemonMove(**move) for move in moves]
         self.order = order
-        self.past_abilities = [PastAbility(**past_type) for past_type in past_types]
+        self.past_abilities = [PastAbility(**past_ability) for past_ability in past_abilities]
         self.past_types = [PastType(**past_type) for past_type in past_types]
         self.species = MinimalResource(**species)
         self.sprites = Sprites(sprites)
