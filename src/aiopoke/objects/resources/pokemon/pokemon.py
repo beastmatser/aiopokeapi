@@ -2,6 +2,7 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import TYPE_CHECKING
+from typing import Optional
 
 from aiopoke.objects.resources.games.version_group import VersionGroupDetail
 from aiopoke.objects.utility import NamedResource
@@ -54,6 +55,7 @@ class Pokemon(NamedResource):
         name: str,
         abilities: List[Dict[str, Any]],
         base_experience: int,
+        cries: Dict[str, str],
         forms: List[Dict[str, Any]],
         game_indices: List[Dict[str, Any]],
         height: int,
@@ -110,6 +112,15 @@ class PokemonAbility(Resource):
         self.is_hidden = is_hidden
         self.slot = slot
         self.ability = MinimalResource(**ability)
+
+
+class PokemonCries(Resource):
+    latest: str
+    legacy: Optional[str]
+
+    def __init__(self, *, latest: str, legacy: Optional[str]) -> None:
+        self.latest = latest
+        self.legacy = legacy
 
 
 class PokemonType(Resource):
