@@ -13,7 +13,6 @@ if TYPE_CHECKING:
 U = TypeVar("U")
 
 
-# cache decorator
 def cache(
     endpoint: str,
     coro: Callable[["AiopokeClient", Union[str, int]], Coroutine[Any, Any, U]],
