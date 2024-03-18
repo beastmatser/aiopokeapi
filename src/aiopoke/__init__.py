@@ -83,7 +83,7 @@ class VersionInfo(NamedTuple):
         return f"{self.major}.{self.minor}.{self.micro}-{self.releaselevel}"
 
 
-version_info: VersionInfo = VersionInfo(0, 1, 7, "final")
+version_info: VersionInfo = VersionInfo(0, 1, 8, "final")
 
 
 __all__ = (
