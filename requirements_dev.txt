@@ -3,4 +3,4 @@ tox==3.28.0
 pytest===8.0.0
 pytest-asyncio==0.18.3
 pytest-cov==4.1.0
-mypy==1.8.0
+mypy==1.9.0
