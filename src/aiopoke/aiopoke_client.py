@@ -105,8 +105,8 @@ class AiopokeClient(metaclass=MetaClient):
         data = await self.http.get(f"berry-firmness/{name_or_id}")
         return BerryFirmness(**data)
 
-    async def get_characteristic(self, name_or_id: Union[str, int]) -> Characteristic:
-        data = await self.http.get(f"characteristic/{name_or_id}")
+    async def get_characteristic(self, id: int) -> Characteristic:
+        data = await self.http.get(f"characteristic/{id}")
         return Characteristic(**data)
 
     async def get_contest_effect(self, id: int) -> ContestEffect:
@@ -193,8 +193,8 @@ class AiopokeClient(metaclass=MetaClient):
         data = await self.http.get(f"location-area/{name_or_id}")
         return LocationArea(**data)
 
-    async def get_machine(self, name_or_id: Union[str, int]) -> Machine:
-        data = await self.http.get(f"machine/{name_or_id}")
+    async def get_machine(self, id: int) -> Machine:
+        data = await self.http.get(f"machine/{id}")
         return Machine(**data)
 
     async def get_move(self, name_or_id: Union[str, int]) -> Move:
