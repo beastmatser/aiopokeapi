@@ -1,3 +1,5 @@
+import asyncio
+
 from typing import Union
 
 from aiopoke.http_client import HttpClient
@@ -246,10 +248,13 @@ class AiopokeClient(metaclass=MetaClient):
         return Pokedex(**data)
 
     async def get_pokemon(self, name_or_id: Union[str, int]) -> Pokemon:
-        data = await self.http.get(f"pokemon/{name_or_id}")
-        data["location_area_encounters"] = await self.http.get(
-            f"pokemon/{data['id']}/encounters"
-        )
+        tasks = [
+            self.http.get(f"pokemon/{name_or_id}"),
+            self.http.get(f"pokemon/{name_or_id}/encounters"),
+        ]
+        results = await asyncio.gather(*tasks)
+        data = results[0]
+        data["location_area_encounters"] = results[1]
         return Pokemon(**data)
 
     async def get_pokemon_color(self, name_or_id: Union[str, int]) -> PokemonColor:
