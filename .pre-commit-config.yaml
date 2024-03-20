@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 23.10.1
+    rev: 24.3.0
     hooks:
       - id: black
         args: [--safe]
@@ -17,7 +17,7 @@ repos:
         language_version: python3
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
+    rev: 7.0.0
     hooks:
       - id: flake8
         language_version: python3
@@ -31,13 +31,13 @@ repos:
         files: ^src/aiopoke/
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
+    rev: v3.15.1
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.6.1
+    rev: v1.9.0
     hooks:
       - id: mypy
         files: ^src/aiopoke/
