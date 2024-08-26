@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from aiopoke.objects.utility import GenerationGameIndex
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
+from aiopoke.objects.utility.common_models import Sprites
 from aiopoke.utils.minimal_resources import MinimalResource
 from aiopoke.utils.resource import Resource
 
@@ -24,6 +25,7 @@ class NaturalGiftType(NamedResource):
     names: List["Name"]
     past_damage_relations: List["PastTypeRelation"]
     pokemon: List["TypePokemon"]
+    sprites: "Sprites"
 
     def __init__(
         self,
@@ -38,6 +40,7 @@ class NaturalGiftType(NamedResource):
         names: List[Dict[str, Any]],
         past_damage_relations: List[Dict[str, Any]],
         pokemon: List[Dict[str, Any]],
+        sprites: Dict[str, Any],
     ) -> None:
         super().__init__(id=id, name=name)
         self.damage_relations = TypeRelations(**damage_relations)
@@ -57,6 +60,7 @@ class NaturalGiftType(NamedResource):
             for past_damage_relation in past_damage_relations
         ]
         self.pokemon = [TypePokemon(**pokemon) for pokemon in pokemon]
+        self.sprites = Sprites(sprites)
 
 
 class TypeRelations(Resource):

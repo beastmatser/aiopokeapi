@@ -23,15 +23,15 @@ class Sprites:
     other: Optional["Other"]
 
     def __init__(self, data) -> None:
-        self.back_default = Sprite(data["back_default"])
-        self.back_female = Sprite(data["back_female"])
-        self.back_shiny = Sprite(data["back_shiny"])
-        self.back_shiny_female = Sprite(data["back_shiny_female"])
+        self.back_default = Sprite(data.get("back_default"))
+        self.back_female = Sprite(data.get("back_female"))
+        self.back_shiny = Sprite(data.get("back_shiny"))
+        self.back_shiny_female = Sprite(data.get("back_shiny_female"))
 
-        self.front_default = Sprite(data["front_default"])
-        self.front_female = Sprite(data["front_female"])
-        self.front_shiny = Sprite(data["front_shiny"])
-        self.front_shiny_female = Sprite(data["front_shiny_female"])
+        self.front_default = Sprite(data.get("front_default"))
+        self.front_female = Sprite(data.get("front_female"))
+        self.front_shiny = Sprite(data.get("front_shiny"))
+        self.front_shiny_female = Sprite(data.get("front_shiny_female"))
         if data.get("versions") is not None:
             self.generation_i = self.generation_1 = GenerationISprites(
                 data["versions"]["generation-i"]
