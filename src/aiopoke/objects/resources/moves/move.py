@@ -253,7 +253,7 @@ class PastMoveStatValues(Resource):
         power: int,
         pp: int,
         effect_entries: List[Dict[str, Any]],
-        type: Dict[str, Any],
+        type: Optional[Dict[str, Any]],
         version_group: Dict[str, Any],
     ) -> None:
         self.accuracy = accuracy
@@ -263,5 +263,5 @@ class PastMoveStatValues(Resource):
         self.effect_entries = [
             VerboseEffect(**effect_entry) for effect_entry in effect_entries
         ]
-        self.type = MinimalResource(**type)
+        self.type = MinimalResource(**type) if type is not None else None
         self.version_group = MinimalResource(**version_group)
