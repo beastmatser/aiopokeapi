@@ -26,7 +26,7 @@ class Location(NamedResource):
         name: str,
         areas: List[Dict[str, Any]],
         game_indices: List[Dict[str, Any]],
-        region: Dict[str, Any],
+        region: Optional[Dict[str, Any]],
         names: List[Dict[str, Any]],
     ) -> None:
         super().__init__(id=id, name=name)
@@ -34,5 +34,5 @@ class Location(NamedResource):
         self.game_indices = [
             GenerationGameIndex(**game_index) for game_index in game_indices
         ]
-        self.region = MinimalResource(**region)
+        self.region = MinimalResource(**region) if region is not None else None
         self.names = [Name(**name) for name in names]

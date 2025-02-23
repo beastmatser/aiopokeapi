@@ -75,7 +75,7 @@ class PokemonSpecies(NamedResource):
         genera: List[Dict[str, Any]],
         generation: Dict[str, Any],
         growth_rate: Dict[str, Any],
-        habitat: Dict[str, Any],
+        habitat: Optional[Dict[str, Any]],
         has_gender_differences: bool,
         hatch_counter: int,
         is_baby: bool,
@@ -85,7 +85,7 @@ class PokemonSpecies(NamedResource):
         names: List[Dict[str, Any]],
         pal_park_encounters: List[Dict[str, Any]],
         pokedex_numbers: List[Dict[str, Any]],
-        shape: Dict[str, Any],
+        shape: Optional[Dict[str, Any]],
         varieties: List[Dict[str, Any]],
     ) -> None:
         super().__init__(id=id, name=name)

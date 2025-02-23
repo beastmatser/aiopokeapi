@@ -64,8 +64,8 @@ class Move(NamedResource):
         name: str,
         accuracy: int,
         contest_combos: Optional[Dict[str, Any]],
-        contest_effect: Dict[str, Any],
-        contest_type: Dict[str, Any],
+        contest_effect: Optional[Dict[str, Any]],
+        contest_type: Optional[Dict[str, Any]],
         damage_class: Dict[str, Any],
         effect_chance: Optional[int],
         effect_entries: List[Dict[str, Any]],
@@ -74,7 +74,7 @@ class Move(NamedResource):
         generation: Dict[str, Any],
         learned_by_pokemon: List[Dict[str, Any]],
         machines: List[Dict[str, Any]],
-        meta: Dict[str, Any],
+        meta: Optional[Dict[str, Any]],
         names: List[Dict[str, Any]],
         past_values: List[Dict[str, Any]],
         power: int,
@@ -90,8 +90,8 @@ class Move(NamedResource):
         self.contest_combos = (
             ContestComboSets(**contest_combos) if contest_combos is not None else None
         )
-        self.contest_effect = Url(**contest_effect)
-        self.contest_type = MinimalResource(**contest_type)
+        self.contest_effect = Url(**contest_effect) if contest_effect is not None else None
+        self.contest_type = MinimalResource(**contest_type) if contest_type is not None else None
         self.damage_class = MinimalResource(**damage_class)
         self.effect_chance = effect_chance
         self.effect_entries = [
@@ -109,7 +109,7 @@ class Move(NamedResource):
             MinimalResource(**pokemon) for pokemon in learned_by_pokemon
         ]
         self.machines = [MachineVersionDetail(**machine) for machine in machines]
-        self.meta = MoveMetaData(**meta)
+        self.meta = MoveMetaData(**meta) if meta is not None else None
         self.names = [Name(**name) for name in names]
         self.past_values = [
             PastMoveStatValues(**past_value) for past_value in past_values if past_value is not None
@@ -120,7 +120,7 @@ class Move(NamedResource):
         self.stat_changes = [
             MoveStatChange(**stat_change) for stat_change in stat_changes
         ]
-        self.super_contest_effect = Url(**super_contest_effect)
+        self.super_contest_effect = Url(**super_contest_effect) if super_contest_effect is not None else None
         self.target = MinimalResource(**target)
         self.type = MinimalResource(**type)
 
