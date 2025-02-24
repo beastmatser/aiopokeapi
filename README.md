@@ -100,3 +100,11 @@ async with aiopoke.AiopokeClient() as client:
    ability = await client.get_ability(1)
    generation = await ability.generation.fetch()
 ```
+
+If you are hosting the pokeapi locally and still want to use aiopokeapi,
+you may pass a base url into the keyword arguments of `AiopokeClient` as follows:
+
+```py
+aiopoke.AiopokeClient(base_url="https://localhost:8080")
+```
+

@@ -74,8 +74,8 @@ class AiopokeClient(metaclass=MetaClient):
     http: HttpClient
     _cache: Cache
 
-    def __init__(self, *, session=None) -> None:
-        self.http = HttpClient(session=session)
+    def __init__(self, *, session=None, base_url="https://pokeapi.co/api/v2") -> None:
+        self.http = HttpClient(session=session, base_url=base_url)
         self._cache = Cache()
         Url.link(self)
         Sprite.link(self)
