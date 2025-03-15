@@ -1,4 +1,6 @@
 from typing import TYPE_CHECKING, Any, Dict, List
+from typing import Optional
+
 
 from aiopoke.objects.resources.games.version import Version
 from aiopoke.objects.utility import NamedResource
@@ -44,6 +46,7 @@ class VersionGroup(NamedResource):
 class VersionGroupDetail(Resource):
     level_learned_at: int
     move_learn_method: MinimalResource["MoveLearnMethod"]
+    order: Optional[str]
     version_group: MinimalResource["VersionGroup"]
 
     def __init__(
@@ -51,8 +54,10 @@ class VersionGroupDetail(Resource):
         *,
         level_learned_at: int,
         move_learn_method: Dict[str, Any],
+        order: Optional[str],
         version_group: Dict[str, Any],
     ) -> None:
         self.level_learned_at = level_learned_at
         self.move_learn_method = MinimalResource(**move_learn_method)
+        self.order = order
         self.version_group = MinimalResource(**version_group)
