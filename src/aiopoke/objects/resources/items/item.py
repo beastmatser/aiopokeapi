@@ -72,7 +72,7 @@ class Item(NamedResource):
             VersionGroupFlavorText(**flavor_text_entry)
             for flavor_text_entry in flavor_text_entries
         ]
-        self.fling_effect = Url(**fling_effect) if fling_effect is not None else None  # type: ignore
+        self.fling_effect = MinimalResource(**fling_effect) if fling_effect is not None else None
         self.fling_power = fling_power
         self.game_indices = [
             GenerationGameIndex(**game_index) for game_index in game_indices
