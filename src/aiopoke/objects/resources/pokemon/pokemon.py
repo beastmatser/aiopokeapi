@@ -75,6 +75,7 @@ class Pokemon(NamedResource):
         super().__init__(id=id, name=name)
         self.abilities = [PokemonAbility(**ability) for ability in abilities]
         self.base_experience = base_experience
+        self.cries = None
         self.forms = [MinimalResource(**form) for form in forms]
         self.game_indices = [
             VersionGameIndex(**game_index) for game_index in game_indices
@@ -100,7 +101,7 @@ class Pokemon(NamedResource):
 class PokemonAbility(Resource):
     is_hidden: bool
     slot: int
-    ability: MinimalResource["Ability"]
+    ability: Optional[MinimalResource["Ability"]]
 
     def __init__(
         self,
@@ -111,7 +112,7 @@ class PokemonAbility(Resource):
     ) -> None:
         self.is_hidden = is_hidden
         self.slot = slot
-        self.ability = MinimalResource(**ability)
+        self.ability = MinimalResource(**ability) if ability is not None else None
 
 
 class PokemonCries(Resource):
