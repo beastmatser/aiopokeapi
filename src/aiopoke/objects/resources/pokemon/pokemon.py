@@ -56,7 +56,7 @@ class Pokemon(NamedResource):
         name: str,
         abilities: List[Dict[str, Any]],
         base_experience: int,
-        cries: Dict[str, Optional[str]],
+        cries: Dict[str, Any],
         forms: List[Dict[str, Any]],
         game_indices: List[Dict[str, Any]],
         height: int,
