@@ -26,7 +26,8 @@
 
 ## :earth_africa: Documentation
 
-AioPokéApi has a very minimal website, which you can find [here](https://beastmatser.github.io/aiopoke/). It also has some [documentation](https://beastmatser.github.io/aiopoke/docs/).
+All endpoints of the PokéApi are accesible through methods of the `AiopokeClient`,
+these methods are listed in [aiopoke_client.py](./src/aiopoke/aiopoke_client.py) and should be fairly straightforward to use.
 
 ## :comet: Installation
 
