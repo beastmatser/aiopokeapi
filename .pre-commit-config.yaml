@@ -1,50 +1,50 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+-   repo: https://github.com/psf/black
+    rev: 26.1.0
     hooks:
-      - id: black
+    -   id: black
         args: [--safe]
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files
-      - id: debug-statements
-      - id: check-toml
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+    -   id: debug-statements
+    -   id: check-toml
         language_version: python3
 
-  - repo: https://github.com/PyCQA/flake8
+-   repo: https://github.com/PyCQA/flake8
     rev: 7.3.0
     hooks:
-      - id: flake8
+    -   id: flake8
         language_version: python3
         args: [--ignore=W503 src/aiopoke]
 
-  - repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.15.0
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.16.0
     hooks:
-      - id: reorder-python-imports
+    -   id: reorder-python-imports
         args: [--py39-plus]
         files: ^src/aiopoke/
 
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.21.2
     hooks:
-      - id: pyupgrade
+    -   id: pyupgrade
         args: [--py39-plus]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.17.0
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.19.1
     hooks:
-      - id: mypy
+    -   id: mypy
         files: ^src/aiopoke/
         args: [--install-types, --non-interactive]
 
-  - repo: https://github.com/MarcoGorelli/absolufy-imports
+-   repo: https://github.com/MarcoGorelli/absolufy-imports
     rev: v0.3.1
     hooks:
-      - id: absolufy-imports
+    -   id: absolufy-imports
         files: ^src/aiopoke/
