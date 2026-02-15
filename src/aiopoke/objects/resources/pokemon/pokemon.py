@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from typing import Optional
 
 from aiopoke.objects.resources.games.version_group import VersionGroupDetail
+from aiopoke.objects.resources.pokemon.stat import Stat
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import VersionEncounterDetail
 from aiopoke.objects.utility import VersionGameIndex
@@ -42,6 +43,7 @@ class Pokemon(NamedResource):
     moves: List["PokemonMove"]
     order: int
     past_abilities: List["PastAbility"]
+    past_stats: List["PastStat"]
     past_types: List["PastType"]
     species: MinimalResource["PokemonSpecies"]
     sprites: "Sprites"
@@ -66,6 +68,7 @@ class Pokemon(NamedResource):
         moves: List[Dict[str, Any]],
         order: int,
         past_abilities: List[Dict[str, Any]],
+        past_stats: List[Dict[str, Any]],
         past_types: List[Dict[str, Any]],
         species: Dict[str, Any],
         sprites: Dict[str, Any],
@@ -91,6 +94,7 @@ class Pokemon(NamedResource):
         self.moves = [PokemonMove(**move) for move in moves]
         self.order = order
         self.past_abilities = [PastAbility(**past_ability) for past_ability in past_abilities]
+        self.past_abilities = [PastStat(**past_stat) for past_stat in past_stats]
         self.past_types = [PastType(**past_type) for past_type in past_types]
         self.species = MinimalResource(**species)
         self.sprites = Sprites(sprites)
@@ -228,6 +232,15 @@ class PastAbility(Resource):
     def __init__(self, *, abilities: List[Dict[str, Any]], generation: Dict[str, Any]) -> None:
         self.ability = [PokemonAbility(**ability) for ability in abilities]
         self.generation = MinimalResource(**generation)
+
+
+class PastStat(Resource):
+    generation: MinimalResource["Generation"]
+    stats: List["PokemonStat"]
+
+    def __init__(self, *, generation: Dict[str, Any], stats: List[Dict[str, Any]]) -> None:
+        self.generation = MinimalResource(**generation)
+        self.stats = [PokemonStat(**stat) for stat in stats]
 
 
 class PastType(Resource):

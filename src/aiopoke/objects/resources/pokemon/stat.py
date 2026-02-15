@@ -4,6 +4,7 @@ from typing import List
 from typing import Optional
 from typing import TYPE_CHECKING
 
+from aiopoke.objects.resources.items.item import Item
 from aiopoke.objects.utility import Name
 from aiopoke.objects.utility import NamedResource
 from aiopoke.utils.minimal_resources import MinimalResource
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
 
 
 class Stat(NamedResource):
+    affecting_items: List["Item"]
     affecting_moves: "MoveStatAffectSets"
     affecting_natures: "NatureStatAffectSets"
     characteristics: List[Url["Characteristic"]]
@@ -29,6 +31,7 @@ class Stat(NamedResource):
         *,
         id: int,
         name: str,
+        affecting_items: List[Dict[str, Any]],
         affecting_moves: Dict[str, Any],
         affecting_natures: Dict[str, Any],
         characteristics: List[Dict[str, Any]],
@@ -37,7 +40,10 @@ class Stat(NamedResource):
         move_damage_class: Optional[Dict[str, Any]],
         names: List[Dict[str, Any]],
     ):
+        from aiopoke.objects.resources import Move
+
         super().__init__(id=id, name=name)
+        self.affecting_moves = [MinimalResource(**affecting_item) for affecting_item in affecting_items]
         self.affecting_moves = MoveStatAffectSets(**affecting_moves)
         self.affecting_natures = NatureStatAffectSets(**affecting_natures)
         self.characteristics = [

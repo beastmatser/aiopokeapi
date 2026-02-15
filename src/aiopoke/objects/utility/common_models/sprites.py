@@ -32,31 +32,32 @@ class Sprites:
         self.front_female = Sprite(data.get("front_female"))
         self.front_shiny = Sprite(data.get("front_shiny"))
         self.front_shiny_female = Sprite(data.get("front_shiny_female"))
-        if data.get("versions") is not None:
+        versions = data.get("versions")
+        if versions is not None:
             self.generation_i = self.generation_1 = GenerationISprites(
-                data["versions"]["generation-i"]
-            )
+                versions["generation-i"]
+            ) if "generation-i" in versions else None
             self.generation_ii = self.generation_2 = GenerationIISprites(
-                data["versions"]["generation-ii"]
-            )
+                versions["generation-ii"]
+            ) if "generation-ii" in versions else None
             self.generation_iii = self.generation_3 = GenerationIIISprites(
-                data["versions"]["generation-iii"]
-            )
+                versions["generation-iii"]
+            ) if "generation-iii" in versions else None
             self.generation_iv = self.generation_4 = GenerationIVSprites(
-                data["versions"]["generation-iv"]
-            )
+                versions["generation-iv"]
+            ) if "generation-iv" in versions else None
             self.generation_v = self.generation_5 = GenerationVSprites(
-                data["versions"]["generation-v"]
-            )
+                versions["generation-v"]
+            ) if "generation-v" in versions else None
             self.generation_vi = self.generation_6 = GenerationVISprites(
-                data["versions"]["generation-vi"]
-            )
+                versions["generation-vi"]
+            ) if "generation-vi" in versions else None
             self.generation_vii = self.generation_7 = GenerationVIISprites(
-                data["versions"]["generation-vii"]
-            )
+                versions["generation-vii"]
+            ) if "generation-vii" in versions else None
             self.generation_viii = self.generation_8 = GenerationVIIISprites(
-                data["versions"]["generation-viii"]
-            )
+                versions["generation-viii"]
+            ) if "generation-viii" in versions else None
         self.other = Other(data["other"]) if data.get("other") is not None else None
 
 
@@ -348,8 +349,8 @@ class GenerationVIIISprites:
     icons_front_female: Optional["Sprite"]
 
     def __init__(self, data) -> None:
-        self.icons_front_default = Sprite(data["icons"]["front_default"])
-        self.icons_front_female = Sprite(data["icons"]["front_female"])
+        self.icons_front_default = Sprite(data["brilliant-diamond-shining-pearl"]["front_default"])
+        self.icons_front_female = Sprite(data["brilliant-diamond-shining-pearl"]["front_female"])
 
 
 class Other:
