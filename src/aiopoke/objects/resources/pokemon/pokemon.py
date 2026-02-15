@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from typing import Optional
 
 from aiopoke.objects.resources.games.version_group import VersionGroupDetail
-from aiopoke.objects.resources.pokemon.stat import Stat
 from aiopoke.objects.utility import NamedResource
 from aiopoke.objects.utility import VersionEncounterDetail
 from aiopoke.objects.utility import VersionGameIndex
@@ -96,7 +95,7 @@ class Pokemon(NamedResource):
         self.past_abilities = [
             PastAbility(**past_ability) for past_ability in past_abilities
         ]
-        self.past_abilities = [PastStat(**past_stat) for past_stat in past_stats]
+        self.past_stats = [PastStat(**past_stat) for past_stat in past_stats]
         self.past_types = [PastType(**past_type) for past_type in past_types]
         self.species = MinimalResource(**species)
         self.sprites = Sprites(sprites)

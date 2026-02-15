@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 
 class Stat(NamedResource):
-    affecting_items: List["Item"]
+    affecting_items: List[MinimalResource["Item"]]
     affecting_moves: "MoveStatAffectSets"
     affecting_natures: "NatureStatAffectSets"
     characteristics: List[Url["Characteristic"]]
@@ -40,10 +40,8 @@ class Stat(NamedResource):
         move_damage_class: Optional[Dict[str, Any]],
         names: List[Dict[str, Any]],
     ):
-        from aiopoke.objects.resources import Move
-
         super().__init__(id=id, name=name)
-        self.affecting_moves = [
+        self.affecting_items = [
             MinimalResource(**affecting_item) for affecting_item in affecting_items
         ]
         self.affecting_moves = MoveStatAffectSets(**affecting_moves)
