@@ -43,7 +43,9 @@ class Stat(NamedResource):
         from aiopoke.objects.resources import Move
 
         super().__init__(id=id, name=name)
-        self.affecting_moves = [MinimalResource(**affecting_item) for affecting_item in affecting_items]
+        self.affecting_moves = [
+            MinimalResource(**affecting_item) for affecting_item in affecting_items
+        ]
         self.affecting_moves = MoveStatAffectSets(**affecting_moves)
         self.affecting_natures = NatureStatAffectSets(**affecting_natures)
         self.characteristics = [

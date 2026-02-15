@@ -24,9 +24,7 @@ class HttpClient:
         if endpoint in self.inexistent_endpoints:
             raise ValueError(f"The id or name for {endpoint} was not found.")
 
-        async with self._session.get(
-            f"{self.base_url}/{endpoint}"
-        ) as response:
+        async with self._session.get(f"{self.base_url}/{endpoint}") as response:
             if response.status == 404:
                 self.inexistent_endpoints.append(endpoint)
                 raise ValueError(f"The id or name for {endpoint} was not found.")

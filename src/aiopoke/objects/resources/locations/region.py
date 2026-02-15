@@ -28,7 +28,9 @@ class Region(NamedResource):
     ) -> None:
         super().__init__(id=id, name=name)
         self.locations = [MinimalResource(**location) for location in locations]
-        self.main_generation = MinimalResource(**main_generation) if main_generation is not None else None
+        self.main_generation = (
+            MinimalResource(**main_generation) if main_generation is not None else None
+        )
         self.pokedexes = [MinimalResource(**pokedex) for pokedex in pokedexes]
         self.names = [Name(**name) for name in names]
         self.version_groups = [

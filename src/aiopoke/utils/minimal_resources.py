@@ -23,9 +23,9 @@ class Url(Resource, Generic[T]):
     endpoint: str = field(repr=False)
 
     _client: Optional["AiopokeClient"] = field(default=None, repr=False)
-    _build_map: Dict[
-        str, Callable[[Union[str, int]], Coroutine[Any, Any, Any]]
-    ] = field(repr=False)
+    _build_map: Dict[str, Callable[[Union[str, int]], Coroutine[Any, Any, Any]]] = (
+        field(repr=False)
+    )
 
     def __init__(self, *, url: str) -> None:
         self.url = url

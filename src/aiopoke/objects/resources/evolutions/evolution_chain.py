@@ -115,7 +115,7 @@ class EvolutionDetail(Resource):
         trade_species: Optional[Dict[str, Any]],
         trigger: Dict[str, Any],
         turn_upside_down: bool,
-        used_move: Optional[Dict[str, Any]]
+        used_move: Optional[Dict[str, Any]],
     ):
         self.base_form_id = base_form_id
         self.gender = gender

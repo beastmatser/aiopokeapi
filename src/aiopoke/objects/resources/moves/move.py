@@ -90,8 +90,12 @@ class Move(NamedResource):
         self.contest_combos = (
             ContestComboSets(**contest_combos) if contest_combos is not None else None
         )
-        self.contest_effect = Url(**contest_effect) if contest_effect is not None else None
-        self.contest_type = MinimalResource(**contest_type) if contest_type is not None else None
+        self.contest_effect = (
+            Url(**contest_effect) if contest_effect is not None else None
+        )
+        self.contest_type = (
+            MinimalResource(**contest_type) if contest_type is not None else None
+        )
         self.damage_class = MinimalResource(**damage_class)
         self.effect_chance = effect_chance
         self.effect_entries = [
@@ -112,7 +116,9 @@ class Move(NamedResource):
         self.meta = MoveMetaData(**meta) if meta is not None else None
         self.names = [Name(**name) for name in names]
         self.past_values = [
-            PastMoveStatValues(**past_value) for past_value in past_values if past_value is not None
+            PastMoveStatValues(**past_value)
+            for past_value in past_values
+            if past_value is not None
         ]
         self.power = power
         self.pp = pp
@@ -120,7 +126,9 @@ class Move(NamedResource):
         self.stat_changes = [
             MoveStatChange(**stat_change) for stat_change in stat_changes
         ]
-        self.super_contest_effect = Url(**super_contest_effect) if super_contest_effect is not None else None
+        self.super_contest_effect = (
+            Url(**super_contest_effect) if super_contest_effect is not None else None
+        )
         self.target = MinimalResource(**target)
         self.type = MinimalResource(**type)
 
