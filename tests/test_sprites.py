@@ -13,3 +13,5 @@ async def test_sprites(client: aiopoke.AiopokeClient):
     await sprites.back_default.save()
     assert "back_25.png" in os.listdir()
     assert sprites.back_default.client == client
+
+    os.remove("back_25.png")
