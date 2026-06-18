@@ -15,6 +15,7 @@ if TYPE_CHECKING:
         Move,
         NaturalGiftType,
         PokemonSpecies,
+        Region,
     )
 
 
@@ -62,7 +63,7 @@ class ChainLink(Resource):
 
 
 class EvolutionDetail(Resource):
-    base_form_id: None
+    base_form: Optional[MinimalResource["PokemonSpecies"]]
     gender: Optional[int]
     held_item: Optional[MinimalResource["Item"]]
     item: Optional[MinimalResource["Item"]]
@@ -76,11 +77,12 @@ class EvolutionDetail(Resource):
     min_level: Optional[int]
     min_move_count: Optional[int]
     min_steps: Optional[int]
+    near_special_rock: bool
     needs_multiplayer: bool
     needs_overworld_rain: bool
     party_species: Optional[MinimalResource["PokemonSpecies"]]
     party_type: Optional[MinimalResource["NaturalGiftType"]]
-    region_id: None
+    region: Optional[MinimalResource["Region"]]
     relative_physical_stats: Optional[int]
     time_of_day: str
     trade_species: Optional[MinimalResource["PokemonSpecies"]]
@@ -91,7 +93,7 @@ class EvolutionDetail(Resource):
     def __init__(
         self,
         *,
-        base_form_id: None,
+        base_form: Optional[Dict[str, Any]],
         gender: Optional[int],
         held_item: Optional[Dict[str, Any]],
         item: Optional[Dict[str, Any]],
@@ -105,11 +107,12 @@ class EvolutionDetail(Resource):
         min_level: Optional[int],
         min_move_count: Optional[int],
         min_steps: Optional[int],
+        near_special_rock: bool,
         needs_multiplayer: bool,
         needs_overworld_rain: bool,
         party_species: Optional[Dict[str, Any]],
         party_type: Optional[Dict[str, Any]],
-        region_id: None,
+        region: Optional[Dict[str, Any]],
         relative_physical_stats: Optional[int],
         time_of_day: str,
         trade_species: Optional[Dict[str, Any]],
@@ -117,7 +120,9 @@ class EvolutionDetail(Resource):
         turn_upside_down: bool,
         used_move: Optional[Dict[str, Any]],
     ):
-        self.base_form_id = base_form_id
+        self.base_form = (
+            MinimalResource(**base_form) if base_form is not None else None
+        )
         self.gender = gender
         self.held_item = MinimalResource(**held_item) if held_item is not None else None
         self.item = MinimalResource(**item) if item is not None else None
@@ -135,6 +140,7 @@ class EvolutionDetail(Resource):
         self.min_level = min_level
         self.min_move_count = min_move_count
         self.min_steps = min_steps
+        self.near_special_rock = near_special_rock
         self.needs_multiplayer = needs_multiplayer
         self.needs_overworld_rain = needs_overworld_rain
         self.party_species = (
@@ -143,7 +149,7 @@ class EvolutionDetail(Resource):
         self.party_type = (
             MinimalResource(**party_type) if party_type is not None else None
         )
-        self.region_id = region_id
+        self.region = MinimalResource(**region) if region is not None else None
         self.relative_physical_stats = relative_physical_stats
         self.time_of_day = time_of_day
         self.trade_species = (
